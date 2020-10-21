@@ -1,0 +1,31 @@
+{
+    "env": {
+        "browser": true,
+        "es2020": true
+    },
+    "extends": [
+        "plugin:react/recommended",
+        "google"
+    ],
+    "parser": "babel-eslint",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 11,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react"
+    ],
+    "rules": {
+        "quotes": ["error","single"],
+        "linebreak-style": ["off", "windows"],
+        "react/prop-types": "off",
+        "require-jsdoc": "off",
+        "no-invalid-this": "off",
+        "no-unused-vars":"warn",
+        "max-len": ["error", { "ignoreComments": true }],
+        "new-cap": "off"
+    }
+}
