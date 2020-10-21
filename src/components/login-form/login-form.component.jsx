@@ -2,7 +2,7 @@ import React, {Fragment} from 'react';
 
 function LoginForm() {
   return (
-    <Fragment>Login Form</Fragment>
+    <Fragment>This is Sign In Page</Fragment>
   );
 };
 

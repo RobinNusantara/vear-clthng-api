@@ -1197,6 +1197,21 @@
   dependencies:
     "@hapi/hoek" "^8.3.0"
 
+"@iconify/icons-bx@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@iconify/icons-bx/-/icons-bx-1.0.4.tgz#ba444610083d19bcc3e330c8ffa7b9c163be45fc"
+  integrity sha512-9Iwfc6Oweb3HnwurcAC5fyTpxr3g4lB77BEXxS6idvBYHLUcV93vZFvm1k9PBtwjvskfilCb6hlbbvPf1CtAVg==
+
+"@iconify/icons-ic@^1.0.16":
+  version "1.0.16"
+  resolved "https://registry.yarnpkg.com/@iconify/icons-ic/-/icons-ic-1.0.16.tgz#d1b4ceed06b4a842b6e7dd99a750518da58a2627"
+  integrity sha512-K0VPcIxYpSxujgXKsJe0rrpUG1fE5+02vI3qUNBMVuQn9dJYRoAO4X9qmRidHA9bz3oFd9Qr8Co6ytuCaaYYEw==
+
+"@iconify/react@^1.1.3":
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/@iconify/react/-/react-1.1.3.tgz#ebe4d3e5f5dea23cd6a9634acd7a0a25c7414a59"
+  integrity sha512-ReZNJyr89AfED6XZIXkhsJiNv2taT3j1cTo1HVPHMsrKOz6gAYdXtD2kDWF6+GVoFUxpmnO0fMcA6yCyTf6Tow==
+
 "@jest/console@^24.7.1", "@jest/console@^24.9.0":
   version "24.9.0"
   resolved "https://registry.yarnpkg.com/@jest/console/-/console-24.9.0.tgz#79b1bc06fb74a8cfb01cbdedf945584b1b9707f0"
