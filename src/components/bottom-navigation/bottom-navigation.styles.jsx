@@ -6,6 +6,7 @@ const useStyles = makeStyles((theme) => ({
     position: 'fixed',
     bottom: 0,
     display: 'none',
+    zIndex: 1,
   },
   icon: {
     height: 24,

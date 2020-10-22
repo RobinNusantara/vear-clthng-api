@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react';
 import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
+import Directories from '../../components/directories/directories.component';
 import useStyles from './home-page.styles';
 
 function HomePage() {
@@ -9,7 +9,7 @@ function HomePage() {
     <Fragment>
       <Container>
         <div className={classes.root}>
-          <Grid container></Grid>
+          <Directories/>
         </div>
       </Container>
     </Fragment>
