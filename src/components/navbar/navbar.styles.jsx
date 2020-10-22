@@ -11,19 +11,23 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-between',
     textDecoration: 'none',
-    borderBottom: `2px solid ${blueGrey[900]}`,
+    borderBottom: `2px solid ${blueGrey[700]}`,
   },
   logo: {
     fontWeight: 'bold',
   },
   menus: {
-    width: '50%',
+    width: '40%',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
   },
   menu: {
-    color: blueGrey[900],
+    color: blueGrey[700],
+  },
+  icon: {
+    height: 24,
+    width: 24,
   },
   [theme.breakpoints.down('sm')]: {
     root: {

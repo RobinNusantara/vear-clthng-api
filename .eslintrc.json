@@ -25,7 +25,7 @@
         "require-jsdoc": "off",
         "no-invalid-this": "off",
         "no-unused-vars":"warn",
-        "max-len": ["error", { "ignoreComments": true }],
+        "max-len": ["off", { "ignoreComments": true }],
         "new-cap": "off"
     }
 }

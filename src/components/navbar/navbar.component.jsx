@@ -19,7 +19,7 @@ function Navbar() {
           <Toolbar className={classes.toolbar}>
             <Link
               className={classes.logo}
-              variant="h6"
+              variant="h5"
               underline="none"
               to="/"
               component={RouterLink}>VEAR</Link>
@@ -36,20 +36,14 @@ function Navbar() {
                 underline="none"
                 to="/contact"
                 component={RouterLink}>CONTACT</Link>
-              <RouterLink to="/favorite" className={classes.menu}>
-                <Icon
-                  icon={outlineFavoriteBorder}
-                  width={28} height={28}/>
+              <RouterLink className={classes.menu} to="/favorites">
+                <Icon className={classes.icon} icon={outlineFavoriteBorder}/>
               </RouterLink>
-              <RouterLink to="/cart" className={classes.menu}>
-                <Icon
-                  icon={outlineShoppingBag}
-                  width={28} height={28}/>
+              <RouterLink className={classes.menu} to="/cart">
+                <Icon className={classes.icon} icon={outlineShoppingBag}/>
               </RouterLink>
-              <RouterLink to="/signin" className={classes.menu}>
-                <Icon
-                  icon={bxUser}
-                  width={28} height={28}/>
+              <RouterLink className={classes.menu} to="/signin">
+                <Icon className={classes.icon} icon={bxUser}/>
               </RouterLink>
             </div>
           </Toolbar>
