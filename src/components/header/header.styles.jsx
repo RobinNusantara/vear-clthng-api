@@ -6,6 +6,7 @@ const useStyles = makeStyles((theme) => ({
     height: 140,
     display: 'flex',
     justifyContent: 'space-between',
+    marginBottom: theme.spacing(2),
   },
   leftBox: {
     flex: 1,
@@ -26,10 +27,10 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'flex-end',
     alignItems: 'center',
   },
-  icon: {
-    height: 24,
-    width: 24,
-    color: blueGrey[700],
+  [theme.breakpoints.down('sm')]: {
+    root: {
+      height: 120,
+    },
   },
 }));
 

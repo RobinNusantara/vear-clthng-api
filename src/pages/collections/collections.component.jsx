@@ -11,7 +11,7 @@ function Collections() {
       <Container>
         <PageWrapper>
           <div className={classes.header}>
-            <Typography className={classes.textHeader} variant="h6">SHOP</Typography>
+            <Typography className={classes.textHeader} variant="h6">COLLECTIONS</Typography>
           </div>
         </PageWrapper>
       </Container>

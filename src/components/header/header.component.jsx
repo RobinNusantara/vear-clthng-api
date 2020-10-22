@@ -1,10 +1,9 @@
 import React, {Fragment} from 'react';
 import Typography from '@material-ui/core/Typography';
-import {Icon} from '@iconify/react';
-import trashOutline from '@iconify/icons-eva/trash-outline';
+import IconButton from '@material-ui/core/IconButton';
 import useStyles from './header.styles';
 
-function Header({textHeader, textSubtitle}) {
+function Header({textHeader, textSubtitle, iconButton}) {
   const classes = useStyles();
   return (
     <Fragment>
@@ -18,7 +17,7 @@ function Header({textHeader, textSubtitle}) {
           </Typography>
         </div>
         <div className={classes.rightBox}>
-          <Icon className={classes.icon} icon={trashOutline}/>
+          <IconButton>{iconButton}</IconButton>
         </div>
       </div>
     </Fragment>

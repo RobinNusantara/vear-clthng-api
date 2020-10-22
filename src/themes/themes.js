@@ -21,6 +21,9 @@ const theme = createMuiTheme({
     subtitle1: {
       fontSize: 14,
     },
+    subtitle2: {
+      fontSize: 12,
+    },
   },
 });
 

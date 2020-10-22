@@ -17,6 +17,11 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     fontWeight: 'bold',
   },
+  [theme.breakpoints.down('sm')]: {
+    header: {
+      height: 100,
+    },
+  },
 }));
 
 export default useStyles;
