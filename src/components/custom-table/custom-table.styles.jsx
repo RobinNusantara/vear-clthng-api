@@ -1,12 +1,9 @@
 import {makeStyles} from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        display: 'flex',
-        justifyContent: 'center',
-    },
-    table: {
-        width: 700,
+    resetCell: {
+        paddingLeft: 0,
+        paddingRight: 0,
     },
     productImage: {
         width: 100,

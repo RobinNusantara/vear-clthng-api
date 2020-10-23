@@ -1,25 +1,14 @@
 import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
-    root: {
+    content: {
         display: 'flex',
-        justifyContent: 'center',
+        flexDirection: 'column',
+        textAlign: 'right',
+        marginTop: theme.spacing(2),
     },
-    table: {
-        maxWidth: 700,
-    },
-    productImage: {
-        width: 100,
-        height: 130,
-        border: ` 1px solid ${theme.palette.secondary.main}`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-    },
-    productName: {
-        fontWeight: 'bold',
-    },
-    productColor: {
-        marginTop: theme.spacing(1),
+    button: {
+        marginTop: theme.spacing(2),
     },
 }));
 

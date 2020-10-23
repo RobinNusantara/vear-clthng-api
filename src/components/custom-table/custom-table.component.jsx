@@ -16,21 +16,21 @@ function CustomTable() {
   const classes = useStyles();
   return (
     <Fragment>
-      <TableContainer className={classes.root}>
-        <Table className={classes.table} aria-label="customized table">
+      <TableContainer>
+        <Table aria-label="customized table">
           <TableHead>
             <TableRow>
-              <TableCell>PRODUCT</TableCell>
+              <TableCell className={classes.resetCell}>PRODUCT</TableCell>
               <TableCell align="left">DESCRIPTION</TableCell>
               <TableCell className={classes.productPrice} align="left">PRICE</TableCell>
-              <TableCell align="left">ACTION</TableCell>
+              <TableCell className={classes.resetCell} align="right">ACTION</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
                 {
                   TableData.map((data, idx) => (
                     <TableRow key={idx}>
-                      <TableCell align="left">
+                      <TableCell className={classes.resetCell} align="left">
                         <div
                           className={classes.productImage}
                           style={{backgroundImage: `url(${data.productImage})`}}/>
@@ -53,7 +53,7 @@ function CustomTable() {
                           style: 'currency',
                           currency: 'IDR' }).format(data.productPrice)}
                       </TableCell>
-                      <TableCell align="left">
+                      <TableCell className={classes.resetCell} align="right">
                         <IconButton>
                           <Icon
                             className={classes.icon}
