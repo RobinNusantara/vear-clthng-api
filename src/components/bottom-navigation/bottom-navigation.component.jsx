@@ -18,15 +18,18 @@ function NavigationBottom() {
       case '/':
         setValue(0);
         break;
-      case '/favorites':
+      case '/collections':
         setValue(1);
         break;
-      case '/cart':
+      case '/favorites':
         setValue(2);
+        break;
+      case '/cart':
+        setValue(3);
         break;
       case '/signup':
       case '/signin':
-        setValue(3);
+        setValue(4);
         break;
       default:
         break;
@@ -48,7 +51,7 @@ function NavigationBottom() {
             <BottomNavigationAction
               key={idx}
               value={nav.value}
-              label={<Typography variant="subtitle2">{nav.label}</Typography>}
+              label={<Typography variant="subtitle2">{nav.label.toUpperCase()}</Typography>}
               icon={<Icon className={classes.icon} icon={nav.icon}/>}
               to={nav.route}
               component={Link}/>
