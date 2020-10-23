@@ -31,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
   [theme.breakpoints.down('sm')]: {
     root: {
       height: 120,
+      marginBottom: theme.spacing(0),
     },
   },
 }));
