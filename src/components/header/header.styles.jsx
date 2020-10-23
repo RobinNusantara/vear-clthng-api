@@ -1,5 +1,4 @@
 import {makeStyles} from '@material-ui/core/styles';
-import blueGrey from '@material-ui/core/colors/blueGrey';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,13 +18,15 @@ const useStyles = makeStyles((theme) => ({
   },
   textSubtitle: {
     marginTop: theme.spacing(2),
-    color: blueGrey[700],
   },
   rightBox: {
     flex: 1,
     display: 'flex',
     justifyContent: 'flex-end',
     alignItems: 'center',
+  },
+  icon: {
+    color: theme.palette.secondary.main,
   },
   [theme.breakpoints.down('sm')]: {
     root: {

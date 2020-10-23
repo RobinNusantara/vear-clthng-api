@@ -1,12 +1,11 @@
 import {makeStyles} from '@material-ui/core/styles';
-import blueGrey from '@material-ui/core/colors/blueGrey';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     height: (props) => props.mdScreen,
     position: 'relative',
-    border: `2px solid ${blueGrey[700]}`,
-    backgroundColor: theme.palette.common.black,
+    border: `2px solid ${theme.palette.secondary.main}`,
+    backgroundColor: theme.palette.primary.main,
     cursor: 'pointer',
     overflow: 'hidden',
   },
@@ -28,9 +27,9 @@ const useStyles = makeStyles((theme) => ({
     left: '50%',
     transform: 'translate(-50%, -50%)',
     padding: theme.spacing(2),
-    border: '2px solid black',
+    border: `2px solid ${theme.palette.secondary.main}`,
     textAlign: 'center',
-    color: theme.palette.common.black,
+    color: theme.palette.secondary.main,
     backgroundColor: theme.palette.common.white,
     opacity: 0.7,
   },

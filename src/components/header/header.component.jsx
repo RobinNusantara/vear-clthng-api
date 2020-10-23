@@ -12,12 +12,15 @@ function Header({textHeader, textSubtitle, iconButton}) {
           <Typography className={classes.textHeader} variant="h6">
             {textHeader}
           </Typography>
-          <Typography className={classes.textSubtitle} variant="subtitle1">
+          <Typography
+            className={classes.textSubtitle}
+            variant="subtitle1"
+            color="textSecondary">
             {textSubtitle} ITEMS
           </Typography>
         </div>
         <div className={classes.rightBox}>
-          <IconButton>{iconButton}</IconButton>
+          <IconButton className={classes.icon}>{iconButton}</IconButton>
         </div>
       </div>
     </Fragment>

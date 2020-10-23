@@ -1,17 +1,16 @@
 import {makeStyles} from '@material-ui/core/styles';
-import blueGrey from '@material-ui/core/colors/blueGrey';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     position: 'sticky',
     backgroundColor: theme.palette.common.white,
-    color: theme.palette.common.black,
+    color: theme.palette.primary.main,
   },
   toolbar: {
     display: 'flex',
     justifyContent: 'space-between',
     textDecoration: 'none',
-    borderBottom: `2px solid ${blueGrey[700]}`,
+    borderBottom: `2px solid ${theme.palette.secondary.main}`,
   },
   logo: {
     fontWeight: 'bold',
@@ -23,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
   },
   menu: {
-    color: blueGrey[700],
+    color: theme.palette.secondary.main,
   },
   icon: {
     height: 24,
@@ -31,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
   },
   [theme.breakpoints.down('sm')]: {
     root: {
-      backgroundColor: theme.palette.common.black,
+      backgroundColor: theme.palette.primary.main,
     },
     toolbar: {
       borderBottom: 'none',
