@@ -1,14 +1,13 @@
 import {makeStyles} from '@material-ui/core/styles';
-import blueGrey from '@material-ui/core/colors/blueGrey';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    marginLeft: theme.spacing(2),
-    marginRight: theme.spacing(2),
+    marginBottom: theme.spacing(6),
   },
   header: {
     height: 120,
-    borderBottom: `2px solid ${blueGrey[700]}`,
+    borderBottom: `2px solid ${theme.palette.secondary.main}`,
+    marginBottom: theme.spacing(6),
   },
   textHeader: {
     height: '100%',
@@ -18,8 +17,12 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 'bold',
   },
   [theme.breakpoints.down('sm')]: {
+    root: {
+      marginBottom: theme.spacing(12),
+    },
     header: {
       height: 100,
+      marginBottom: theme.spacing(4),
     },
   },
 }));
