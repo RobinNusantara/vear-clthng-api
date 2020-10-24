@@ -27,44 +27,44 @@ function CustomTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-                {
-                  TableData.map((data, idx) => (
-                    <TableRow key={idx}>
-                      <TableCell className={classes.resetCell} align="left">
-                        <div
-                          className={classes.productImage}
-                          style={{backgroundImage: `url(${data.productImage})`}}/>
-                      </TableCell>
-                      <TableCell className={classes.productDescription} align="left">
-                        <Typography className={classes.productName} variant="subtitle1">
-                          {data.productName.toUpperCase()}
-                        </Typography>
-                        <Typography className={classes.productColor} variant="subtitle1">
-                          {data.productColor.toUpperCase()}
-                        </Typography>
-                        <Typography className={classes.descriptionPrice} variant="subtitle1">
-                          {new Intl.NumberFormat('id-ID', {
-                            style: 'currency',
-                            currency: 'IDR' }).format(data.productPrice)}
-                        </Typography>
-                      </TableCell>
-                      <TableCell className={classes.productPrice} align="left">
-                        {new Intl.NumberFormat('id-ID', {
-                          style: 'currency',
-                          currency: 'IDR' }).format(data.productPrice)}
-                      </TableCell>
-                      <TableCell className={classes.resetCell} align="right">
-                        <IconButton>
-                          <Icon
-                            className={classes.icon}
-                            height={24}
-                            width={24}
-                            icon={closeOutline}/>
-                        </IconButton>
-                      </TableCell>
-                    </TableRow>
-                  ))
-                }
+            {
+              TableData.map((data, idx) => (
+                <TableRow key={idx}>
+                  <TableCell className={classes.resetCell} align="left">
+                    <div
+                      className={classes.productImage}
+                      style={{backgroundImage: `url(${data.productImage})`}}/>
+                  </TableCell>
+                  <TableCell className={classes.productDescription} align="left">
+                    <Typography className={classes.productName} variant="subtitle1">
+                      {data.productName.toUpperCase()}
+                    </Typography>
+                    <Typography className={classes.productColor} variant="subtitle1">
+                      {data.productColor.toUpperCase()}
+                    </Typography>
+                    <Typography className={classes.descriptionPrice} variant="subtitle1">
+                      {new Intl.NumberFormat('id-ID', {
+                        style: 'currency',
+                        currency: 'IDR'}).format(data.productPrice)}
+                    </Typography>
+                  </TableCell>
+                  <TableCell className={classes.productPrice} align="left">
+                    {new Intl.NumberFormat('id-ID', {
+                      style: 'currency',
+                      currency: 'IDR'}).format(data.productPrice)}
+                  </TableCell>
+                  <TableCell className={classes.resetCell} align="right">
+                    <IconButton>
+                      <Icon
+                        className={classes.icon}
+                        height={24}
+                        width={24}
+                        icon={closeOutline}/>
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
+              ))
+            }
           </TableBody>
         </Table>
       </TableContainer>

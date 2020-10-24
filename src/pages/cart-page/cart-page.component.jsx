@@ -1,13 +1,13 @@
 import React, {Fragment} from 'react';
 import Container from '@material-ui/core/Container';
+import Typography from '@material-ui/core/Typography';
+import {Icon} from '@iconify/react';
 import trashOutline from '@iconify/icons-eva/trash-outline';
 import PageWrapper from '../../components/container/container.component';
 import Header from '../../components/header/header.component';
-import {Icon} from '@iconify/react';
 import CustomTable from '../../components/custom-table/custom-table.component';
 import CustomButton from '../../components/custom-button/custom-button.component';
 import useStyles from './cart-page.styles';
-import { Typography } from '@material-ui/core';
 
 function CartPage() {
   const classes = useStyles();

@@ -18,18 +18,15 @@ function NavigationBottom() {
       case '/':
         setValue(0);
         break;
-      case '/collections':
+      case '/favorites':
         setValue(1);
         break;
-      case '/favorites':
-        setValue(2);
-        break;
       case '/cart':
-        setValue(3);
+        setValue(2);
         break;
       case '/signup':
       case '/signin':
-        setValue(4);
+        setValue(3);
         break;
       default:
         break;

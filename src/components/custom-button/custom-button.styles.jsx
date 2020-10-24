@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
   },
   [theme.breakpoints.down('sm')]: {
     root: {
-        width: (props) => props.smScreen,
+      width: (props) => props.smScreen,
     },
   },
 }));
