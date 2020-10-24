@@ -22,6 +22,9 @@ const useStyles = makeStyles((theme) => ({
     display: 'none',
     marginTop: theme.spacing(1),
   },
+  counterButton: {
+    marginTop: theme.spacing(1),
+  },
   icon: {
     color: theme.palette.secondary.main,
   },

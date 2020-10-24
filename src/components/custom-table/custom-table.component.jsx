@@ -9,6 +9,7 @@ import TableCell from '@material-ui/core/TableCell';
 import IconButton from '@material-ui/core/IconButton';
 import {Icon} from '@iconify/react';
 import closeOutline from '@iconify/icons-eva/close-outline';
+import CounterButton from '../../components/counter-button/counter-button.component';
 import TableData from '../../data/table-data';
 import useStyles from './custom-table.styles';
 
@@ -47,6 +48,9 @@ function CustomTable() {
                         style: 'currency',
                         currency: 'IDR'}).format(data.productPrice)}
                     </Typography>
+                    <div className={classes.counterButton}>
+                      <CounterButton/>
+                    </div>
                   </TableCell>
                   <TableCell className={classes.productPrice} align="left">
                     {new Intl.NumberFormat('id-ID', {
