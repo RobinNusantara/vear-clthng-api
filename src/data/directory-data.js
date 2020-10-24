@@ -1,8 +1,8 @@
-import MensImage from '../assets/images/mens.jpg';
-import WomensImage from '../assets/images/womens.jpg';
-import HijabImage from '../assets/images/hijab.jpg';
-import JacketsImage from '../assets/images/jackets.jpg';
-import SneakersImage from '../assets/images/sneakers.jpg';
+import MensImage from '../assets/images/ramille-soares--4LszIR1OZ4-unsplash.jpg';
+import WomensImage from '../assets/images/pexels-spencer-selover-428338.jpg';
+import HijabImage from '../assets/images/pexels-steven-tanuwijaya-3328126.jpg';
+import JacketsImage from '../assets/images/pexels-marlene-leppänen-1183266.jpg';
+import SneakersImage from '../assets/images/hamza-nouasria-1pkYRjfH2w0-unsplash.jpg';
 
 const DirectoryData = [
   {
