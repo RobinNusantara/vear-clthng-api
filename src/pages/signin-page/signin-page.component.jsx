@@ -39,7 +39,7 @@ function SignInPage() {
                   don&apos;t have an account?
                 </Typography>
                 <Link
-                  underline="true"
+                  underline="always"
                   variant="subtitle1"
                   to="/signup"
                   component={RouterLink}>sign up</Link>

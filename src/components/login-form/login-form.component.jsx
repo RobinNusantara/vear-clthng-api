@@ -2,6 +2,7 @@ import React, {Fragment} from 'react';
 import {Formik, Form} from 'formik';
 import TextField from '../text-field/text-field.component';
 import CustomButton from '../custom-button/custom-button.component';
+import {SignInSchema} from '../../helpers/helpers';
 import useStyles from './login-form.styles';
 
 function LoginForm() {
@@ -13,6 +14,7 @@ function LoginForm() {
           email: '',
           password: '',
         }}
+        validationSchema={SignInSchema}
         onSubmit={(values) => {
           console.log({values});
         }}>{({values, handleChange, errors}) => (
