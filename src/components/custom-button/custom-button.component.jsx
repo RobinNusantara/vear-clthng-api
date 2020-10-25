@@ -4,9 +4,10 @@ import useStyles from './custom-button.styles';
 
 function CustomButton({...props}) {
   const classes = useStyles(props);
-  const {variant, color, children} = props;
+  const {type, variant, color, children} = props;
   return (
     <Button
+      type={type}
       className={classes.root}
       disableElevation
       variant={variant}

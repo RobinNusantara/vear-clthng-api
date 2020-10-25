@@ -1,6 +1,7 @@
 import React, {Fragment} from 'react';
 import {Formik, Form} from 'formik';
 import TextField from '../text-field/text-field.component';
+import CustomButton from '../custom-button/custom-button.component';
 import useStyles from './login-form.styles';
 
 function LoginForm() {
@@ -25,11 +26,16 @@ function LoginForm() {
               error={errors.email}/>
             <TextField
               label="password"
-              type="email"
-              name="email"
+              type="password"
+              name="password"
               value={values.password}
               handleChange={handleChange}
-              error={errors.email}/>
+              error={errors.password}/>
+            <CustomButton
+              type="submit"
+              width="100%"
+              variant="contained"
+              color="primary">sign in</CustomButton>
           </Form>
         )}
       </Formik>

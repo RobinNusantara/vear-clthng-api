@@ -1,7 +1,7 @@
 import React from 'react';
+import Typography from '@material-ui/core/Typography';
 import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import Input from '@material-ui/core/Input';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import useStyles from './text-field.styles';
 
@@ -10,8 +10,12 @@ function TextField({...props}) {
   const {label, type, name, value, handleChange, error} = props;
   return (
     <FormControl className={classes.root}>
-      <InputLabel>{label}</InputLabel>
-      <Input
+      <label className={classes.label}>
+        <Typography variant="subtitle1">{label}</Typography>
+      </label>
+      <OutlinedInput
+        className={classes.input}
+        autoComplete="off"
         type={type}
         name={name}
         value={value}
