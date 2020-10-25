@@ -7,7 +7,7 @@ import minusOutline from '@iconify/icons-eva/minus-outline';
 import useStyles from './counter-button.styles';
 
 function CounterButton() {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(1);
   const classes = useStyles();
   return (
     <Fragment>

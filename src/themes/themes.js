@@ -21,10 +21,16 @@ const theme = createMuiTheme({
       fontSize: 20,
     },
     h6: {
-      fontSize: 16,
+      'fontSize': 16,
+      '@media screen and (max-width: 600px)': {
+        fontSize: 14,
+      },
     },
     subtitle1: {
-      fontSize: 14,
+      'fontSize': 14,
+      '@media screen and (max-width: 600px)': {
+        fontSize: 12,
+      },
     },
     subtitle2: {
       fontSize: 12,

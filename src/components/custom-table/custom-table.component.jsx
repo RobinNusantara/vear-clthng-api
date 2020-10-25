@@ -21,10 +21,18 @@ function CustomTable() {
         <Table aria-label="customized table">
           <TableHead>
             <TableRow>
-              <TableCell className={classes.resetCell}>PRODUCT</TableCell>
-              <TableCell align="left">DESCRIPTION</TableCell>
-              <TableCell className={classes.productPrice} align="left">PRICE</TableCell>
-              <TableCell className={classes.resetCell} align="right">ACTION</TableCell>
+              <TableCell className={classes.resetCell}>
+                <Typography variant="subtitle1">PRODUCT</Typography>
+              </TableCell>
+              <TableCell align="left">
+                <Typography variant="subtitle1">DESCRIPTION</Typography>
+              </TableCell>
+              <TableCell className={classes.productPrice} align="left">
+                <Typography variant="subtitle1">PRICE</Typography>
+              </TableCell>
+              <TableCell className={classes.resetCell} align="right">
+                <Typography variant="subtitle1">ACTION</Typography>
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

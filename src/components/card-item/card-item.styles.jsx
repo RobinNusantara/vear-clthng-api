@@ -5,8 +5,6 @@ const useStyles = makeStyles((theme) => ({
     height: 340,
     border: `2px solid ${theme.palette.secondary.main}`,
   },
-  cardFooter: {
-  },
   textHeader: {
     fontWeight: 'bold',
     paddingTop: theme.spacing(1),
@@ -22,12 +20,6 @@ const useStyles = makeStyles((theme) => ({
   [theme.breakpoints.down('sm')]: {
     cardHeader: {
       height: 260,
-    },
-    textHeader: {
-      fontSize: 12,
-    },
-    textSubtitle: {
-      fontSize: 12,
     },
   },
 }));
