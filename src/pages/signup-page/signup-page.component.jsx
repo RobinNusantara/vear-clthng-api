@@ -1,8 +1,9 @@
 import React, {Fragment} from 'react';
-import {Link as RouterLink} from 'react-router-dom';
+import {Link as RouterLink, useHistory} from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
+import {useAuthContext} from '../../providers/auth-provider';
 import PageWrapper from '../../components/container/container.component';
 import RegisterForm from '../../components/register-form/register-form.component';
 import CustomButton from '../../components/custom-button/custom-button.component';
@@ -10,6 +11,9 @@ import useStyles from './signup-page.styles';
 
 function SignUpPage() {
   const classes = useStyles();
+  const history = useHistory();
+  const {signInWithGoogle} = useAuthContext();
+
   return (
     <Fragment>
       <Container>
@@ -32,7 +36,10 @@ function SignUpPage() {
                 <CustomButton
                   type="click"
                   variant="outlined"
-                  width="100%">sign up with google</CustomButton>
+                  width="100%"
+                  onClick={() => {
+                    signInWithGoogle().then(() => history.push('/'));
+                  }}>sign up with google</CustomButton>
               </div>
               <div className={classes.textFooter}>
                 <Typography variant="subtitle1">

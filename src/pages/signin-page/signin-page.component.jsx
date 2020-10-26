@@ -1,16 +1,19 @@
 import React, {Fragment} from 'react';
-import {Link as RouterLink} from 'react-router-dom';
+import {Link as RouterLink, useHistory} from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
+import {useAuthContext} from '../../providers/auth-provider';
 import PageWrapper from '../../components/container/container.component';
 import LoginForm from '../../components/login-form/login-form.component';
 import CustomButton from '../../components/custom-button/custom-button.component';
-import {signInWithGoogle} from '../../config/firebase';
 import useStyles from './signin-page.styles';
 
 function SignInPage() {
   const classes = useStyles();
+  const history = useHistory();
+  const {signInWithGoogle} = useAuthContext();
+
   return (
     <Fragment>
       <Container>
@@ -34,7 +37,9 @@ function SignInPage() {
                   type="click"
                   width="100%"
                   variant="outlined"
-                  onClick={signInWithGoogle}>sin in with google</CustomButton>
+                  onClick={() => {
+                    signInWithGoogle().then(() => history.push('/'));
+                  }}>sin in with google</CustomButton>
               </div>
               <div className={classes.textFooter}>
                 <Typography variant="subtitle1">

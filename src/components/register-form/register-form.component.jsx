@@ -20,6 +20,7 @@ function RegisterForm() {
     <Fragment>
       <Formik
         initialValues={{
+          displayName: '',
           email: '',
           password: '',
           confirmPassword: '',
@@ -41,6 +42,13 @@ function RegisterForm() {
               className={classes.error}
               severity="error"
               icon={false}>{error}</Alert>}
+            <TextField
+              label="display name"
+              type="text"
+              name="displayName"
+              value={values.displayName}
+              handleChange={handleChange}
+              error={errors.displayName}/>
             <TextField
               label="email"
               type="email"
