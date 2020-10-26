@@ -6,7 +6,7 @@ import useStyles from './text-field.styles';
 
 function TextField({...props}) {
   const classes = useStyles();
-  const {label, type, name, value, handleChange, error} = props;
+  const {label, type, name, value, handleChange, error, endAdornment} = props;
   return (
     <FormControl className={classes.root}>
       <label className={classes.label}>{label}</label>
@@ -16,7 +16,8 @@ function TextField({...props}) {
         type={type}
         name={name}
         value={value}
-        onChange={handleChange}/>
+        onChange={handleChange}
+        endAdornment={endAdornment}/>
       <FormHelperText className={classes.error}>{error}</FormHelperText>
     </FormControl>
   );

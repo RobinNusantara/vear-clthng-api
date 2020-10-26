@@ -6,6 +6,7 @@ import HomePage from '../../pages/home-page/home-page.component';
 import FavoritesPage from '../../pages/favorites-page/favorites-page.component';
 import CartPage from '../../pages/cart-page/cart-page.component';
 import SignInPage from '../../pages/signin-page/signin-page.component';
+import SignUpPage from '../../pages/signup-page/signup-page.component';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/favorites" component={FavoritesPage}/>
         <Route path="/cart" component={CartPage}/>
         <Route path="/signin" component={SignInPage}/>
+        <Route path="/signup" component={SignUpPage}/>
       </Switch>
     </Fragment>
   );

@@ -4,14 +4,16 @@ import useStyles from './custom-button.styles';
 
 function CustomButton({...props}) {
   const classes = useStyles(props);
-  const {type, variant, color, children} = props;
+  const {type, variant, color, disabled, onClick, children} = props;
   return (
     <Button
       type={type}
       className={classes.root}
       disableElevation
       variant={variant}
-      color={color}>{children}</Button>
+      color={color}
+      disabled={disabled}
+      onClick={onClick}>{children}</Button>
   );
 };
 
