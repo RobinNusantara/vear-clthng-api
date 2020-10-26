@@ -6,8 +6,8 @@ import Typography from '@material-ui/core/Typography';
 import PageWrapper from '../../components/container/container.component';
 import LoginForm from '../../components/login-form/login-form.component';
 import CustomButton from '../../components/custom-button/custom-button.component';
-import useStyles from './signin-page.styles';
 import {signInWithGoogle} from '../../config/firebase';
+import useStyles from './signin-page.styles';
 
 function SignInPage() {
   const classes = useStyles();
@@ -34,7 +34,7 @@ function SignInPage() {
                   type="click"
                   width="100%"
                   variant="outlined"
-                  onClick={signInWithGoogle}>sign in with google</CustomButton>
+                  onClick={signInWithGoogle}>sin in with google</CustomButton>
               </div>
               <div className={classes.textFooter}>
                 <Typography variant="subtitle1">

@@ -8,16 +8,16 @@ import AuthProvider from './providers/auth-provider';
 import App from './components/app/app.component';
 
 ReactDOM.render(
-    <MuiThemeProvider theme={theme}>
-      <CssBaseline/>
-      <Router>
-        <React.StrictMode>
-          <AuthProvider>
+    <AuthProvider>
+      <MuiThemeProvider theme={theme}>
+        <CssBaseline/>
+        <Router>
+          <React.StrictMode>
             <App />
-          </AuthProvider>
-        </React.StrictMode>
-      </Router>
-    </MuiThemeProvider>
+          </React.StrictMode>
+        </Router>
+      </MuiThemeProvider>
+    </AuthProvider>
     , document.getElementById('root'),
 );
 

@@ -1,24 +1,39 @@
-import React, {useEffect, createContext, useReducer} from 'react';
-import {authReducers, initialState} from '../reducers/auth.reducers';
+import React, {useEffect, useState, createContext, useContext} from 'react';
 import {auth} from '../config/firebase';
 
-export const AuthDispatchContext = createContext();
-export const AuthStateContext = createContext();
+const AuthContext = createContext();
+export const useAuthContext = () => useContext(AuthContext);
 
 function AuthProvider({children}) {
-  const [state, dispatch] = useReducer(authReducers, initialState);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
+      setCurrentUser(user);
+      setIsLoading(false);
     });
     return unsubscribe;
-  });
+  }, []);
+
+  function signUpWithEmailAndPassword(email, password) {
+    return auth.createUserWithEmailAndPassword(email, password);
+  };
+
+  function signInWithEmailAndPassword(email, password) {
+    return auth.signInWithEmailAndPassword(email, password);
+  };
+
+  const value = {
+    currentUser,
+    signUpWithEmailAndPassword,
+    signInWithEmailAndPassword,
+  };
 
   return (
-    <AuthDispatchContext.Provider value={dispatch}>
-      <AuthStateContext.Provider value={state}>
-        {children}
-      </AuthStateContext.Provider>
-    </AuthDispatchContext.Provider>
+    <AuthContext.Provider value={value}>
+      {!isLoading && children}
+    </AuthContext.Provider>
   );
 };
 

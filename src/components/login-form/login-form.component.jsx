@@ -1,5 +1,7 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useState} from 'react';
+import {useHistory} from 'react-router-dom';
 import {Formik, Form} from 'formik';
+import {useAuthContext} from '../../providers/auth-provider';
 import TextField from '../text-field/text-field.component';
 import CustomButton from '../custom-button/custom-button.component';
 import {SignInSchema} from '../../helpers/helpers';
@@ -7,6 +9,11 @@ import useStyles from './login-form.styles';
 
 function LoginForm() {
   const classes = useStyles();
+  const history = useHistory();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+  const {signInWithEmailAndPassword} = useAuthContext();
+
   return (
     <Fragment>
       <Formik
@@ -15,8 +22,17 @@ function LoginForm() {
           password: '',
         }}
         validationSchema={SignInSchema}
-        onSubmit={(values) => {
-          console.log({values});
+        onSubmit={async (values) => {
+          try {
+            setError('');
+            setIsLoading(true);
+            await signInWithEmailAndPassword(values.email, values.password);
+            history.push('/');
+          } catch {
+            setError('');
+            console.log(error);
+          }
+          setIsLoading(false);
         }}>{({values, handleChange, errors}) => (
           <Form className={classes.root}>
             <TextField
@@ -37,7 +53,10 @@ function LoginForm() {
               type="submit"
               width="100%"
               variant="contained"
-              color="primary">sign in</CustomButton>
+              color="primary"
+              disabled={isLoading}>{
+                isLoading ? 'sign in...' : 'sign in'
+              }</CustomButton>
           </Form>
         )}
       </Formik>

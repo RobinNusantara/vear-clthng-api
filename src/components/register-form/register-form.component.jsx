@@ -1,11 +1,19 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useState} from 'react';
+import {useHistory} from 'react-router-dom';
 import {Formik, Form} from 'formik';
+import {useAuthContext} from '../../providers/auth-provider';
 import TextField from '../text-field/text-field.component';
 import CustomButton from '../custom-button/custom-button.component';
+import {SignUpSchema} from '../../helpers/helpers';
 import useStyles from './register-form.styles';
 
 function RegisterForm() {
   const classes = useStyles();
+  const history = useHistory();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+  const {signUpWithEmailAndPassword} = useAuthContext();
+
   return (
     <Fragment>
       <Formik
@@ -14,8 +22,18 @@ function RegisterForm() {
           password: '',
           confirmPassword: '',
         }}
-        onSubmit={(values) => {
-          console.log({values});
+        validationSchema={SignUpSchema}
+        onSubmit={async (values) => {
+          try {
+            setError('');
+            setIsLoading(true);
+            await signUpWithEmailAndPassword(values.email, values.password);
+            history.push('/');
+          } catch {
+            setError('');
+            console.log(error);
+          }
+          setIsLoading(false);
         }}>{({values, handleChange, errors}) => (
           <Form className={classes.root}>
             <TextField
@@ -43,7 +61,10 @@ function RegisterForm() {
               type="submit"
               width="100%"
               variant="contained"
-              color="primary">sign up</CustomButton>
+              color="primary"
+              disabled={isLoading}>{
+                isLoading ? 'sign up...' : 'sign up'
+              }</CustomButton>
           </Form>
         )}
       </Formik>
