@@ -1,6 +1,8 @@
 import React, {Fragment, useState} from 'react';
 import {useHistory} from 'react-router-dom';
 import {Formik, Form} from 'formik';
+import Alert from '@material-ui/lab/Alert';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import {useAuthContext} from '../../providers/auth-provider';
 import TextField from '../text-field/text-field.component';
 import CustomButton from '../custom-button/custom-button.component';
@@ -29,13 +31,16 @@ function RegisterForm() {
             setIsLoading(true);
             await signUpWithEmailAndPassword(values.email, values.password);
             history.push('/');
-          } catch {
-            setError('');
-            console.log(error);
+          } catch (error) {
+            setError(error.message);
           }
           setIsLoading(false);
         }}>{({values, handleChange, errors}) => (
           <Form className={classes.root}>
+            {error && <Alert
+              className={classes.error}
+              severity="error"
+              icon={false}>{error}</Alert>}
             <TextField
               label="email"
               type="email"
@@ -63,7 +68,7 @@ function RegisterForm() {
               variant="contained"
               color="primary"
               disabled={isLoading}>{
-                isLoading ? 'sign up...' : 'sign up'
+                isLoading ? <CircularProgress size={18}/> : 'sign up'
               }</CustomButton>
           </Form>
         )}
