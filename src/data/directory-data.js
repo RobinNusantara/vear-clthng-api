@@ -6,22 +6,27 @@ import SneakersImage from '../assets/images/hamza-nouasria-1pkYRjfH2w0-unsplash.
 
 const DirectoryData = [
   {
+    id: 1,
     title: 'mens',
     imageUrl: MensImage,
+    linkUrl: 'collections/mens',
     xs: 12,
     md: 6,
     mdScreen: 340,
     smScreen: 200,
   },
   {
+    id: 2,
     title: 'womens',
     imageUrl: WomensImage,
+    linkUrl: 'collections/womens',
     xs: 12,
     md: 6,
     mdScreen: 340,
     smScreen: 200,
   },
   {
+    id: 3,
     title: 'hijab',
     imageUrl: HijabImage,
     xs: 12,
@@ -30,6 +35,7 @@ const DirectoryData = [
     smScreen: 320,
   },
   {
+    id: 4,
     title: 'jackets',
     imageUrl: JacketsImage,
     xs: 6,
@@ -38,6 +44,7 @@ const DirectoryData = [
     smScreen: 320,
   },
   {
+    id: 5,
     title: 'sneakers',
     imageUrl: SneakersImage,
     xs: 6,

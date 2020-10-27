@@ -8,19 +8,8 @@ function Directories() {
     <Fragment>
       <Grid container spacing={2}>
         {
-          DirectoryData.map((directory, idx) => (
-            <Grid
-              key={idx}
-              item
-              xs={directory.xs}
-              md={directory.md}>
-              <Directory
-                title={directory.title.toUpperCase()}
-                imageUrl={directory.imageUrl}
-                smScreen={directory.smScreen}
-                mdScreen={directory.mdScreen}
-              />
-            </Grid>
+          DirectoryData.map((directory) => (
+            <Directory key={directory.id} {...directory} />
           ))
         }
       </Grid>

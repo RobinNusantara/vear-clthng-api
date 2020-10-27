@@ -7,6 +7,7 @@ import FavoritesPage from '../../pages/favorites-page/favorites-page.component';
 import CartPage from '../../pages/cart-page/cart-page.component';
 import SignInPage from '../../pages/signin-page/signin-page.component';
 import SignUpPage from '../../pages/signup-page/signup-page.component';
+import Shop from '../../components/shop/shop.component';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Switch>
         <Route exact path="/" component={HomePage}/>
         <Route path="/favorites" component={FavoritesPage}/>
+        <Route path="/collections" component={Shop}/>
         <Route path="/cart" component={CartPage}/>
         <Route path="/signin" component={SignInPage}/>
         <Route path="/signup" component={SignUpPage}/>
