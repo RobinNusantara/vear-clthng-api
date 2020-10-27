@@ -16,17 +16,15 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 'bold',
   },
   menus: {
-    width: '40%',
+    width: '50%',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
   },
-  menu: {
-    color: theme.palette.secondary.main,
-  },
   icon: {
     height: 24,
     width: 24,
+    color: theme.palette.secondary.main,
   },
   [theme.breakpoints.down('sm')]: {
     root: {
