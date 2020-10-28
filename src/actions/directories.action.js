@@ -1,0 +1,7 @@
+const DirActions = {
+  FETCH_DIR_START: 'FETCH_DIR_START',
+  FETCH_DIR_SUCCESS: 'FETCH_DIR_SUCCESS',
+  FETCH_DIR_FAILED: 'FETCH_DIR_FAILED',
+};
+
+export default DirActions;
