@@ -9,10 +9,12 @@ import {Icon} from '@iconify/react';
 import bxUser from '@iconify/icons-bx/bx-user';
 import outlineFavoriteBorder from '@iconify/icons-ic/baseline-favorite-border';
 import outlineShoppingBag from '@iconify/icons-ic/outline-shopping-bag';
+import {useAuthContext} from '../../providers/auth-provider';
 import useStyles from './navbar.styles';
 
 function Navbar() {
   const classes = useStyles();
+  const {currentUser} = useAuthContext();
 
   return (
     <Fragment>
@@ -49,7 +51,7 @@ function Navbar() {
                 </RouterLink>
               </IconButton>
               <IconButton className={classes.menu}>
-                <RouterLink to="/signin">
+                <RouterLink to={!currentUser ? '/signin' : '/user'}>
                   <Icon className={classes.icon} icon={bxUser}/>
                 </RouterLink>
               </IconButton>

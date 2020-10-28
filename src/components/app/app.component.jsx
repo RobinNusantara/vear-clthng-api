@@ -8,6 +8,8 @@ import FavoritesPage from '../../pages/favorites-page/favorites-page.component';
 import CartPage from '../../pages/cart-page/cart-page.component';
 import SignInPage from '../../pages/signin-page/signin-page.component';
 import SignUpPage from '../../pages/signup-page/signup-page.component';
+import PrivateRoute from '../../routes/private-routes';
+import UserPage from '../../pages/user-page/user-page.component';
 
 function App() {
   return (
@@ -21,6 +23,7 @@ function App() {
         <Route path="/cart" component={CartPage}/>
         <Route path="/signin" component={SignInPage}/>
         <Route path="/signup" component={SignUpPage}/>
+        <PrivateRoute path="/user" component={UserPage}/>
       </Switch>
     </Fragment>
   );

@@ -28,11 +28,16 @@ function AuthProvider({children}) {
     return auth.signInWithEmailAndPassword(email, password);
   };
 
+  function signOut() {
+    return auth.signOut();
+  }
+
   const value = {
     currentUser,
     signUpWithEmailAndPassword,
-    signInWithGoogle,
     signInWithEmailAndPassword,
+    signInWithGoogle,
+    signOut,
   };
 
   return (
