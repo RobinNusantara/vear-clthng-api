@@ -3,8 +3,9 @@ import {useHistory} from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
+import Divider from '@material-ui/core/Divider';
 import {useAuthContext} from '../../providers/auth-provider';
+import {StyledListItemText} from './user-page.styles';
 
 function UserPage() {
   const {currentUser, signOut} = useAuthContext();
@@ -15,15 +16,22 @@ function UserPage() {
       <Container>
         <List>
           <ListItem>
-            <ListItemText primary={`HELLO, ${currentUser.email.toUpperCase()}`}/>
+            <StyledListItemText disableTypography primary={`hello, ${currentUser.email}`}/>
           </ListItem>
           <ListItem button>
-            <ListItemText primary="PROFILE"/>
+            <StyledListItemText disableTypography primary="my profile"/>
           </ListItem>
           <ListItem button>
-            <ListItemText primary="LOGOUT" onClick={() => {
-              signOut().then(() => history.push('/signin'));
-            }}/>
+            <StyledListItemText disableTypography primary="my orders"/>
+          </ListItem>
+          <Divider/>
+          <ListItem button>
+            <StyledListItemText
+              disableTypography
+              primary="logout"
+              onClick={() => {
+                signOut().then(() => history.push('/signin'));
+              }}/>
           </ListItem>
         </List>
       </Container>

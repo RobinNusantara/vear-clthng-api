@@ -4,8 +4,8 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
     position: 'fixed',
-    bottom: 0,
     display: 'none',
+    bottom: 0,
     zIndex: 1,
   },
   icon: {
