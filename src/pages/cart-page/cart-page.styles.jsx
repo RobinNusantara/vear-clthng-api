@@ -7,6 +7,10 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'right',
     marginTop: theme.spacing(2),
   },
+  totalCount: {
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+  },
   button: {
     marginTop: theme.spacing(2),
   },

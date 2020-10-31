@@ -4,7 +4,9 @@ const useStyles = makeStyles((theme) => ({
   cardHeader: {
     position: 'relative',
     height: 400,
-    border: `1px solid ${theme.palette.secondary.main}`,
+    border: `2px solid ${theme.palette.primary.main}`,
+    borderRadius: 6,
+    overflow: 'hidden',
   },
   cardImage: {
     height: '100%',
@@ -17,9 +19,15 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     top: 0,
     right: 0,
-    borderLeft: `1px solid ${theme.palette.secondary.main}`,
-    borderBottom: `1px solid ${theme.palette.secondary.main}`,
-    backgroundColor: theme.palette.common.white,
+    paddingTop: theme.spacing(2),
+    paddingRight: theme.spacing(2),
+  },
+  iconContainer: {
+    backgroundColor: theme.palette.primary.main,
+    borderRadius: 4,
+  },
+  icon: {
+    color: theme.palette.common.white,
   },
   cartButton: {
     width: '100%',
@@ -34,6 +42,7 @@ const useStyles = makeStyles((theme) => ({
   },
   textSubtitle: {
     textAlign: 'right',
+    fontWeight: 'bold',
     paddingTop: theme.spacing(1),
   },
 }));

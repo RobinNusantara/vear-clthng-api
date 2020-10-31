@@ -26,7 +26,8 @@ function CartPage() {
             }/>
           <CustomTable/>
           <div className={classes.content}>
-            <Typography variant="subtitle1">Rp 2.660.000,00</Typography>
+            <Typography className={classes.totalCount} variant="subtitle1">
+              total Rp 2.660.000,00</Typography>
             <div className={classes.button}>
               <CustomButton
                 width={180}

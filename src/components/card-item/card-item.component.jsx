@@ -1,5 +1,6 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useState} from 'react';
 import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Divider from '@material-ui/core/Divider';
@@ -11,23 +12,54 @@ import useStyles from './card-item.styles';
 function CardItem({...props}) {
   const {productName, productPrice} = props;
   const classes = useStyles(props);
+  const [isMouseInside, setIsMouseInside] = useState(false);
+
+  const mouseEnter = () => setIsMouseInside(true);
+
+  const mouseLeave = () => setIsMouseInside(false);
+
   return (
     <Fragment>
       <Grid item xs={12} sm={6} md={4} lg={3}>
         <div className={classes.root}>
-          <div className={classes.cardHeader}>
-            <div className={classes.cardImage}/>
-            <div className={classes.favoriteButton}>
-              <IconButton>
-                <Icon icon={outlineFavoriteBorder}/>
-              </IconButton>
-            </div>
-            <div className={classes.cartButton}>
-              <CustomButton
-                width="100%"
-                variant="contained"
-                color="primary">add to cart</CustomButton>
-            </div>
+          <div
+            className={classes.cardHeader}
+            onMouseEnter={mouseEnter}
+            onMouseLeave={mouseLeave}>
+            <div className={classes.cardImage}></div>
+            {
+              isMouseInside ?
+              <Fragment>
+                <div className={classes.favoriteButton}>
+                  <div className={classes.iconContainer}>
+                    <IconButton>
+                      <Icon className={classes.icon} icon={outlineFavoriteBorder}/>
+                    </IconButton>
+                  </div>
+                </div>
+                <div className={classes.cartButton}>
+                  <CustomButton
+                    width="100%"
+                    variant="contained"
+                    color="primary">add to cart</CustomButton>
+                </div>
+              </Fragment> : null
+            }
+            <Box display={{xs: 'block', md: 'none'}}>
+              <div className={classes.favoriteButton}>
+                <div className={classes.iconContainer}>
+                  <IconButton>
+                    <Icon className={classes.icon} icon={outlineFavoriteBorder}/>
+                  </IconButton>
+                </div>
+              </div>
+              <div className={classes.cartButton}>
+                <CustomButton
+                  width="100%"
+                  variant="contained"
+                  color="primary">add to cart</CustomButton>
+              </div>
+            </Box>
           </div>
           <div className={classes.cardFooter}>
             <Typography
