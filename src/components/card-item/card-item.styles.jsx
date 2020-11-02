@@ -35,15 +35,36 @@ const useStyles = makeStyles((theme) => ({
     bottom: 0,
     padding: theme.spacing(2),
   },
+  cardFooter: {
+    whiteSpace: 'nowrap',
+  },
   textHeader: {
     fontWeight: 'bold',
+    textOverflow: 'ellipsis',
     paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(1),
+    overflow: 'hidden',
   },
   textSubtitle: {
     textAlign: 'right',
     fontWeight: 'bold',
     paddingTop: theme.spacing(1),
+  },
+  [theme.breakpoints.down('xs')]: {
+    cardHeader: {
+      height: 260,
+    },
+    favoriteButton: {
+      paddingTop: theme.spacing(1),
+      paddingRight: theme.spacing(1),
+    },
+    cartButton: {
+      display: 'none',
+    },
+    icon: {
+      width: 18,
+      height: 18,
+    },
   },
 }));
 

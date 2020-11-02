@@ -39,7 +39,7 @@ function SignInPage() {
                   variant="outlined"
                   onClick={() => {
                     signInWithGoogle().then(() => history.push('/'));
-                  }}>sin in with google</CustomButton>
+                  }}>sign in with google</CustomButton>
               </div>
               <div className={classes.textFooter}>
                 <Typography variant="subtitle1">

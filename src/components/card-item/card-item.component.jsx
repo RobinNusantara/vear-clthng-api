@@ -20,7 +20,7 @@ function CardItem({...props}) {
 
   return (
     <Fragment>
-      <Grid item xs={12} sm={6} md={4} lg={3}>
+      <Grid item xs={6} md={4} lg={3}>
         <div className={classes.root}>
           <div
             className={classes.cardHeader}
@@ -52,12 +52,6 @@ function CardItem({...props}) {
                     <Icon className={classes.icon} icon={outlineFavoriteBorder}/>
                   </IconButton>
                 </div>
-              </div>
-              <div className={classes.cartButton}>
-                <CustomButton
-                  width="100%"
-                  variant="contained"
-                  color="primary">add to cart</CustomButton>
               </div>
             </Box>
           </div>

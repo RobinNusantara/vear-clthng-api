@@ -1,24 +1,32 @@
-import DirActions from '../actions/directories.action';
+import {DirectoryTypes} from '../helpers/types';
 
-export const initialState = {
-  directories: [],
+const initialState = {
+  sections: [],
   isLoading: false,
+  error: '',
 };
 
-export function reducer(state, action) {
+function directoriesReducer(state = initialState, action) {
   switch (action.type) {
-    case DirActions.FETCH_DIR_START:
+    case DirectoryTypes.FETCH_DIRECTORY_START:
       return {
         ...state,
-        directories: [],
         isLoading: true,
       };
-    case DirActions.FETCH_DIR_SUCCESS:
+    case DirectoryTypes.FETCH_DIRECTORY_SUCCESS:
       return {
         ...state,
-        directories: action.payload,
+        sections: action.payload,
         isLoading: false,
       };
-    default: return;
+    case DirectoryTypes.FETCH_DIRECTORY_FAILED:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.payload,
+      };
+    default: return state;
   };
 };
+
+export default directoriesReducer;

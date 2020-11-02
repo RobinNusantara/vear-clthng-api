@@ -81,7 +81,11 @@ function NavigationBottom() {
             <BottomNavigationAction
               key={idx}
               value={nav.value}
-              label={<Typography variant="subtitle2">{nav.label.toUpperCase()}</Typography>}
+              label={
+                <Typography className={classes.label} variant="subtitle2">
+                  {nav.label.toUpperCase()}
+                </Typography>
+              }
               icon={<Icon className={classes.icon} icon={nav.icon}/>}
               to={nav.route}
               component={Link}/>

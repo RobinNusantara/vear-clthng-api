@@ -1,33 +1,42 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useEffect} from 'react';
+import {connect} from 'react-redux';
+import {selectDirectories} from '../../utils/directories-selector';
+import {getDirectories} from '../../actions/directories.action';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
-import Spinner from '../../components/spinner/spinner.component';
 import Directory from '../../components/directory/directory.component';
-import {useStateDirectoriesContext} from '../../providers/directories-provider';
 import useStyles from './home-page.styles';
 
-function HomePage() {
+function HomePage({directories, fetchDirectories}) {
   const classes = useStyles();
-  const {directories, isLoading} = useStateDirectoriesContext();
+
+  useEffect(() => {
+    fetchDirectories();
+  }, [fetchDirectories]);
 
   return (
     <Fragment>
       <Container>
         <div className={classes.root}>
-          {
-            isLoading ? <Spinner/> :
-            <Grid container spacing={2}>
-              {
-                directories.map((directory) => (
-                  <Directory key={directory.id} {...directory}/>
-                ))
-              }
-            </Grid>
-          }
+          <Grid container spacing={2}>
+            {
+              directories.map((directory) => (
+                <Directory key={directory.id} {...directory}/>
+              ))
+            }
+          </Grid>
         </div>
       </Container>
     </Fragment>
   );
 };
 
-export default HomePage;
+const mapStateToProps = (state) => ({
+  directories: selectDirectories(state),
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchDirectories: () => dispatch(getDirectories()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
