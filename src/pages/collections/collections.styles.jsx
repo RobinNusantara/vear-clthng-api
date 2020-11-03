@@ -6,7 +6,7 @@ const useStyles = makeStyles((theme) => ({
   },
   header: {
     height: 120,
-    borderBottom: `2px solid ${theme.palette.secondary.main}`,
+    borderBottom: `1px solid ${theme.palette.primary.main}`,
     marginBottom: theme.spacing(6),
   },
   textHeader: {
@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
       marginBottom: theme.spacing(12),
     },
     header: {
-      height: 100,
+      height: 80,
       marginBottom: theme.spacing(4),
     },
   },

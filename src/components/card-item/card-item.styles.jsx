@@ -4,8 +4,7 @@ const useStyles = makeStyles((theme) => ({
   cardHeader: {
     position: 'relative',
     height: 400,
-    border: `2px solid ${theme.palette.primary.main}`,
-    borderRadius: 6,
+    border: `1px solid ${theme.palette.primary.main}`,
     overflow: 'hidden',
   },
   cardImage: {

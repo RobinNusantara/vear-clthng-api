@@ -16,8 +16,8 @@ function collectionsReducer(state = initialState, action) {
     case CollectionTypes.FETCH_COLLECTION_SUCCESS:
       return {
         ...state,
-        collections: action.payload,
         isLoading: false,
+        collections: action.payload,
       };
     case CollectionTypes.FETCH_COLLECTION_FAILED:
       return {

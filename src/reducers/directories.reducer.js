@@ -16,8 +16,8 @@ function directoriesReducer(state = initialState, action) {
     case DirectoryTypes.FETCH_DIRECTORY_SUCCESS:
       return {
         ...state,
-        sections: action.payload,
         isLoading: false,
+        sections: action.payload,
       };
     case DirectoryTypes.FETCH_DIRECTORY_FAILED:
       return {
