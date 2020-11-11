@@ -1,9 +1,9 @@
 import React, {Fragment} from 'react';
+import {useFirebase} from 'react-redux-firebase';
 import {Link as RouterLink, useHistory} from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
-import {useAuthContext} from '../../providers/auth-provider';
 import PageWrapper from '../../components/container/container.component';
 import RegisterForm from '../../components/register-form/register-form.component';
 import CustomButton from '../../components/custom-button/custom-button.component';
@@ -12,7 +12,14 @@ import useStyles from './signup-page.styles';
 function SignUpPage() {
   const classes = useStyles();
   const history = useHistory();
-  const {signInWithGoogle} = useAuthContext();
+  const firebase = useFirebase();
+
+  const signUpWithGoogle = () => {
+    return firebase.login({
+      provider: 'google',
+      type: 'popup',
+    }).then(() => history.push('/'));
+  };
 
   return (
     <Fragment>
@@ -37,9 +44,7 @@ function SignUpPage() {
                   type="click"
                   variant="outlined"
                   width="100%"
-                  onClick={() => {
-                    signInWithGoogle().then(() => history.push('/'));
-                  }}>sign up with google</CustomButton>
+                  onClick={signUpWithGoogle}>sign up with google</CustomButton>
               </div>
               <div className={classes.textFooter}>
                 <Typography variant="subtitle1">

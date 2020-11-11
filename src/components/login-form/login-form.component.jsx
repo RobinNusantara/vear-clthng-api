@@ -1,9 +1,9 @@
 import React, {Fragment, useState} from 'react';
+import {useFirebase} from 'react-redux-firebase';
 import {useHistory} from 'react-router-dom';
 import {Formik, Form} from 'formik';
 import Alert from '@material-ui/lab/Alert';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import {useAuthContext} from '../../providers/auth-provider';
 import TextField from '../text-field/text-field.component';
 import CustomButton from '../custom-button/custom-button.component';
 import {SignInSchema} from '../../helpers/helpers';
@@ -12,9 +12,16 @@ import useStyles from './login-form.styles';
 function LoginForm() {
   const classes = useStyles();
   const history = useHistory();
+  const firebase = useFirebase();
+
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  const {signInWithEmailAndPassword} = useAuthContext();
+
+  async function signInWithEmailAndPassword(credentials) {
+    return await firebase.login({email: credentials.email, password: credentials.password})
+        .then(() => history.push('/'))
+        .catch((error) => setError(error.message));
+  };
 
   return (
     <Fragment>
@@ -25,14 +32,9 @@ function LoginForm() {
         }}
         validationSchema={SignInSchema}
         onSubmit={async (values) => {
-          try {
-            setError('');
-            setIsLoading(true);
-            await signInWithEmailAndPassword(values.email, values.password);
-            history.push('/');
-          } catch (error) {
-            setError(error.message);
-          }
+          setError('');
+          setIsLoading(true);
+          await signInWithEmailAndPassword(values);
           setIsLoading(false);
         }}>{({values, handleChange, errors}) => (
           <Form className={classes.root}>

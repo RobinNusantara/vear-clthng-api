@@ -23,7 +23,9 @@ function App() {
         <Route path="/cart" component={CartPage}/>
         <Route path="/signin" component={SignInPage}/>
         <Route path="/signup" component={SignUpPage}/>
-        <PrivateRoute path="/user" component={UserPage}/>
+        <PrivateRoute path="/user">
+          <UserPage/>
+        </PrivateRoute>
       </Switch>
     </Fragment>
   );

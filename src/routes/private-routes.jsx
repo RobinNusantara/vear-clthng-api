@@ -1,15 +1,22 @@
 import React from 'react';
+import {useSelector} from 'react-redux';
+import {isLoaded, isEmpty} from 'react-redux-firebase';
 import {Route, Redirect} from 'react-router-dom';
-import {useAuthContext} from '../providers/auth-provider';
 
-function PrivateRoute({component: Component, ...props}) {
-  const {currentUser} = useAuthContext();
+function PrivateRoute({children, ...rest}) {
+  const auth = useSelector((state) => state.firebase.auth);
+
   return (
     <Route
-      {...props}
-      render={(props) => {
-        return currentUser ? <Component {...props}/> : <Redirect to="/signin"/>;
-      }}/>
+      {...rest}
+      render={({location}) =>
+        isLoaded(auth) && !isEmpty(auth) ? (children) :
+        (<Redirect
+          to={{
+            pathname: '/signin',
+            state: {from: location},
+          }}/>)
+      }/>
   );
 }
 

@@ -1,22 +1,26 @@
 import React, {Fragment} from 'react';
+import {useSelector} from 'react-redux';
+import {useFirebase} from 'react-redux-firebase';
 import {useHistory} from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Divider from '@material-ui/core/Divider';
-import {useAuthContext} from '../../providers/auth-provider';
 import {StyledListItemText} from './user-page.styles';
 
 function UserPage() {
-  const {currentUser, signOut} = useAuthContext();
   const history = useHistory();
+  const firebase = useFirebase();
+  const auth = useSelector((state) => state.firebase.profile);
+
+  const signOut = () => firebase.logout().then(() => history.push('/signin'));
 
   return (
     <Fragment>
       <Container>
         <List>
           <ListItem>
-            <StyledListItemText disableTypography primary={`hello, ${currentUser.email}`}/>
+            <StyledListItemText disableTypography primary={`hello, ${auth.displayName}`}/>
           </ListItem>
           <ListItem button>
             <StyledListItemText disableTypography primary="my profile"/>
@@ -29,9 +33,7 @@ function UserPage() {
             <StyledListItemText
               disableTypography
               primary="logout"
-              onClick={() => {
-                signOut().then(() => history.push('/signin'));
-              }}/>
+              onClick={signOut}/>
           </ListItem>
         </List>
       </Container>

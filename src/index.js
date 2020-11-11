@@ -6,7 +6,6 @@ import store from './store/store';
 import {MuiThemeProvider} from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from './themes/themes';
-import AuthProvider from './providers/auth-provider';
 import {ReactReduxFirebaseProvider} from 'react-redux-firebase';
 import {createFirestoreInstance} from 'redux-firestore';
 import firebase from './config/firebase';
@@ -14,6 +13,7 @@ import App from './components/app/app.component';
 
 const rrfConfig = {
   userProfile: 'users',
+  useFirestoreForProfile: true,
 };
 
 const rrfProps = {
@@ -30,9 +30,7 @@ ReactDOM.render(
         <React.StrictMode>
           <Provider store={store}>
             <ReactReduxFirebaseProvider {...rrfProps}>
-              <AuthProvider>
-                <App/>
-              </AuthProvider>
+              <App/>
             </ReactReduxFirebaseProvider>
           </Provider>
         </React.StrictMode>
