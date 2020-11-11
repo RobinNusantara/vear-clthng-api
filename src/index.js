@@ -7,7 +7,21 @@ import {MuiThemeProvider} from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from './themes/themes';
 import AuthProvider from './providers/auth-provider';
+import {ReactReduxFirebaseProvider} from 'react-redux-firebase';
+import {createFirestoreInstance} from 'redux-firestore';
+import firebase from './config/firebase';
 import App from './components/app/app.component';
+
+const rrfConfig = {
+  userProfile: 'users',
+};
+
+const rrfProps = {
+  firebase,
+  config: rrfConfig,
+  dispatch: store.dispatch,
+  createFirestoreInstance,
+};
 
 ReactDOM.render(
     <MuiThemeProvider theme={theme}>
@@ -15,9 +29,11 @@ ReactDOM.render(
       <Router>
         <React.StrictMode>
           <Provider store={store}>
-            <AuthProvider>
-              <App/>
-            </AuthProvider>
+            <ReactReduxFirebaseProvider {...rrfProps}>
+              <AuthProvider>
+                <App/>
+              </AuthProvider>
+            </ReactReduxFirebaseProvider>
           </Provider>
         </React.StrictMode>
       </Router>

@@ -1,18 +1,18 @@
-import React, {Fragment, useEffect} from 'react';
-import {connect} from 'react-redux';
-import {selectDirectories} from '../../utils/directories-selector';
-import {getDirectories} from '../../actions/directories.action';
+import React, {Fragment} from 'react';
+import {useSelector} from 'react-redux';
+import {useFirestoreConnect} from 'react-redux-firebase';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
-import Directory from '../../components/directory/directory.component';
+import Spinner from '../../components/spinner/spinner.component';
 import useStyles from './home-page.styles';
+import Directory from '../../components/directory/directory.component';
 
-function HomePage({directories, fetchDirectories}) {
+function HomePage() {
   const classes = useStyles();
 
-  useEffect(() => {
-    fetchDirectories();
-  }, [fetchDirectories]);
+  useFirestoreConnect(() => [{collection: 'directories'}]);
+
+  const directories = useSelector((state) => state.firestore.ordered.directories);
 
   return (
     <Fragment>
@@ -20,9 +20,10 @@ function HomePage({directories, fetchDirectories}) {
         <div className={classes.root}>
           <Grid container spacing={2}>
             {
-              directories.map((directory) => (
-                <Directory key={directory.id} {...directory}/>
-              ))
+                !directories ? <Spinner/> :
+                directories.map((directory) => (
+                  <Directory key={directory.id} {...directory}/>
+                ))
             }
           </Grid>
         </div>
@@ -31,12 +32,4 @@ function HomePage({directories, fetchDirectories}) {
   );
 };
 
-const mapStateToProps = (state) => ({
-  directories: selectDirectories(state),
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  fetchDirectories: () => dispatch(getDirectories()),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
+export default HomePage;

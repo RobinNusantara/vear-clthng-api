@@ -1,20 +1,32 @@
-import React, {Fragment, useEffect} from 'react';
-import {connect} from 'react-redux';
-import {selectCollections} from '../../utils/collections-selector';
-import {getCollections} from '../../actions/collections.action';
+import React, {Fragment} from 'react';
+// import {useParams} from 'react-router-dom';
+// import {useSelector, connect} from 'react-redux';
+// import {useFirestoreConnect} from 'react-redux-firebase';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import PageWrapper from '../../components/container/container.component';
-import CardItem from '../../components/card-item/card-item.component';
+// import Spinner from '../../components/spinner/spinner.component';
+// import CardItem from '../../components/card-item/card-item.component';
 import useStyles from './collections.styles';
 
-function Collections({collections, fetchCollections}) {
+function Collections({collections}) {
   const classes = useStyles();
+  // const {id} = useParams();
 
-  useEffect(() => {
-    fetchCollections();
-  }, [fetchCollections]);
+  // useFirestoreConnect(() => [
+  //   {collection: 'directories'},
+  //   {
+  //     collection: 'directories',
+  //     where: id,
+  //     subcollections: [
+  //       {collection: 'collections'},
+  //     ],
+  //     storeAs: Collection,
+  //   },
+  // ]);
+
+  // const collections = useSelector((state) => state.firestore.ordered.collection);
 
   return (
     <Fragment>
@@ -25,9 +37,10 @@ function Collections({collections, fetchCollections}) {
               <Typography className={classes.textHeader} variant="h6">COLLECTIONS</Typography>
             </div>
             <Grid container spacing={1}>
-              {
+              {/* {
+                !collections ? <Spinner/> :
                 collections.map((collection) => <CardItem key={collection.id} {...collection}/>)
-              }
+              } */}
             </Grid>
           </div>
         </PageWrapper>
@@ -36,12 +49,4 @@ function Collections({collections, fetchCollections}) {
   );
 };
 
-const mapStateToProps = (state) => ({
-  collections: selectCollections(state),
-});
-
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  fetchCollections: () => dispatch(getCollections(ownProps.match.params.id)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Collections);
+export default Collections;
