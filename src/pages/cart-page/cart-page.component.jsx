@@ -12,6 +12,7 @@ import Header from '../../components/header/header.component';
 import CustomTable from '../../components/custom-table/custom-table.component';
 import CustomButton from '../../components/custom-button/custom-button.component';
 import Spinner from '../../components/spinner/spinner.component';
+import EmptyCartIllustration from '../../assets/images/empty-cart.svg';
 import useStyles from './cart-page.styles';
 
 function CartPage() {
@@ -30,6 +31,14 @@ function CartPage() {
         <PageWrapper>
           {
             !cart ? <Spinner/> :
+            cart.length === 0 ?
+            <div className={classes.empty}>
+              <img src={EmptyCartIllustration} alt="empty-cart"/>
+              <Typography className={classes.textHeader} variant="h6">YOUR CART IS EMPTY</Typography>
+              <Typography className={classes.textSubtitle} variant="subtitle1">
+                LOOKS LIKE YOU HAVEN&apos;T MADE YOUR CHOICES YET
+              </Typography>
+            </div> :
             <Fragment>
               <Header
                 textHeader="CART"

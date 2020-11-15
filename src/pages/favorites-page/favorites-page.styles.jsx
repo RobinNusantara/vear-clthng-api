@@ -15,18 +15,6 @@ const useStyles = makeStyles((theme) => ({
   textSubtitle: {
     marginTop: theme.spacing(2),
   },
-  content: {
-    display: 'flex',
-    flexDirection: 'column',
-    textAlign: 'right',
-    marginTop: theme.spacing(2),
-  },
-  totalCount: {
-    fontWeight: 'bold',
-  },
-  button: {
-    marginTop: theme.spacing(2),
-  },
 }));
 
 export default useStyles;
