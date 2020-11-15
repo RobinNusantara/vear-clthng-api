@@ -45,21 +45,21 @@ function Navbar() {
                 underline="none"
                 to="/contact"
                 component={RouterLink}>CONTACT</Link>
-              <IconButton className={classes.menu}>
-                <RouterLink to="/favorites">
+              <RouterLink to="/favorites">
+                <IconButton className={classes.menu}>
                   <Icon className={classes.icon} icon={outlineFavoriteBorder}/>
-                </RouterLink>
-              </IconButton>
-              <IconButton className={classes.menu}>
-                <RouterLink to="/cart">
+                </IconButton>
+              </RouterLink>
+              <RouterLink to="/cart">
+                <IconButton className={classes.menu}>
                   <Icon className={classes.icon} icon={outlineShoppingBag}/>
-                </RouterLink>
-              </IconButton>
-              <IconButton className={classes.menu}>
-                <RouterLink to={isLoaded(auth) && !isEmpty(auth) ? '/user' : '/signin'}>
+                </IconButton>
+              </RouterLink>
+              <RouterLink to={isLoaded(auth) && !isEmpty(auth) ? '/user' : '/signin'}>
+                <IconButton className={classes.menu}>
                   <Icon className={classes.icon} icon={bxUser}/>
-                </RouterLink>
-              </IconButton>
+                </IconButton>
+              </RouterLink>
             </div>
           </Toolbar>
         </Container>

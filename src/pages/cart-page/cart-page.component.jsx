@@ -19,9 +19,9 @@ function CartPage() {
   const classes = useStyles();
   const uid = useSelector((state) => state.firebase.auth.uid);
 
-  const cartpath = `users/${uid}/cart`;
-  useFirestoreConnect(() => [{collection: cartpath}]);
-  const cart = useSelector((state) => state.firestore.ordered[cartpath]);
+  const cartPath = `users/${uid}/cart`;
+  useFirestoreConnect(() => [{collection: cartPath}]);
+  const cart = useSelector((state) => state.firestore.ordered[cartPath]);
 
   const [remove, setRemove] = useRemoveData({uid, collection: 'cart'});
 
