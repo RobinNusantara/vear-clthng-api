@@ -1,5 +1,6 @@
 import React, {Fragment} from 'react';
 import {useSelector} from 'react-redux';
+import {useRemoveData} from '../../hooks/user.hook';
 import {useFirestoreConnect} from 'react-redux-firebase';
 import Container from '@material-ui/core/Container';
 import {Icon} from '@iconify/react';
@@ -15,6 +16,8 @@ function FavoritesPage() {
   const wishlistPath = `users/${uid}/wishlist`;
   useFirestoreConnect(() => [{collection: wishlistPath}]);
   const wishlist = useSelector((state) => state.firestore.ordered[wishlistPath]);
+
+  const [remove, setRemove] = useRemoveData({uid, collection: 'wishlist'});
 
   return (
     <Fragment>
@@ -32,7 +35,10 @@ function FavoritesPage() {
                     width={24}
                     icon={trashOutline}/>
                 }/>
-              <CustomTable uid={uid} cart={wishlist}/>
+              <CustomTable
+                collection={wishlist}
+                remove={remove}
+                setRemove={setRemove}/>
             </Fragment>
           }
         </PageWrapper>

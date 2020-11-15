@@ -1,6 +1,7 @@
 import React, {Fragment} from 'react';
 import {useSelector} from 'react-redux';
 import {useFirestoreConnect} from 'react-redux-firebase';
+import {useRemoveData} from '../../hooks/user.hook';
 import {totalPrice, formatPrice} from '../../utils/utils';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
@@ -21,6 +22,8 @@ function CartPage() {
   useFirestoreConnect(() => [{collection: cartpath}]);
   const cart = useSelector((state) => state.firestore.ordered[cartpath]);
 
+  const [remove, setRemove] = useRemoveData({uid, collection: 'cart'});
+
   return (
     <Fragment>
       <Container>
@@ -37,7 +40,10 @@ function CartPage() {
                     width={24}
                     icon={trashOutline}/>
                 }/>
-              <CustomTable uid={uid} cart={cart}/>
+              <CustomTable
+                collection={cart}
+                remove={remove}
+                setRemove={setRemove}/>
               <div className={classes.content}>
                 <Typography className={classes.totalCount} variant="subtitle1">
                   {'TOTAL ' + formatPrice(totalPrice(cart, 'productPrice'))}</Typography>

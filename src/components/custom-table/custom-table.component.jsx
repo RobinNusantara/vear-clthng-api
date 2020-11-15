@@ -1,6 +1,5 @@
 import React, {Fragment} from 'react';
 import {useLocation} from 'react-router-dom';
-import {useRemoveData} from '../../hooks/user.hook';
 import {formatPrice} from '../../utils/utils';
 import Typography from '@material-ui/core/Typography';
 import Table from '@material-ui/core/Table';
@@ -20,11 +19,9 @@ function Counter(currentLocation) {
   return (<CounterButton/>);
 }
 
-function CustomTable({uid, cart}) {
+function CustomTable({collection, setRemove}) {
   const classes = useStyles();
   const location = useLocation();
-
-  const [remove, setRemove] = useRemoveData({uid, collection: 'cart'});
 
   return (
     <Fragment>
@@ -48,35 +45,34 @@ function CustomTable({uid, cart}) {
           </TableHead>
           <TableBody>
             {
-              cart.map((data, idx) => (
+              collection.map((document, idx) => (
                 <TableRow key={idx}>
                   <TableCell className={classes.resetCell} align="left">
                     <div
                       className={classes.productImage}
-                      style={{backgroundImage: `url(${data.productImageUrl})`}}/>
+                      style={{backgroundImage: `url(${document.productImageUrl})`}}/>
                   </TableCell>
                   <TableCell className={classes.productDescription} align="left">
                     <Typography className={classes.productName} variant="subtitle1">
-                      {data.productName.toUpperCase()}
+                      {document.productName.toUpperCase()}
                     </Typography>
                     <Typography className={classes.productColor} variant="subtitle1">
-                      {data.productColor.toUpperCase()}
+                      {document.productColor.toUpperCase()}
                     </Typography>
                     <Typography className={classes.descriptionPrice} variant="subtitle1">
-                      {formatPrice(data.productPrice)}
+                      {formatPrice(document.productPrice)}
                     </Typography>
                     <div className={classes.counterButton}>
                       {Counter(location)}
                     </div>
                   </TableCell>
                   <TableCell className={classes.productPrice} align="left">
-                    {formatPrice(data.productPrice)}
+                    {formatPrice(document.productPrice)}
                   </TableCell>
                   <TableCell className={classes.resetCell} align="right">
                     <IconButton onClick={(event) => {
                       event.preventDefault();
-                      setRemove(data.id);
-                      console.log(remove);
+                      setRemove(document.id);
                     }}>
                       <Icon
                         className={classes.icon}
