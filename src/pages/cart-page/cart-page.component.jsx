@@ -1,4 +1,7 @@
 import React, {Fragment} from 'react';
+import {useSelector} from 'react-redux';
+import {useFirestoreConnect} from 'react-redux-firebase';
+import {totalPrice, formatPrice} from '../../utils/utils';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import {Icon} from '@iconify/react';
@@ -7,35 +10,47 @@ import PageWrapper from '../../components/container/container.component';
 import Header from '../../components/header/header.component';
 import CustomTable from '../../components/custom-table/custom-table.component';
 import CustomButton from '../../components/custom-button/custom-button.component';
+import Spinner from '../../components/spinner/spinner.component';
 import useStyles from './cart-page.styles';
 
 function CartPage() {
   const classes = useStyles();
+  const uid = useSelector((state) => state.firebase.auth.uid);
+
+  const cartpath = `users/${uid}/cart`;
+  useFirestoreConnect(() => [{collection: cartpath}]);
+  const cart = useSelector((state) => state.firestore.ordered[cartpath]);
+
   return (
     <Fragment>
       <Container>
         <PageWrapper>
-          <Header
-            textHeader="CART"
-            textSubtitle={4}
-            iconButton={
-              <Icon
-                height={24}
-                width={24}
-                icon={trashOutline}/>
-            }/>
-          <CustomTable/>
-          <div className={classes.content}>
-            <Typography className={classes.totalCount} variant="subtitle1">
-              total Rp 2.660.000,00</Typography>
-            <div className={classes.button}>
-              <CustomButton
-                width={180}
-                smScreen="100%"
-                variant="contained"
-                color="primary">CHECKOUT</CustomButton>
-            </div>
-          </div>
+          {
+            !cart ? <Spinner/> :
+            <Fragment>
+              <Header
+                textHeader="CART"
+                textSubtitle={cart.length}
+                iconButton={
+                  <Icon
+                    height={24}
+                    width={24}
+                    icon={trashOutline}/>
+                }/>
+              <CustomTable uid={uid} cart={cart}/>
+              <div className={classes.content}>
+                <Typography className={classes.totalCount} variant="subtitle1">
+                  {'TOTAL ' + formatPrice(totalPrice(cart, 'productPrice'))}</Typography>
+                <div className={classes.button}>
+                  <CustomButton
+                    width={180}
+                    smScreen="100%"
+                    variant="contained"
+                    color="primary">CHECKOUT</CustomButton>
+                </div>
+              </div>
+            </Fragment>
+          }
         </PageWrapper>
       </Container>
     </Fragment>

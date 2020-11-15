@@ -12,8 +12,11 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: 'none',
     borderBottom: `2px solid ${theme.palette.secondary.main}`,
   },
-  logo: {
-    fontWeight: 'bold',
+  logoDark: {
+    display: 'block',
+  },
+  logoLight: {
+    display: 'none',
   },
   menus: {
     width: '50%',
@@ -34,8 +37,11 @@ const useStyles = makeStyles((theme) => ({
       borderBottom: 'none',
       justifyContent: 'center',
     },
-    logo: {
-      color: theme.palette.common.white,
+    logoDark: {
+      display: 'none',
+    },
+    logoLight: {
+      display: 'block',
     },
     menus: {
       display: 'none',

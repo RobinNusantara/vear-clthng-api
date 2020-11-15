@@ -9,7 +9,6 @@ const useStyles = makeStyles((theme) => ({
   },
   totalCount: {
     fontWeight: 'bold',
-    textTransform: 'uppercase',
   },
   button: {
     marginTop: theme.spacing(2),

@@ -11,6 +11,8 @@ import {Icon} from '@iconify/react';
 import bxUser from '@iconify/icons-bx/bx-user';
 import outlineFavoriteBorder from '@iconify/icons-ic/baseline-favorite-border';
 import outlineShoppingBag from '@iconify/icons-ic/outline-shopping-bag';
+import {ReactComponent as VearClothingLogoDark} from '../../assets/icons/vear-logo-dark.svg';
+import {ReactComponent as VearClothingLogoLight} from '../../assets/icons/vear-logo-light.svg';
 import useStyles from './navbar.styles';
 
 function Navbar() {
@@ -23,11 +25,13 @@ function Navbar() {
         <Container>
           <Toolbar className={classes.toolbar}>
             <Link
-              className={classes.logo}
               variant="h5"
               underline="none"
               to="/"
-              component={RouterLink}>VEAR</Link>
+              component={RouterLink}>
+              <VearClothingLogoDark className={classes.logoDark}/>
+              <VearClothingLogoLight className={classes.logoLight}/>
+            </Link>
             <div className={classes.menus}>
               <Link
                 className={classes.menu}

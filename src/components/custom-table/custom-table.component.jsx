@@ -1,4 +1,7 @@
 import React, {Fragment} from 'react';
+import {useLocation} from 'react-router-dom';
+import {useRemoveData} from '../../hooks/user.hook';
+import {formatPrice} from '../../utils/utils';
 import Typography from '@material-ui/core/Typography';
 import Table from '@material-ui/core/Table';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -10,15 +13,23 @@ import IconButton from '@material-ui/core/IconButton';
 import {Icon} from '@iconify/react';
 import closeOutline from '@iconify/icons-eva/close-outline';
 import CounterButton from '../../components/counter-button/counter-button.component';
-import TableData from '../../data/table-data';
 import useStyles from './custom-table.styles';
 
-function CustomTable() {
+function Counter(currentLocation) {
+  if (currentLocation.pathname.match('/favorites')) return null;
+  return (<CounterButton/>);
+}
+
+function CustomTable({uid, cart}) {
   const classes = useStyles();
+  const location = useLocation();
+
+  const [remove, setRemove] = useRemoveData({uid, collection: 'cart'});
+
   return (
     <Fragment>
       <TableContainer>
-        <Table aria-label="customized table">
+        <Table>
           <TableHead>
             <TableRow>
               <TableCell className={classes.resetCell}>
@@ -37,12 +48,12 @@ function CustomTable() {
           </TableHead>
           <TableBody>
             {
-              TableData.map((data, idx) => (
+              cart.map((data, idx) => (
                 <TableRow key={idx}>
                   <TableCell className={classes.resetCell} align="left">
                     <div
                       className={classes.productImage}
-                      style={{backgroundImage: `url(${data.productImage})`}}/>
+                      style={{backgroundImage: `url(${data.productImageUrl})`}}/>
                   </TableCell>
                   <TableCell className={classes.productDescription} align="left">
                     <Typography className={classes.productName} variant="subtitle1">
@@ -52,21 +63,21 @@ function CustomTable() {
                       {data.productColor.toUpperCase()}
                     </Typography>
                     <Typography className={classes.descriptionPrice} variant="subtitle1">
-                      {new Intl.NumberFormat('id-ID', {
-                        style: 'currency',
-                        currency: 'IDR'}).format(data.productPrice)}
+                      {formatPrice(data.productPrice)}
                     </Typography>
                     <div className={classes.counterButton}>
-                      <CounterButton/>
+                      {Counter(location)}
                     </div>
                   </TableCell>
                   <TableCell className={classes.productPrice} align="left">
-                    {new Intl.NumberFormat('id-ID', {
-                      style: 'currency',
-                      currency: 'IDR'}).format(data.productPrice)}
+                    {formatPrice(data.productPrice)}
                   </TableCell>
                   <TableCell className={classes.resetCell} align="right">
-                    <IconButton>
+                    <IconButton onClick={(event) => {
+                      event.preventDefault();
+                      setRemove(data.id);
+                      console.log(remove);
+                    }}>
                       <Icon
                         className={classes.icon}
                         height={24}
