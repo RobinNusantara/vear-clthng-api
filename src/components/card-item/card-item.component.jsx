@@ -45,7 +45,7 @@ function CardItem({...props}) {
             isMouseInside ? Buttons(classes, setWishlist, setCart) : null
           }
           <Box display={{xs: 'block', sm: 'none'}}>
-            {Buttons(classes, cart, setWishlist, wishlist, setCart)}
+            {Buttons(classes, setWishlist, setCart)}
           </Box>
           <div className={classes.priceContainer}>
             <Typography

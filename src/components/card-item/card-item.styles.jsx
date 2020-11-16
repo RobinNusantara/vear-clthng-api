@@ -13,6 +13,9 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: theme.spacing(1),
     boxShadow: boxShadow,
     overflow: 'hidden',
+    [theme.breakpoints.down('xs')]: {
+      height: 380,
+    },
   },
   image: {
     height: '100%',
