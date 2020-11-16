@@ -39,8 +39,9 @@ function FavoritesPage() {
             </div> :
             <Fragment>
               <Header
+                collection={wishlist}
+                uid={uid}
                 textHeader="FAVORITE"
-                textSubtitle={wishlist.length}
                 iconButton={
                   <Icon
                     height={24}

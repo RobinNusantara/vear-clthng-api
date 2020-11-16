@@ -3,7 +3,7 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import useStyles from './header.styles';
 
-function Header({textHeader, textSubtitle, iconButton}) {
+function Header({uid, collection, textHeader, iconButton}) {
   const classes = useStyles();
   return (
     <Fragment>
@@ -16,7 +16,7 @@ function Header({textHeader, textSubtitle, iconButton}) {
             className={classes.textSubtitle}
             variant="subtitle1"
             color="textSecondary">
-            {textSubtitle} ITEMS
+            {collection.length} ITEMS
           </Typography>
         </div>
         <div className={classes.rightBox}>

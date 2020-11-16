@@ -41,8 +41,9 @@ function CartPage() {
             </div> :
             <Fragment>
               <Header
+                collection={cart}
+                uid={uid}
                 textHeader="CART"
-                textSubtitle={cart.length}
                 iconButton={
                   <Icon
                     height={24}

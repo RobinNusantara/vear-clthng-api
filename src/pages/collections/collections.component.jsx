@@ -4,10 +4,15 @@ import {useSelector} from 'react-redux';
 import {useFirestoreConnect} from 'react-redux-firebase';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
+import InputBase from '@material-ui/core/InputBase';
+import IconButton from '@material-ui/core/IconButton';
+// import Typography from '@material-ui/core/Typography';
 import PageWrapper from '../../components/container/container.component';
 import Spinner from '../../components/spinner/spinner.component';
 import CardItem from '../../components/card-item/card-item.component';
+import {Icon} from '@iconify/react';
+import optionsOutline from '@iconify/icons-eva/options-outline';
+import searchOutline from '@iconify/icons-eva/search-outline';
 import useStyles from './collections.styles';
 
 function Collections() {
@@ -24,15 +29,29 @@ function Collections() {
       <Container>
         <PageWrapper>
           <div className={classes.root}>
-            <div className={classes.header}>
-              <Typography className={classes.textHeader} variant="h6">COLLECTIONS</Typography>
-            </div>
-            <Grid container spacing={1}>
-              {
-                !collections ? <Spinner/> :
-                Object.values(collections).map((collection) => <CardItem key={collection.id} {...collection}/>)
-              }
-            </Grid>
+            {
+              !collections ? <Spinner/> :
+              <Fragment>
+                <div className={classes.smallDeviceHeader}>
+                  <div className={classes.searchContainer}>
+                    <div className={classes.searchIcon}>
+                      <Icon className={classes.icon} icon={searchOutline}/>
+                    </div>
+                    <InputBase className={classes.searchInput} placeholder="Search..."/>
+                  </div>
+                  <div className={classes.filterContainer}>
+                    <IconButton>
+                      <Icon className={classes.icon} icon={optionsOutline}/>
+                    </IconButton>
+                  </div>
+                </div>
+                <Grid container spacing={2}>
+                  {
+                    collections.map((collection) => <CardItem key={collection.id} {...collection}/>)
+                  }
+                </Grid>
+              </Fragment>
+            }
           </div>
         </PageWrapper>
       </Container>

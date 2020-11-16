@@ -1,69 +1,58 @@
 import {makeStyles} from '@material-ui/core/styles';
 
+const boxShadow = `
+  rgba(17, 17, 26, 0.1) 0px 8px 24px, 
+  rgba(17, 17, 26, 0.1) 0px 16px 56px,
+  rgba(17, 17, 26, 0.1) 0px 24px 80px
+`;
+
 const useStyles = makeStyles((theme) => ({
-  cardHeader: {
+  root: {
     position: 'relative',
-    height: 400,
-    border: `1px solid ${theme.palette.primary.main}`,
+    height: 360,
+    borderRadius: theme.spacing(1),
+    boxShadow: boxShadow,
     overflow: 'hidden',
   },
-  cardImage: {
+  image: {
     height: '100%',
     width: '100%',
     backgroundImage: (props) => `url(${props.productImageUrl})`,
     backgroundPosition: 'center',
     backgroundSize: 'cover',
   },
-  favoriteButton: {
+  buttons: {
     position: 'absolute',
-    top: 0,
-    right: 0,
-    paddingTop: theme.spacing(2),
-    paddingRight: theme.spacing(2),
+    top: 10,
+    right: 10,
+    display: 'flex',
+    flexDirection: 'column',
   },
-  iconContainer: {
+  buttonContainer: {
+    borderRadius: theme.spacing(1),
     backgroundColor: theme.palette.primary.main,
-    borderRadius: 4,
+  },
+  cartContainer: {
+    marginTop: theme.spacing(1),
   },
   icon: {
+    height: 20,
+    width: 20,
     color: theme.palette.common.white,
   },
-  cartButton: {
-    width: '100%',
+  priceContainer: {
     position: 'absolute',
     bottom: 0,
-    padding: theme.spacing(2),
-  },
-  cardFooter: {
-    whiteSpace: 'nowrap',
-  },
-  textHeader: {
-    fontWeight: 'bold',
-    textOverflow: 'ellipsis',
+    right: 0,
     paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(1),
-    overflow: 'hidden',
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
+    backgroundColor: theme.palette.primary.main,
   },
-  textSubtitle: {
-    textAlign: 'right',
+  textPrice: {
     fontWeight: 'bold',
-    paddingTop: theme.spacing(1),
-  },
-  [theme.breakpoints.down('xs')]: {
-    cardHeader: {
-      height: 260,
-    },
-    favoriteButton: {
-      paddingTop: theme.spacing(1),
-      paddingRight: theme.spacing(1),
-    },
-    cartButton: {
-      display: 'none',
-    },
-    icon: {
-      width: 18,
-      height: 18,
-    },
+    color: theme.palette.common.white,
   },
 }));
 
