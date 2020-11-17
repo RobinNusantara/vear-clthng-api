@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
       marginBottom: theme.spacing(12),
     },
   },
-  smallDeviceHeader: {
+  mobileDeviceHeader: {
     display: 'none',
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
@@ -18,13 +18,16 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   searchContainer: {
-    flex: 4,
+    flex: 5,
     position: 'relative',
     height: 50,
     borderRadius: theme.spacing(1),
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
     boxShadow: theme.boxShadow,
+    [theme.breakpoints.xxs]: {
+      flex: 4,
+    },
   },
   searchInput: {
     height: '100%',

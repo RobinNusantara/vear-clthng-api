@@ -10,6 +10,9 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('xs')]: {
       height: 240,
     },
+    [theme.breakpoints.xxs]: {
+      height: 200,
+    },
   },
   image: {
     height: '100%',

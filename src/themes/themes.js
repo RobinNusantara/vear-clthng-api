@@ -45,6 +45,9 @@ const theme = createMuiTheme({
     },
   },
   boxShadow: boxShadow,
+  breakpoints: {
+    xxs: '@media screen and (max-width: 360px)',
+  },
 });
 
 export default theme;

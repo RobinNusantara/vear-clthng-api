@@ -31,7 +31,7 @@ function Collections() {
             {
               !collections ? <Spinner/> :
               <Fragment>
-                <div className={classes.smallDeviceHeader}>
+                <div className={classes.mobileDeviceHeader}>
                   <div className={classes.searchContainer}>
                     <div className={classes.searchIcon}>
                       <Icon className={classes.icon} icon={searchOutline}/>
