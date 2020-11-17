@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: theme.spacing(1),
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
-    boxShadow: theme.boxShadow,
+    boxShadow: theme.boxShadow.primary,
     [theme.breakpoints.xxs]: {
       flex: 4,
     },
@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
     marginLeft: theme.spacing(2),
-    boxShadow: theme.boxShadow,
+    boxShadow: theme.boxShadow.primary,
   },
   icon: {
     color: theme.palette.primary.main,

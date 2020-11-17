@@ -5,7 +5,7 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative',
     height: 360,
     borderRadius: theme.spacing(1),
-    boxShadow: theme.boxShadow,
+    boxShadow: theme.boxShadow.primary,
     overflow: 'hidden',
     [theme.breakpoints.down('xs')]: {
       height: 240,

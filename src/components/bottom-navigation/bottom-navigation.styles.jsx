@@ -6,7 +6,7 @@ const useStyles = makeStyles((theme) => ({
     position: 'fixed',
     bottom: 0,
     display: 'none',
-    boxShadow: theme.boxShadow,
+    boxShadow: theme.boxShadow.secondary,
     zIndex: 1,
   },
   icon: {
