@@ -6,7 +6,6 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import InputBase from '@material-ui/core/InputBase';
 import IconButton from '@material-ui/core/IconButton';
-// import Typography from '@material-ui/core/Typography';
 import PageWrapper from '../../components/container/container.component';
 import Spinner from '../../components/spinner/spinner.component';
 import CardItem from '../../components/card-item/card-item.component';

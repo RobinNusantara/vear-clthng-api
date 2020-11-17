@@ -1,20 +1,14 @@
 import {makeStyles} from '@material-ui/core/styles';
 
-const boxShadow = `
-  rgba(17, 17, 26, 0.1) 0px 8px 24px, 
-  rgba(17, 17, 26, 0.1) 0px 16px 56px,
-  rgba(17, 17, 26, 0.1) 0px 24px 80px
-`;
-
 const useStyles = makeStyles((theme) => ({
   root: {
     position: 'relative',
     height: 360,
     borderRadius: theme.spacing(1),
-    boxShadow: boxShadow,
+    boxShadow: theme.boxShadow,
     overflow: 'hidden',
     [theme.breakpoints.down('xs')]: {
-      height: 380,
+      height: 240,
     },
   },
   image: {
@@ -30,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
     right: 10,
     display: 'flex',
     flexDirection: 'column',
+    [theme.breakpoints.down('xs')]: {
+      display: 'none',
+    },
   },
   buttonContainer: {
     borderRadius: theme.spacing(1),

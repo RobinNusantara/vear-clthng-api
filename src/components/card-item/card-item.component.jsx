@@ -3,7 +3,6 @@ import {useSelector} from 'react-redux';
 import {usePostData} from '../../hooks/user.hook';
 import {formatPrice} from '../../utils/utils';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import {Icon} from '@iconify/react';
@@ -35,18 +34,39 @@ function CardItem({...props}) {
 
   return (
     <Fragment>
-      <Grid item xs={12} sm={6} md={4} lg={3}>
+      <Grid item xs={6} md={4} lg={3}>
         <div
           className={classes.root}
           onMouseEnter={mouseEnter}
           onMouseLeave={mouseLeave}>
           <div className={classes.image}/>
           {
-            isMouseInside ? Buttons(classes, setWishlist, setCart) : null
+            isMouseInside ?
+            <div className={classes.buttons}>
+              <div className={classes.buttonContainer}>
+                <IconButton onClick={(event) => {
+                  event.preventDefault();
+                  if (process.env.development) {
+                    console.log(wishlist);
+                  }
+                  setWishlist();
+                }}>
+                  <Icon className={classes.icon} icon={outlineFavoriteBorder}/>
+                </IconButton>
+              </div>
+              <div className={`${classes.buttonContainer} ${classes.cartContainer}`}>
+                <IconButton onClick={(event) => {
+                  event.preventDefault();
+                  if (process.env.development) {
+                    console.log(cart);
+                  }
+                  setCart();
+                }}>
+                  <Icon className={classes.icon} icon={plusOutline}/>
+                </IconButton>
+              </div>
+            </div> : null
           }
-          <Box display={{xs: 'block', sm: 'none'}}>
-            {Buttons(classes, setWishlist, setCart)}
-          </Box>
           <div className={classes.priceContainer}>
             <Typography
               className={classes.textPrice}
@@ -57,28 +77,5 @@ function CardItem({...props}) {
     </Fragment>
   );
 };
-
-function Buttons(classes, setWishlist, setCart) {
-  return (
-    <div className={classes.buttons}>
-      <div className={classes.buttonContainer}>
-        <IconButton onClick={(event) => {
-          event.preventDefault();
-          setWishlist();
-        }}>
-          <Icon className={classes.icon} icon={outlineFavoriteBorder}/>
-        </IconButton>
-      </div>
-      <div className={`${classes.buttonContainer} ${classes.cartContainer}`}>
-        <IconButton onClick={(event) => {
-          event.preventDefault();
-          setCart();
-        }}>
-          <Icon className={classes.icon} icon={plusOutline}/>
-        </IconButton>
-      </div>
-    </div>
-  );
-}
 
 export default CardItem;

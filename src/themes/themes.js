@@ -3,6 +3,12 @@ import grey from '@material-ui/core/colors/grey';
 import blueGrey from '@material-ui/core/colors/blueGrey';
 import blue from '@material-ui/core/colors/blue';
 
+const boxShadow = `
+  rgba(17, 17, 26, 0.1) 0px 8px 24px, 
+  rgba(17, 17, 26, 0.1) 0px 16px 56px,
+  rgba(17, 17, 26, 0.1) 0px 24px 80px
+`;
+
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -38,6 +44,7 @@ const theme = createMuiTheme({
       fontSize: 12,
     },
   },
+  boxShadow: boxShadow,
 });
 
 export default theme;

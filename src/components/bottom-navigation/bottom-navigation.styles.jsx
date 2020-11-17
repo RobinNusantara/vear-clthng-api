@@ -4,8 +4,9 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
     position: 'fixed',
-    display: 'none',
     bottom: 0,
+    display: 'none',
+    boxShadow: theme.boxShadow,
     zIndex: 1,
   },
   icon: {

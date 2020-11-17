@@ -1,14 +1,13 @@
 import {makeStyles} from '@material-ui/core/styles';
 
-const boxShadow = `
-  rgba(17, 17, 26, 0.1) 0px 8px 24px, 
-  rgba(17, 17, 26, 0.1) 0px 16px 56px,
-  rgba(17, 17, 26, 0.1) 0px 24px 80px
-`;
-
 const useStyles = makeStyles((theme) => ({
   root: {
+    marginTop: theme.spacing(6),
     marginBottom: theme.spacing(6),
+    [theme.breakpoints.down('xs')]: {
+      marginTop: theme.spacing(0),
+      marginBottom: theme.spacing(12),
+    },
   },
   smallDeviceHeader: {
     display: 'none',
@@ -25,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: theme.spacing(1),
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
-    boxShadow: boxShadow,
+    boxShadow: theme.boxShadow,
   },
   searchInput: {
     height: '100%',
@@ -50,28 +49,12 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
     marginLeft: theme.spacing(2),
-    boxShadow: boxShadow,
+    boxShadow: theme.boxShadow,
   },
   icon: {
     color: theme.palette.primary.main,
     width: 20,
     height: 20,
-  },
-  textHeader: {
-    height: '100%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    fontWeight: 'bold',
-  },
-  [theme.breakpoints.down('sm')]: {
-    root: {
-      marginBottom: theme.spacing(12),
-    },
-    header: {
-      height: 80,
-      marginBottom: theme.spacing(4),
-    },
   },
 }));
 
