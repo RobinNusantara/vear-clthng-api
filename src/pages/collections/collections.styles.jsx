@@ -14,20 +14,16 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
     [theme.breakpoints.down('xs')]: {
-      display: 'flex',
+      display: 'block',
     },
   },
   searchContainer: {
-    flex: 5,
     position: 'relative',
     height: 50,
     borderRadius: theme.spacing(1),
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
-    boxShadow: theme.boxShadow.primary,
-    [theme.breakpoints.xxs]: {
-      flex: 4,
-    },
+    backgroundColor: theme.palette.secondary.light,
   },
   searchInput: {
     height: '100%',
@@ -43,16 +39,6 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
     paddingLeft: theme.spacing(2),
-  },
-  filterContainer: {
-    flex: 1,
-    display: 'flex',
-    justifyContent: 'center',
-    borderRadius: theme.spacing(1),
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2),
-    marginLeft: theme.spacing(2),
-    boxShadow: theme.boxShadow.primary,
   },
   icon: {
     color: theme.palette.primary.main,

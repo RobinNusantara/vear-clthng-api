@@ -3,23 +3,16 @@ import {makeStyles} from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   root: {
     position: 'relative',
-    height: 360,
-    borderRadius: theme.spacing(1),
-    boxShadow: theme.boxShadow.primary,
-    overflow: 'hidden',
-    [theme.breakpoints.down('xs')]: {
-      height: 240,
-    },
-    [theme.breakpoints.xxs]: {
-      height: 200,
-    },
   },
   image: {
-    height: '100%',
+    height: 360,
     width: '100%',
     backgroundImage: (props) => `url(${props.productImageUrl})`,
     backgroundPosition: 'center',
     backgroundSize: 'cover',
+    [theme.breakpoints.down('xs')]: {
+      height: 220,
+    },
   },
   buttons: {
     position: 'absolute',
@@ -43,19 +36,21 @@ const useStyles = makeStyles((theme) => ({
     width: 20,
     color: theme.palette.common.white,
   },
-  priceContainer: {
-    position: 'absolute',
-    bottom: 0,
-    right: 0,
-    paddingTop: theme.spacing(1),
-    paddingBottom: theme.spacing(1),
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(2),
-    backgroundColor: theme.palette.primary.main,
+  text: {
+    width: '100%',
+    textAlign: 'center',
+    color: theme.palette.secondary.main,
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
   },
-  textPrice: {
+  topSpacing: {
     fontWeight: 'bold',
-    color: theme.palette.common.white,
+    marginTop: theme.spacing(2),
+    color: theme.palette.primary.main,
+  },
+  botSpacing: {
+    marginBottom: theme.spacing(2),
   },
 }));
 

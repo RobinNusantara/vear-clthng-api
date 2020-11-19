@@ -11,8 +11,8 @@ import plusOutline from '@iconify/icons-eva/plus-outline';
 import useStyles from './card-item.styles';
 
 function CardItem({...props}) {
-  const {productPrice} = props;
   const classes = useStyles(props);
+  const {productName, productColor, productPrice} = props;
   const [isMouseInside, setIsMouseInside] = useState(false);
 
   const data = {
@@ -25,8 +25,17 @@ function CardItem({...props}) {
   };
 
   const uid = useSelector((state) => state.firebase.auth.uid);
-  const [cart, setCart] = usePostData({uid, collection: 'cart', payload: data});
-  const [wishlist, setWishlist] = usePostData({uid, collection: 'wishlist', payload: data});
+  const [cart, setCart] = usePostData({
+    uid,
+    collection: 'cart',
+    payload: {...data, 'productAmount': 1},
+  });
+
+  const [wishlist, setWishlist] = usePostData({
+    uid,
+    collection: 'wishlist',
+    payload: data,
+  });
 
   const mouseEnter = () => setIsMouseInside(true);
 
@@ -67,10 +76,14 @@ function CardItem({...props}) {
               </div>
             </div> : null
           }
-          <div className={classes.priceContainer}>
-            <Typography
-              className={classes.textPrice}
-              variant="subtitle1">{formatPrice(productPrice)}</Typography>
+          <div>
+            <Typography className={`${classes.text} ${classes.topSpacing}`} variant="subtitle1">
+              {productName.toUpperCase()}
+            </Typography>
+            <Typography className={classes.text} variant="subtitle1">{productColor.toUpperCase()}</Typography>
+            <Typography className={`${classes.text} ${classes.botSpacing}`} variant="subtitle1">
+              {formatPrice(productPrice)}
+            </Typography>
           </div>
         </div>
       </Grid>
