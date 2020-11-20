@@ -21,7 +21,7 @@ function FavoritesPage() {
   useFirestoreConnect(() => [{collection: wishlistPath}]);
   const wishlist = useSelector((state) => state.firestore.ordered[wishlistPath]);
 
-  const [remove, setRemove] = useRemoveData({uid, collection: 'wishlist'});
+  const [, setRemove] = useRemoveData({uid, collection: 'wishlist'});
 
   return (
     <Fragment>
@@ -50,7 +50,6 @@ function FavoritesPage() {
                 }/>
               <CustomTable
                 collection={wishlist}
-                remove={remove}
                 setRemove={setRemove}/>
             </Fragment>
           }

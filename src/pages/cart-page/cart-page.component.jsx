@@ -23,7 +23,7 @@ function CartPage() {
   useFirestoreConnect(() => [{collection: cartPath}]);
   const cart = useSelector((state) => state.firestore.ordered[cartPath]);
 
-  const [remove, setRemove] = useRemoveData({uid, collection: 'cart'});
+  const [, setRemove] = useRemoveData({uid, collection: 'cart'});
 
   return (
     <Fragment>
@@ -52,11 +52,10 @@ function CartPage() {
                 }/>
               <CustomTable
                 collection={cart}
-                remove={remove}
                 setRemove={setRemove}/>
               <div className={classes.content}>
                 <Typography className={classes.totalCount} variant="subtitle1">
-                  {'TOTAL ' + formatPrice(totalPrice(cart, 'productPrice'))}</Typography>
+                  {'TOTAL ' + formatPrice(totalPrice(cart))}</Typography>
                 <div className={classes.button}>
                   <CustomButton
                     width={180}
