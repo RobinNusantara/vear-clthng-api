@@ -4,6 +4,6 @@ export function formatPrice(data) {
     currency: 'IDR'}).format(data);
 }
 
-export function totalPrice(data, key) {
-  return data.reduce((acc, val) => acc + val[key], 0);
+export function totalPrice(data) {
+  return data.reduce((acc, val) => acc + val.productAmount * val.productPrice, 0);
 }
