@@ -3,18 +3,18 @@ import {makeStyles} from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   root: {
     position: 'relative',
+    backgroundColor: 'transparent',
   },
-  image: {
+  cardImage: {
     height: 360,
     width: '100%',
-    backgroundImage: (props) => `url(${props.productImageUrl})`,
     backgroundPosition: 'center',
     backgroundSize: 'cover',
     [theme.breakpoints.down('xs')]: {
       height: 220,
     },
   },
-  buttons: {
+  cardActions: {
     position: 'absolute',
     top: 10,
     right: 10,
@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
       display: 'none',
     },
   },
-  buttonContainer: {
+  paper: {
     borderRadius: theme.spacing(1),
     backgroundColor: theme.palette.primary.main,
   },
@@ -36,21 +36,19 @@ const useStyles = makeStyles((theme) => ({
     width: 20,
     color: theme.palette.common.white,
   },
+  cardContent: {
+    textAlign: 'center',
+  },
+  textHeader: {
+    fontWeight: 'bold',
+    color: theme.palette.primary.main,
+  },
   text: {
     width: '100%',
-    textAlign: 'center',
     color: theme.palette.secondary.main,
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-  },
-  topSpacing: {
-    fontWeight: 'bold',
-    marginTop: theme.spacing(2),
-    color: theme.palette.primary.main,
-  },
-  botSpacing: {
-    marginBottom: theme.spacing(2),
   },
 }));
 
