@@ -32,12 +32,18 @@ function CartPage() {
           {
             !cart ? <Spinner/> :
             cart.length === 0 ?
-            <div className={classes.empty}>
-              <img src={EmptyCartIllustration} alt="empty-cart"/>
-              <Typography className={classes.textHeader} variant="h6">YOUR CART IS EMPTY</Typography>
-              <Typography className={classes.textSubtitle} variant="subtitle1">
-                LOOKS LIKE YOU HAVEN&apos;T MADE YOUR CHOICES YET
-              </Typography>
+            <div className={classes.message}>
+              <figure className={classes.figure}>
+                <img src={EmptyCartIllustration} alt="empty-cart"/>
+                <figcaption>
+                  <Typography className={classes.textHeader} variant="h6">
+                    YOUR CART IS EMPTY
+                  </Typography>
+                  <Typography className={classes.textSubtitle} variant="subtitle1">
+                    LOOKS LIKE YOU HAVEN&apos;T MADE YOUR CHOICES YET
+                  </Typography>
+                </figcaption>
+              </figure>
             </div> :
             <Fragment>
               <Header

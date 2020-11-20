@@ -30,12 +30,18 @@ function FavoritesPage() {
           {
             !wishlist ? <Spinner/> :
             wishlist.length === 0 ?
-            <div className={classes.empty}>
-              <img src={EmptyFavoriteIllustration} alt="empty-favorite"/>
-              <Typography className={classes.textHeader} variant="h6">YOUR WISHLIST IS EMPTY</Typography>
-              <Typography className={classes.textSubtitle} variant="subtitle1">
-                LOOKS LIKE YOU HAVEN&apos;T MADE YOUR CHOICES YET
-              </Typography>
+            <div className={classes.message}>
+              <figure className={classes.figure}>
+                <img src={EmptyFavoriteIllustration} alt="empty-favorite"/>
+                <figcaption>
+                  <Typography className={classes.textHeader} variant="h6">
+                    YOUR WISHLIST IS EMPTY
+                  </Typography>
+                  <Typography className={classes.textSubtitle} variant="subtitle1">
+                    LOOKS LIKE YOU HAVEN&apos;T MADE YOUR CHOICES YET
+                  </Typography>
+                </figcaption>
+              </figure>
             </div> :
             <Fragment>
               <Header
