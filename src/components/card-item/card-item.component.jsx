@@ -1,5 +1,6 @@
 import React, {Fragment, useState} from 'react';
 import {useSelector} from 'react-redux';
+import {isLoaded, isEmpty} from 'react-redux-firebase';
 import {usePostData} from '../../hooks/user.hook';
 import {formatPrice} from '../../utils/utils';
 import Grid from '@material-ui/core/Grid';
@@ -31,6 +32,8 @@ function CardItem({...props}) {
   };
 
   const uid = useSelector((state) => state.firebase.auth.uid);
+  const auth = useSelector((state) => state.firebase.auth);
+
   const [, setCart] = usePostData({
     uid,
     collection: 'cart',
@@ -61,7 +64,9 @@ function CardItem({...props}) {
               <Paper className={classes.paper}>
                 <IconButton onClick={(event) => {
                   event.preventDefault();
-                  setWishlist();
+                  if (isLoaded(auth) && !isEmpty(auth)) {
+                    setWishlist();
+                  }
                 }}>
                   <Icon className={classes.icon} icon={outlineFavoriteBorder}/>
                 </IconButton>
@@ -74,7 +79,11 @@ function CardItem({...props}) {
               <Paper className={`${classes.paper} ${classes.cartContainer}`}>
                 <IconButton onClick={(event) => {
                   event.preventDefault();
-                  setCart();
+                  if (isLoaded(auth) && !isEmpty(auth)) {
+                    setCart();
+                  } else {
+                    console.log('you are not authorized');
+                  }
                 }}>
                   <Icon className={classes.icon} icon={plusOutline}/>
                 </IconButton>
