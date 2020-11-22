@@ -10,20 +10,21 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   mobileDeviceHeader: {
+    height: 50,
     display: 'none',
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2),
+    marginTop: theme.spacing(4),
     [theme.breakpoints.down('xs')]: {
-      display: 'block',
+      display: 'flex',
     },
   },
   searchContainer: {
+    flex: 5,
     position: 'relative',
-    height: 50,
     borderRadius: theme.spacing(1),
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2),
     backgroundColor: theme.palette.secondary.light,
+    [theme.breakpoints.xxs]: {
+      flex: 4,
+    },
   },
   searchInput: {
     height: '100%',
@@ -41,9 +42,31 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: theme.spacing(2),
   },
   icon: {
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
     width: 20,
     height: 20,
+  },
+  filterContainer: {
+    flex: 1,
+    display: 'flex',
+    justifyContent: 'center',
+    borderRadius: theme.spacing(1),
+    marginLeft: theme.spacing(2),
+    backgroundColor: theme.palette.secondary.light,
+  },
+  tabs: {
+    height: 50,
+    marginTop: theme.spacing(2),
+  },
+  tab: {
+    fontSize: 14,
+    color: theme.palette.secondary.main,
+    [theme.breakpoints.xxs]: {
+      fontSize: 12,
+    },
+  },
+  grid: {
+    marginTop: theme.spacing(2),
   },
 }));
 
