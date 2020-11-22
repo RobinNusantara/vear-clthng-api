@@ -5,7 +5,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
   },
-  button: {
+  paper: {
     borderRadius: 4,
     backgroundColor: theme.palette.secondary.light,
   },

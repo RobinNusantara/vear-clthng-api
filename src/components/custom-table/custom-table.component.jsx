@@ -14,9 +14,9 @@ import closeOutline from '@iconify/icons-eva/close-outline';
 import CounterButton from '../../components/counter-button/counter-button.component';
 import useStyles from './custom-table.styles';
 
-function Counter(currentLocation) {
+function Counter(currentLocation, document) {
   if (currentLocation.pathname.match('/favorites')) return null;
-  return (<CounterButton/>);
+  return (<CounterButton document={document}/>);
 }
 
 function CustomTable({collection, setRemove}) {
@@ -63,7 +63,7 @@ function CustomTable({collection, setRemove}) {
                       {formatPrice(document.productPrice)}
                     </Typography>
                     <div className={classes.counterButton}>
-                      {Counter(location)}
+                      {Counter(location, document)}
                     </div>
                   </TableCell>
                   <TableCell className={classes.productPrice} align="left">
