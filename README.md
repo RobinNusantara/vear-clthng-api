@@ -1,3 +1,5 @@
+[![Generic badge](https://img.shields.io/badge/Frontend-React-blue.svg)](https://shields.io/)
+[![Generic badge](https://img.shields.io/badge/Database-Firebase-orange.svg)](https://shields.io/)
 <p align="center">
   <img src="src/assets/icons/vear-logo-dark.svg" alt="drawing" width="180" height="90"/>
 </p>
