@@ -1,3 +1,12 @@
+<p align="center">
+  <img src="src/assets/icons/vear-logo-dark.svg" alt="drawing" width="180" height="90"/>
+</p>
+<h3 align="center">This project was built with</h3>
+<p align="center">
+  <img src="https://cdn.worldvectorlogo.com/logos/react.svg" alt="drawing" width="240" height="200"/>
+  <img src="https://cdn.worldvectorlogo.com/logos/redux.svg" alt="drawing" width="220" height="180"/>
+  <img src="https://cdn.worldvectorlogo.com/logos/firebase-2.svg" alt="drawing" width="240" height="180"/>
+</p>
 <h2>Mobile Version</h2>
 <h3>Home Page & Collection Page</h3>
 <p float="left">
