@@ -1,5 +1,6 @@
-import React, {Fragment, useState} from 'react';
-import {useFirebase} from 'react-redux-firebase';
+import React, {Fragment} from 'react';
+import {connect} from 'react-redux';
+import {signUpWithEmailAndPassword} from '../../actions/auth.action';
 import {useHistory} from 'react-router-dom';
 import {Formik, Form} from 'formik';
 import Alert from '@material-ui/lab/Alert';
@@ -9,25 +10,9 @@ import CustomButton from '../custom-button/custom-button.component';
 import {SignUpSchema} from '../../validation/form-validation';
 import useStyles from './register-form.styles';
 
-function RegisterForm() {
+function RegisterForm({signUp, isLoading, error}) {
   const classes = useStyles();
   const history = useHistory();
-  const firebase = useFirebase();
-
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
-
-  async function signUpWithEmailAndPassword(credentials) {
-    return await firebase.createUser(
-        {email: credentials.email, password: credentials.password},
-        {
-          avatarUrl: '',
-          displayName: credentials.displayName,
-          email: credentials.email,
-        })
-        .then(() => history.push('/'))
-        .catch((error) => setError(error.message));
-  }
 
   return (
     <Fragment>
@@ -40,10 +25,8 @@ function RegisterForm() {
         }}
         validationSchema={SignUpSchema}
         onSubmit={async (values) => {
-          setError('');
-          setIsLoading(true);
-          await signUpWithEmailAndPassword(values);
-          setIsLoading(false);
+          await signUp(values);
+          if (error != null) history.push('/');
         }}>{({values, handleChange, errors}) => (
           <Form className={classes.root}>
             {error && <Alert
@@ -93,4 +76,17 @@ function RegisterForm() {
   );
 };
 
-export default RegisterForm;
+const mapStateToProps = (state) => {
+  return {
+    isLoading: state.auth.isLoading,
+    error: state.auth.signUpError,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    signUp: (values) => dispatch(signUpWithEmailAndPassword(values)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterForm);

@@ -1,24 +1,34 @@
+import {AuthActionTypes} from '../helpers/helpers';
+
 const initialState = {
-  error: null,
+  signInError: '',
+  signUpError: '',
   isLoading: false,
 };
 
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'SIGN_IN_START':
+    case AuthActionTypes.SIGN_UP_START:
+    case AuthActionTypes.SIGN_IN_START:
       return {
         isLoading: true,
       };
-    case 'SIGN_IN_SUCCESS':
+    case AuthActionTypes.SIGN_UP_SUCCESS:
+    case AuthActionTypes.SIGN_IN_SUCCESS:
       return {
         ...state,
-        error: null,
         isLoading: false,
       };
-    case 'SIGN_IN_FAILED':
+    case AuthActionTypes.SIGN_UP_FAILED:
       return {
         ...state,
-        error: action.payload,
+        signUpError: action.payload,
+        isLoading: false,
+      };
+    case AuthActionTypes.SIGN_IN_FAILED:
+      return {
+        ...state,
+        signInError: action.payload,
         isLoading: false,
       };
     default: return state;
