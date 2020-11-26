@@ -1,4 +1,5 @@
 import {AuthActionTypes} from '../helpers/helpers';
+import {push} from 'connected-react-router';
 
 function signInStart() {
   return {
@@ -46,6 +47,7 @@ export function signInWithEmailAndPassword(credentials) {
       password: credentials.password,
     })
         .then(() => dispatch(signInSuccess()))
+        .then(() => dispatch(push('/')))
         .catch((error) => dispatch(signInFailed(error.message)));
   };
 }
@@ -63,6 +65,7 @@ export function signUpWithEmailAndPassword(credentials) {
       email: credentials.email,
     })
         .then(() => dispatch(signUpSuccess()))
+        .then(() => dispatch(push('/')))
         .catch((error) => dispatch(signUpFailed(error.message)));
   };
 }
