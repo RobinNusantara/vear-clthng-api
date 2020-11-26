@@ -63,7 +63,7 @@ function LoginForm({signIn, isLoading, error}) {
 const mapStateToProps = (state) => {
   return {
     isLoading: state.auth.isLoading,
-    error: state.auth.error,
+    error: state.auth.signInError,
   };
 };
 
