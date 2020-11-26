@@ -6,7 +6,7 @@ import Alert from '@material-ui/lab/Alert';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import TextField from '../text-field/text-field.component';
 import CustomButton from '../custom-button/custom-button.component';
-import {SignUpSchema} from '../../helpers/helpers';
+import {SignUpSchema} from '../../validation/form-validation';
 import useStyles from './register-form.styles';
 
 function RegisterForm() {
