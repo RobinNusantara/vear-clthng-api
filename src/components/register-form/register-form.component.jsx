@@ -1,7 +1,6 @@
 import React, {Fragment} from 'react';
 import {connect} from 'react-redux';
 import {signUpWithEmailAndPassword} from '../../actions/auth.action';
-import {useHistory} from 'react-router-dom';
 import {Formik, Form} from 'formik';
 import Alert from '@material-ui/lab/Alert';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -12,7 +11,6 @@ import useStyles from './register-form.styles';
 
 function RegisterForm({signUp, isLoading, error}) {
   const classes = useStyles();
-  const history = useHistory();
 
   return (
     <Fragment>
@@ -26,7 +24,6 @@ function RegisterForm({signUp, isLoading, error}) {
         validationSchema={SignUpSchema}
         onSubmit={async (values) => {
           await signUp(values);
-          if (error != null) history.push('/');
         }}>{({values, handleChange, errors}) => (
           <Form className={classes.root}>
             {error && <Alert
