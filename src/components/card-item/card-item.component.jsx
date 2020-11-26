@@ -1,7 +1,8 @@
 import React, {Fragment, useState} from 'react';
-import {useSelector} from 'react-redux';
+import {connect, useSelector} from 'react-redux';
 import {isLoaded, isEmpty} from 'react-redux-firebase';
-import {usePostData} from '../../hooks/user.hook';
+import {addProductToCart} from '../../actions/cart.action';
+import {addProductToWishlist} from '../../actions/wishlist.action';
 import {formatPrice} from '../../utils/utils';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -17,7 +18,7 @@ import outlineFavoriteBorder from '@iconify/icons-ic/baseline-favorite-border';
 import plusOutline from '@iconify/icons-eva/plus-outline';
 import useStyles from './card-item.styles';
 
-function CardItem({...props}) {
+function CardItem({addProductToCart, addProductToWishlist, ...props}) {
   const classes = useStyles();
   const {productImageUrl, productName, productColor, productPrice} = props;
   const [isMouseInside, setIsMouseInside] = useState(false);
@@ -33,18 +34,6 @@ function CardItem({...props}) {
 
   const uid = useSelector((state) => state.firebase.auth.uid);
   const auth = useSelector((state) => state.firebase.auth);
-
-  const [, setCart] = usePostData({
-    uid,
-    collection: 'cart',
-    payload: {...data, 'productAmount': 1},
-  });
-
-  const [, setWishlist] = usePostData({
-    uid,
-    collection: 'wishlist',
-    payload: data,
-  });
 
   const mouseEnter = () => setIsMouseInside(true);
 
@@ -65,7 +54,7 @@ function CardItem({...props}) {
                 <IconButton onClick={(event) => {
                   event.preventDefault();
                   if (isLoaded(auth) && !isEmpty(auth)) {
-                    setWishlist();
+                    addProductToWishlist(uid, data);
                   }
                 }}>
                   <Icon className={classes.icon} icon={outlineFavoriteBorder}/>
@@ -80,7 +69,7 @@ function CardItem({...props}) {
                 <IconButton onClick={(event) => {
                   event.preventDefault();
                   if (isLoaded(auth) && !isEmpty(auth)) {
-                    setCart();
+                    addProductToCart(uid, {...data, 'productAmount': 1});
                   } else {
                     console.log('you are not authorized');
                   }
@@ -107,4 +96,11 @@ function CardItem({...props}) {
   );
 };
 
-export default CardItem;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addProductToCart: (uid, data) => dispatch(addProductToCart(uid, data)),
+    addProductToWishlist: (uid, data) => dispatch(addProductToWishlist(uid, data)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(CardItem);
