@@ -1,5 +1,4 @@
 import React, {Fragment} from 'react';
-import {useSelector} from 'react-redux';
 import {useLocation} from 'react-router-dom';
 import {formatPrice} from '../../utils/utils';
 import Typography from '@material-ui/core/Typography';
@@ -23,8 +22,6 @@ function Counter(currentLocation, document) {
 function CustomTable({collection, removeDocument}) {
   const classes = useStyles();
   const location = useLocation();
-
-  const uid = useSelector((state) => state.firebase.auth.uid);
 
   return (
     <Fragment>
@@ -75,7 +72,7 @@ function CustomTable({collection, removeDocument}) {
                   <TableCell className={classes.resetCell} align="right">
                     <IconButton onClick={(event) => {
                       event.preventDefault();
-                      removeDocument(uid, document.id);
+                      removeDocument(document.id);
                     }}>
                       <Icon
                         className={classes.icon}

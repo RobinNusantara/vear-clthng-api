@@ -65,7 +65,7 @@ function FavoritesPage({removeProduct}) {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    removeProduct: (uid, id) => dispatch(removeProductFromWishlist(uid, id)),
+    removeProduct: (id) => dispatch(removeProductFromWishlist(id)),
   };
 };
 

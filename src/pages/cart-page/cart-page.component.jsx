@@ -78,7 +78,7 @@ function CartPage({removeProduct}) {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    removeProduct: (uid, id) => dispatch(removeProductFromCart(uid, id)),
+    removeProduct: (id) => dispatch(removeProductFromCart(id)),
   };
 };
 

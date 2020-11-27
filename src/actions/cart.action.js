@@ -13,8 +13,9 @@ function addProductToCartFailed(error) {
   };
 }
 
-export function addProductToCart(uid, data) {
+export function addProductToCart(data) {
   return (dispatch, getState, getFirebase) => {
+    const uid = getState().firebase.auth.uid;
     return getFirebase().firestore()
         .collection('users')
         .doc(uid)
@@ -25,8 +26,9 @@ export function addProductToCart(uid, data) {
   };
 }
 
-export function removeProductFromCart(uid, id) {
+export function removeProductFromCart(id) {
   return (dispatch, getState, getFirebase) => {
+    const uid = getState().firebase.auth.uid;
     return getFirebase().firestore()
         .collection('users')
         .doc(uid)

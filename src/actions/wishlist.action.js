@@ -13,8 +13,9 @@ function addProductToFavoFailed(error) {
   };
 }
 
-export function addProductToWishlist(uid, data) {
+export function addProductToWishlist(data) {
   return (dispatch, getState, getFirebase) => {
+    const uid = getState().firebase.auth.uid;
     return getFirebase().firestore()
         .collection('users')
         .doc(uid)
@@ -25,8 +26,9 @@ export function addProductToWishlist(uid, data) {
   };
 }
 
-export function removeProductFromWishlist(uid, id) {
+export function removeProductFromWishlist(id) {
   return (dispatch, getState, getFirebase) => {
+    const uid = getState().firebase.auth.uid;
     return getFirebase().firestore()
         .collection('users')
         .doc(uid)

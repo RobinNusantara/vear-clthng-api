@@ -32,7 +32,6 @@ function CardItem({addProductToCart, addProductToWishlist, ...props}) {
     'productPrice': props.productPrice,
   };
 
-  const uid = useSelector((state) => state.firebase.auth.uid);
   const auth = useSelector((state) => state.firebase.auth);
 
   const mouseEnter = () => setIsMouseInside(true);
@@ -54,7 +53,7 @@ function CardItem({addProductToCart, addProductToWishlist, ...props}) {
                 <IconButton onClick={(event) => {
                   event.preventDefault();
                   if (isLoaded(auth) && !isEmpty(auth)) {
-                    addProductToWishlist(uid, data);
+                    addProductToWishlist(data);
                   }
                 }}>
                   <Icon className={classes.icon} icon={outlineFavoriteBorder}/>
@@ -69,7 +68,7 @@ function CardItem({addProductToCart, addProductToWishlist, ...props}) {
                 <IconButton onClick={(event) => {
                   event.preventDefault();
                   if (isLoaded(auth) && !isEmpty(auth)) {
-                    addProductToCart(uid, {...data, 'productAmount': 1});
+                    addProductToCart({...data, 'productAmount': 1});
                   } else {
                     console.log('you are not authorized');
                   }
@@ -98,8 +97,8 @@ function CardItem({addProductToCart, addProductToWishlist, ...props}) {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addProductToCart: (uid, data) => dispatch(addProductToCart(uid, data)),
-    addProductToWishlist: (uid, data) => dispatch(addProductToWishlist(uid, data)),
+    addProductToCart: (data) => dispatch(addProductToCart(data)),
+    addProductToWishlist: (data) => dispatch(addProductToWishlist(data)),
   };
 };
 
