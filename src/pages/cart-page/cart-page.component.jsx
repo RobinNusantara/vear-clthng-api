@@ -1,7 +1,7 @@
 import React, {Fragment} from 'react';
-import {useSelector} from 'react-redux';
+import {useSelector, connect} from 'react-redux';
 import {useFirestoreConnect} from 'react-redux-firebase';
-import {useRemoveData} from '../../hooks/user.hook';
+import {removeProductFromCart} from '../../actions/cart.action';
 import {totalPrice, formatPrice} from '../../utils/utils';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
@@ -15,15 +15,13 @@ import Spinner from '../../components/spinner/spinner.component';
 import EmptyCartIllustration from '../../assets/images/empty-cart.svg';
 import useStyles from './cart-page.styles';
 
-function CartPage() {
+function CartPage({removeProduct}) {
   const classes = useStyles();
   const uid = useSelector((state) => state.firebase.auth.uid);
 
   const cartPath = `users/${uid}/cart`;
   useFirestoreConnect(() => [{collection: cartPath}]);
   const cart = useSelector((state) => state.firestore.ordered[cartPath]);
-
-  const [, setRemove] = useRemoveData({uid, collection: 'cart'});
 
   return (
     <Fragment>
@@ -58,7 +56,7 @@ function CartPage() {
                 }/>
               <CustomTable
                 collection={cart}
-                setRemove={setRemove}/>
+                removeDocument={removeProduct}/>
               <div className={classes.content}>
                 <Typography className={classes.totalCount} variant="subtitle1">
                   {'TOTAL ' + formatPrice(totalPrice(cart))}</Typography>
@@ -78,4 +76,10 @@ function CartPage() {
   );
 };
 
-export default CartPage;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    removeProduct: (uid, id) => dispatch(removeProductFromCart(uid, id)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(CartPage);

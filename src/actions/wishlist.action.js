@@ -25,3 +25,14 @@ export function addProductToWishlist(uid, data) {
   };
 }
 
+export function removeProductFromWishlist(uid, id) {
+  return (dispatch, getState, getFirebase) => {
+    return getFirebase().firestore()
+        .collection('users')
+        .doc(uid)
+        .collection('wishlist')
+        .doc(id)
+        .delete()
+        .then(() => dispatch({type: FavoActionTypes.REMOVE_ITEM_FROM_FAVO}));
+  };
+}

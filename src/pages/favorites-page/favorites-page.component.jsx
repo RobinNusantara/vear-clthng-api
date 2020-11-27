@@ -1,7 +1,7 @@
 import React, {Fragment} from 'react';
-import {useSelector} from 'react-redux';
-import {useRemoveData} from '../../hooks/user.hook';
+import {useSelector, connect} from 'react-redux';
 import {useFirestoreConnect} from 'react-redux-firebase';
+import {removeProductFromWishlist} from '../../actions/wishlist.action';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import {Icon} from '@iconify/react';
@@ -13,15 +13,13 @@ import Spinner from '../../components/spinner/spinner.component';
 import EmptyFavoriteIllustration from '../../assets/images/empty-wishlist.svg';
 import useStyles from './favorites-page.styles';
 
-function FavoritesPage() {
+function FavoritesPage({removeProduct}) {
   const classes = useStyles();
   const uid = useSelector((state) => state.firebase.auth.uid);
 
   const wishlistPath = `users/${uid}/wishlist`;
   useFirestoreConnect(() => [{collection: wishlistPath}]);
   const wishlist = useSelector((state) => state.firestore.ordered[wishlistPath]);
-
-  const [, setRemove] = useRemoveData({uid, collection: 'wishlist'});
 
   return (
     <Fragment>
@@ -56,7 +54,7 @@ function FavoritesPage() {
                 }/>
               <CustomTable
                 collection={wishlist}
-                setRemove={setRemove}/>
+                removeDocument={removeProduct}/>
             </Fragment>
           }
         </PageWrapper>
@@ -65,4 +63,10 @@ function FavoritesPage() {
   );
 };
 
-export default FavoritesPage;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    removeProduct: (uid, id) => dispatch(removeProductFromWishlist(uid, id)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(FavoritesPage);

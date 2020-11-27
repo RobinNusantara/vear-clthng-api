@@ -24,3 +24,15 @@ export function addProductToCart(uid, data) {
         .catch((error) => dispatch(addProductToCartFailed(error)));
   };
 }
+
+export function removeProductFromCart(uid, id) {
+  return (dispatch, getState, getFirebase) => {
+    return getFirebase().firestore()
+        .collection('users')
+        .doc(uid)
+        .collection('cart')
+        .doc(id)
+        .delete()
+        .then(() => dispatch({type: CartActionTypes.REMOVE_ITEM_FROM_CART}));
+  };
+}
