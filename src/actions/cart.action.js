@@ -16,6 +16,14 @@ function addProductToCartFailed(error) {
 export function addProductToCart(data) {
   return (dispatch, getState, getFirebase) => {
     const uid = getState().firebase.auth.uid;
+
+    const cartPath = `users/${uid}/cart`;
+    const cart = getState().firestore.ordered[cartPath];
+
+    const isProductExists = cart.find((doc, index) => doc.productName === data.productName);
+
+    if (isProductExists) return;
+
     return getFirebase().firestore()
         .collection('users')
         .doc(uid)
@@ -23,6 +31,18 @@ export function addProductToCart(data) {
         .add(data)
         .then(() => dispatch(addProductToCartSuccess()))
         .catch((error) => dispatch(addProductToCartFailed(error)));
+  };
+}
+
+export function updateProductInCart(id, newData) {
+  return (dispatch, getState, getFirebase) => {
+    const uid = getState().firebase.auth.uid;
+    return getFirebase().firestore()
+        .collection('users')
+        .doc(uid)
+        .collection('cart')
+        .update(newData)
+        .then(() => dispatch({type: CartActionTypes.UPDATE_CART_ITEM}));
   };
 }
 

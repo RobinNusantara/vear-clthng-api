@@ -16,6 +16,14 @@ function addProductToFavoFailed(error) {
 export function addProductToWishlist(data) {
   return (dispatch, getState, getFirebase) => {
     const uid = getState().firebase.auth.uid;
+
+    const wishlistPath = `users/${uid}/wishlist`;
+    const cart = getState().firestore.ordered[wishlistPath];
+
+    const isProductExists = cart.find((doc, index) => doc.productName === data.productName);
+
+    if (isProductExists) return;
+
     return getFirebase().firestore()
         .collection('users')
         .doc(uid)
