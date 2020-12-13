@@ -37,7 +37,7 @@ function Navbar() {
                 className={classes.menu}
                 variant="h6"
                 underline="none"
-                to="/collections"
+                to="/shop"
                 component={RouterLink}>SHOP</Link>
               <Link
                 className={classes.menu}

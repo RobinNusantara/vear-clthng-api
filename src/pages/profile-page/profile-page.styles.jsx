@@ -12,4 +12,3 @@ export const StyledListItemText = withStyles((theme) => ({
     },
   },
 }))(ListItemText);
-

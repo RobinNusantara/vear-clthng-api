@@ -23,7 +23,7 @@ function NavigationBottom() {
       value: 0,
       label: 'home',
       icon: homeOption,
-      route: '/',
+      route: '/shop',
     },
     {
       value: 1,
@@ -48,7 +48,7 @@ function NavigationBottom() {
   useEffect(() => {
     const path = location.pathname;
     switch (path) {
-      case '/':
+      case '/shop':
         setValue(0);
         break;
       case '/favorites':

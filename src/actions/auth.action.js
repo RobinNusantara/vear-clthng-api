@@ -47,7 +47,7 @@ export function signInWithEmailAndPassword(credentials) {
       password: credentials.password,
     })
         .then(() => dispatch(signInSuccess()))
-        .then(() => dispatch(push('/')))
+        .then(() => dispatch(push('/shop')))
         .catch((error) => dispatch(signInFailed(error.message)));
   };
 }
@@ -65,7 +65,7 @@ export function signUpWithEmailAndPassword(credentials) {
       email: credentials.email,
     })
         .then(() => dispatch(signUpSuccess()))
-        .then(() => dispatch(push('/')))
+        .then(() => dispatch(push('/shop')))
         .catch((error) => dispatch(signUpFailed(error.message)));
   };
 }

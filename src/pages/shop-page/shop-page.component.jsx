@@ -4,7 +4,7 @@ import {useFirestoreConnect} from 'react-redux-firebase';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Spinner from '../../components/spinner/spinner.component';
-import useStyles from './home-page.styles';
+import useStyles from './shop-page.styles';
 import Directory from '../../components/directory/directory.component';
 
 function HomePage() {

@@ -6,9 +6,10 @@ import Container from '@material-ui/core/Container';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Divider from '@material-ui/core/Divider';
-import {StyledListItemText} from './user-page.styles';
+import {StyledListItemText} from './profile-page.styles';
 
-function UserPage() {
+
+function ProfilePage() {
   const history = useHistory();
   const firebase = useFirebase();
   const auth = useSelector((state) => state.firebase.profile);
@@ -39,6 +40,6 @@ function UserPage() {
       </Container>
     </Fragment>
   );
-};
+}
 
-export default UserPage;
+export default ProfilePage;
