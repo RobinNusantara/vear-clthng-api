@@ -45,10 +45,13 @@ export function insertProduct(values) {
   return (dispatch) => {
     const formData = new FormData();
     const files = values.files;
-    const headers = {headers: {'Content-Type': 'multipart/form-data'}};
+    const headers = {headers: {'Content-Type': 'application/json'}};
+
+    console.log(values);
 
     formData.append('productName', values.productName);
-    formData.append('productLabel', values.productLabel);
+    formData.append('productBrand', values.productBrand);
+    formData.append('productCategory', values.productCategory);
     formData.append('productColor', values.productColor);
     formData.append('productSize', values.productSize);
     formData.append('productPrice', values.productPrice);

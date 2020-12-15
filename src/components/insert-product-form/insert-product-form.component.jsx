@@ -3,14 +3,40 @@ import {useDispatch} from 'react-redux';
 import {Formik, Form} from 'formik';
 import {useDropzone} from 'react-dropzone';
 import {insertProduct} from '../../actions/products.action';
-import TextField from '../text-field/text-field.component';
+import InputField from '../text-field/text-field.component';
 import CustomButton from '../custom-button/custom-button.component';
 import Grid from '@material-ui/core/Grid';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import Typography from '@material-ui/core/Typography';
+import FormControl from '@material-ui/core/FormControl';
+import TextField from '@material-ui/core/TextField';
+import MenuItem from '@material-ui/core/MenuItem';
 import ImageIcon from '@material-ui/icons/Image';
 import useStyles from './insert-product-form.styles';
+
+const categories = [
+  {
+    value: 't-shirt',
+    label: 'T-Shirt',
+  },
+  {
+    value: 'pants',
+    label: 'Pants',
+  },
+  {
+    value: 'hijab',
+    label: 'Hijab',
+  },
+  {
+    value: 'jackets',
+    label: 'Jackets',
+  },
+  {
+    value: 'sneakers',
+    label: 'Sneakers',
+  },
+];
 
 function InsertProductForm() {
   const classes = useStyles();
@@ -43,7 +69,8 @@ function InsertProductForm() {
       <Formik
         initialValues={{
           productName: '',
-          productLabel: '',
+          productBrand: '',
+          productCategory: '',
           productColor: '',
           productSize: '',
           productPrice: '',
@@ -54,31 +81,57 @@ function InsertProductForm() {
           <Form>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
-                <TextField
+                <InputField
                   label="Product Name"
                   type="text"
                   name="productName"
                   value={values.productName}
                   handleChange={handleChange}/>
-                <TextField
+                <InputField
                   label="Product Brand"
                   type="text"
-                  name="productLabel"
-                  value={values.productLabel}
+                  name="productBrand"
+                  value={values.productBrand}
                   handleChange={handleChange}/>
-                <TextField
+                <FormControl className={classes.inputSelectContainer}>
+                  <label className={classes.inputSelectLabel}>
+                    Product Category
+                  </label>
+                  <TextField
+                    className={classes.inputSelectItem}
+                    select
+                    name="productCategory"
+                    value={values.productCategory}
+                    variant="outlined"
+                    onChange={handleChange}
+                    inputProps={{
+                      className: classes.inputSelectField,
+                    }}>
+                    {
+                      categories.map((category, idx) => (
+                        <MenuItem
+                          className={classes.inputSelectItem}
+                          key={idx}
+                          value={category.value}>
+                          {category.label}
+                        </MenuItem>
+                      ))
+                    }
+                  </TextField>
+                </FormControl>
+                <InputField
                   label="Product Color"
                   type="text"
                   name="productColor"
                   value={values.productColor}
                   handleChange={handleChange}/>
-                <TextField
+                <InputField
                   label="Product Size"
                   type="text"
                   name="productSize"
                   value={values.productSize}
                   handleChange={handleChange}/>
-                <TextField
+                <InputField
                   label="Product Price"
                   type="number"
                   name="productPrice"
