@@ -5,6 +5,7 @@ const useStyles = makeStyles((theme) => ({
     position: 'sticky',
     backgroundColor: theme.palette.common.white,
     color: theme.palette.primary.main,
+    zIndex: 2000,
   },
   toolbar: {
     display: 'flex',
