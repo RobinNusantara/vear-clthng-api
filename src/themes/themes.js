@@ -1,6 +1,8 @@
 import {unstable_createMuiStrictModeTheme as createMuiTheme} from '@material-ui/core/styles';
 import grey from '@material-ui/core/colors/grey';
 import blueGrey from '@material-ui/core/colors/blueGrey';
+import red from '@material-ui/core/colors/red';
+import green from '@material-ui/core/colors/green';
 
 const theme = createMuiTheme({
   palette: {
@@ -10,6 +12,14 @@ const theme = createMuiTheme({
     secondary: {
       main: blueGrey[700],
       light: blueGrey[50],
+    },
+    error: {
+      main: red[700],
+      light: red[100],
+    },
+    success: {
+      main: green[700],
+      light: green[50],
     },
     text: {
       secondary: blueGrey[700],
@@ -37,10 +47,7 @@ const theme = createMuiTheme({
     },
   },
   boxShadow: {
-    primary: `rgba(17, 17, 26, 0.1) 0px 8px 24px, 
-              rgba(17, 17, 26, 0.1) 0px 16px 56px,
-              rgba(17, 17, 26, 0.1) 0px 24px 80px`,
-    secondary: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',
+    primary: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',
   },
   breakpoints: {
     xxs: '@media screen and (max-width: 360px)',
