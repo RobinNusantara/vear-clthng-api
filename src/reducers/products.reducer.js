@@ -2,7 +2,7 @@ import {ProductActionTypes} from '../helpers/helpers';
 
 const initialState = {
   isLoading: false,
-  products: [],
+  products: null,
   error: '',
 };
 

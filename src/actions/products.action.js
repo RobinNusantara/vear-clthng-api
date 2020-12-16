@@ -1,3 +1,4 @@
+import axios from 'axios';
 import API from '../api/api';
 import {ProductActionTypes} from '../helpers/helpers';
 
@@ -47,8 +48,6 @@ export function insertProduct(values) {
     const files = values.files;
     const headers = {headers: {'Content-Type': 'application/json'}};
 
-    console.log(values);
-
     formData.append('productName', values.productName);
     formData.append('productBrand', values.productBrand);
     formData.append('productCategory', values.productCategory);
@@ -66,8 +65,12 @@ export function insertProduct(values) {
 
 export function fetchProducts() {
   return (dispatch) => {
+    const CancelToken = axios.CancelToken;
+    const source = CancelToken.source();
+    const cancellation = {cancelToken: source.token};
+
     dispatch(fetchProductStart());
-    API.get('products/all')
+    API.get('products/all', cancellation)
         .then((res) => res.data)
         .then((res) => dispatch(fetchProductSuccess(res.data)))
         .catch((error) => dispatch(fetchProductFailed(error)));
