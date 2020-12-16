@@ -48,14 +48,14 @@ function InsertProductForm() {
     accept: 'image/jpeg, image/png',
     maxFiles: 6,
     onDrop: (acceptedFiles) => {
-      setFiles(acceptedFiles.map((file) => Object.assign(file, {
+      setFiles([...files, ...acceptedFiles.map((file) => Object.assign(file, {
         preview: URL.createObjectURL(file),
-      })));
+      }))]);
     },
   });
 
-  const ImagePreview = files.map((file, idx) => (
-    <GridListTile key={idx}>
+  const ImagePreview = files.map((file) => (
+    <GridListTile key={file.path}>
       <img src={file.preview} alt={file.name} />
     </GridListTile>
   ));
@@ -104,9 +104,7 @@ function InsertProductForm() {
                     value={values.productCategory}
                     variant="outlined"
                     onChange={handleChange}
-                    inputProps={{
-                      className: classes.inputSelectField,
-                    }}>
+                    inputProps={{className: classes.inputSelectField}}>
                     {
                       categories.map((category, idx) => (
                         <MenuItem
