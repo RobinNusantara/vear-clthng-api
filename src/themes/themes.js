@@ -52,6 +52,26 @@ const theme = createMuiTheme({
   breakpoints: {
     xxs: '@media screen and (max-width: 360px)',
   },
+  overrides: {
+    MuiTabs: {
+      indicator: {
+        height: 0,
+      },
+    },
+    MuiTab: {
+      root: {
+        'textTransform': 'capitalize',
+        'marginRight': 8,
+        'marginLeft': 8,
+        'borderRadius': 4,
+        'backgroundColor': blueGrey[50],
+        '&$selected': {
+          color: 'white',
+          backgroundColor: grey[900],
+        },
+      },
+    },
+  },
 });
 
 export default theme;
