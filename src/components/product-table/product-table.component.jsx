@@ -1,8 +1,8 @@
 import React, {Fragment, useEffect} from 'react';
-import {Link as RouterLink} from 'react-router-dom';
-import {useSelector, useDispatch} from 'react-redux';
+import {Link as RouterLink, useParams} from 'react-router-dom';
+import {connect, useSelector} from 'react-redux';
 import {productsSelector, productsFetching} from '../../utils/products-selectors';
-import {fetchProducts} from '../../actions/products.action';
+import {fetchProducts, destroyProductsState} from '../../actions/products.action';
 import {formatPrice} from '../../utils/utils';
 import Spinner from '../../components/spinner/spinner.component';
 import Typography from '@material-ui/core/Typography';
@@ -15,20 +15,23 @@ import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import useStyles from './product-table.styles';
 
-function ProductTable() {
+function ProductTable({fetchProducts, destroyProducts}) {
   const classes = useStyles();
-  const dispatch = useDispatch();
   const products = useSelector(productsSelector);
   const isFetching = useSelector(productsFetching);
+  const {category} = useParams();
+
+  console.log(category);
 
   useEffect(() => {
-    dispatch(fetchProducts());
-  }, [dispatch]);
+    fetchProducts(category);
+    return () => destroyProducts();
+  }, [fetchProducts, category, destroyProducts]);
 
   return (
     <Fragment>
       {
-          !isFetching ? <Spinner/> :
+          isFetching ? <Spinner/> :
           <TableContainer>
             <Table>
               <TableHead>
@@ -105,4 +108,11 @@ function ProductTable() {
   );
 }
 
-export default ProductTable;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchProducts: (params) => dispatch(fetchProducts(params)),
+    destroyProducts: () => dispatch(destroyProductsState()),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(ProductTable);

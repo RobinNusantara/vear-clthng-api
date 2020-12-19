@@ -10,7 +10,6 @@ import CartPage from '../../pages/cart-page/cart-page.component';
 import SignInPage from '../../pages/signin-page/signin-page.component';
 import SignUpPage from '../../pages/signup-page/signup-page.component';
 import ProfilePage from '../../pages/profile-page/profile-page.component';
-
 import AdminPage from '../../pages/admin-pages/admin-pages.component';
 
 function Component(location, Component) {

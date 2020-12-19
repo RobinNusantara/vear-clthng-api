@@ -7,8 +7,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import {ReactComponent as VearClothingLogoLight} from '../../assets/icons/vear-logo-light.svg';
 import useStyles from './drawer-navigation.styles';
 
-function MenuButton(currentLocation, classes) {
-  if (currentLocation.pathname.match('/admin/dashboard')) {
+function MenuButton(location, classes) {
+  if (location.pathname.match('/admin/products')) {
     return (
       <IconButton className={classes.menuButton}>
         <MenuIcon />

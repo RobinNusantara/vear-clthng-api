@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
     width: 20,
     height: 20,
   },
-  smallButton: {
+  containedButton: {
     textTransform: 'capitalize',
     [theme.breakpoints.down('sm')]: {
       display: 'none',

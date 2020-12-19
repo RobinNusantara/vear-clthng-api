@@ -1,6 +1,6 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
-import {useHistory} from 'react-router-dom';
+import {useHistory, useLocation} from 'react-router-dom';
 import ProductTable from '../../components/product-table/product-table.component';
 import {useTheme} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -14,13 +14,38 @@ import {Icon} from '@iconify/react';
 import searchOutline from '@iconify/icons-eva/search-outline';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import useStyles from './admin-dashboard.styles';
+import categories from '../../data/categories';
+import useStyles from './admin-products-page.styles';
 
 function AdminDashboard() {
   const classes = useStyles();
+  const location = useLocation();
   const history = useHistory();
   const theme = useTheme();
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
+
+  useEffect(() => {
+    const path = location.pathname;
+    switch (path) {
+      case '/admin/products/t-shirt':
+        setValue(0);
+        break;
+      case '/admin/products/pants':
+        setValue(1);
+        break;
+      case '/admin/products/hijab':
+        setValue(2);
+        break;
+      case '/admin/products/jackets':
+        setValue(3);
+        break;
+      case '/admin/products/sneakers':
+        setValue(4);
+        break;
+      default:
+        break;
+    };
+  }, [location]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -43,7 +68,7 @@ function AdminDashboard() {
                 }}/>
             </div>
             <Button
-              className={classes.smallButton}
+              className={classes.containedButton}
               variant="contained"
               color="primary"
               disableElevation={true}
@@ -64,27 +89,23 @@ function AdminDashboard() {
             onChange={handleChange}
             variant="scrollable"
             scrollButtons="off">
-            <Tab {...a11yProps(0)} label={<Typography variant="subtitle1">t-shirts</Typography>}/>
-            <Tab {...a11yProps(1)} label={<Typography variant="subtitle1">pants</Typography>}/>
-            <Tab {...a11yProps(2)} label={<Typography variant="subtitle1">hijab</Typography>}/>
-            <Tab {...a11yProps(3)} label={<Typography variant="subtitle1">jackets</Typography>}/>
-            <Tab {...a11yProps(4)} label={<Typography variant="subtitle1">sneakers</Typography>}/>
+            {
+              categories.map((category, idx) => (
+                <Tab
+                  key={idx}
+                  {...a11yProps(idx)}
+                  label={<Typography variant="subtitle1">{category.name}</Typography>}
+                  onClick={() => history.push(`/admin/products/${category.name}`)}/>
+              ))
+            }
           </Tabs>
-          <TabPanel value={value} index={0}>
-            <span>T-Shirts</span>
-          </TabPanel>
-          <TabPanel value={value} index={1}>
-            <span>Pants</span>
-          </TabPanel>
-          <TabPanel value={value} index={2}>
-            <span>Hijab</span>
-          </TabPanel>
-          <TabPanel value={value} index={3}>
-            <span>Jackets</span>
-          </TabPanel>
-          <TabPanel value={value} index={4}>
-            <ProductTable/>
-          </TabPanel>
+          {
+            categories.map((_, idx) => (
+              <TabPanel key={idx} value={value} index={idx}>
+                <ProductTable/>
+              </TabPanel>
+            ))
+          }
         </Paper>
       </Container>
     </Fragment>
