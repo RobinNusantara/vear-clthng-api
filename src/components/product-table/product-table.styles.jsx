@@ -15,6 +15,21 @@ const useStyles = makeStyles((theme) => ({
   productCategory: {
     textTransform: 'capitalize',
   },
+  descriptionSpace: {
+    marginTop: theme.spacing(1),
+  },
+  cellSmDevice: {
+    display: 'none',
+    [theme.breakpoints.down('sm')]: {
+      display: 'block',
+    },
+  },
+  cellXlDevice: {
+    display: 'table-cell',
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    },
+  },
 }));
 
 export default useStyles;

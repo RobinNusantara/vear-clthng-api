@@ -1,7 +1,7 @@
 import React, {Fragment, useEffect} from 'react';
 import {Link as RouterLink} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
-import {productsSelector, productsLoaded} from '../../utils/products-selectors';
+import {productsSelector, productsFetching} from '../../utils/products-selectors';
 import {fetchProducts} from '../../actions/products.action';
 import {formatPrice} from '../../utils/utils';
 import Spinner from '../../components/spinner/spinner.component';
@@ -19,7 +19,7 @@ function ProductTable() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const products = useSelector(productsSelector);
-  const fetched = useSelector(productsLoaded);
+  const isFetching = useSelector(productsFetching);
 
   useEffect(() => {
     dispatch(fetchProducts());
@@ -28,7 +28,7 @@ function ProductTable() {
   return (
     <Fragment>
       {
-          !fetched ? <Spinner/> :
+          !isFetching ? <Spinner/> :
           <TableContainer>
             <Table>
               <TableHead>
@@ -39,13 +39,13 @@ function ProductTable() {
                   <TableCell colSpan={2}>
                     <Typography variant="subtitle1">Product</Typography>
                   </TableCell>
-                  <TableCell>
+                  <TableCell className={classes.cellXlDevice}>
                     <Typography variant="subtitle1">Brand</Typography>
                   </TableCell>
-                  <TableCell>
+                  <TableCell className={classes.cellXlDevice}>
                     <Typography variant="subtitle1">Category</Typography>
                   </TableCell>
-                  <TableCell>
+                  <TableCell className={classes.cellXlDevice}>
                     <Typography variant="subtitle1">Price</Typography>
                   </TableCell>
                 </TableRow>
@@ -69,16 +69,29 @@ function ProductTable() {
                           component={RouterLink}>
                           {product.productName}
                         </Link>
+                        <Typography
+                          className={`
+                          ${classes.cellSmDevice}
+                          ${classes.productCategory}
+                          ${classes.descriptionSpace}`}
+                          variant="subtitle1">
+                          {product.productCategory}
+                        </Typography>
+                        <Typography
+                          className={`${classes.cellSmDevice} ${classes.descriptionSpace}`}
+                          variant="subtitle1">
+                          {formatPrice(product.productPrice)}
+                        </Typography>
                       </TableCell>
-                      <TableCell>
+                      <TableCell className={classes.cellXlDevice}>
                         <Typography variant="subtitle1">{product.productBrand}</Typography>
                       </TableCell>
-                      <TableCell>
+                      <TableCell className={classes.cellXlDevice}>
                         <Typography className={classes.productCategory} variant="subtitle1">
                           {product.productCategory}
                         </Typography>
                       </TableCell>
-                      <TableCell>
+                      <TableCell className={classes.cellXlDevice}>
                         <Typography variant="subtitle1">{formatPrice(product.productPrice)}</Typography>
                       </TableCell>
                     </TableRow>
