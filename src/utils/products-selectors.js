@@ -11,8 +11,3 @@ export const productsFetching = createSelector(
     [selectShop],
     (shop) => shop.isLoading,
 );
-
-export const productsLoaded = createSelector(
-    [selectShop],
-    (shop) => !!shop.products,
-);
