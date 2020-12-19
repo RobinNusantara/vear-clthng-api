@@ -6,7 +6,7 @@ import useStyles from './directory.styles';
 
 function Directory({...props}) {
   const classes = useStyles(props);
-  const {id, title, xs, md} = props;
+  const {name, xs, md} = props;
   const history = useHistory();
 
   return (
@@ -14,11 +14,11 @@ function Directory({...props}) {
       <Grid item xs={xs} md={md}>
         <div
           className={classes.root}
-          onClick={() => history.push(`/collections/${id}`)}>
+          onClick={() => history.push(`/collections/${name}`)}>
           <div className={classes.image}/>
           <div className={classes.content}>
             <Typography className={classes.textHeader} variant="h6">
-              {title.toUpperCase()}
+              {name.toUpperCase()}
             </Typography>
             <Typography variant="h6">SHOP NOW</Typography>
           </div>
