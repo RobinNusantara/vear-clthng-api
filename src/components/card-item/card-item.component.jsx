@@ -1,8 +1,4 @@
 import React, {Fragment, useState} from 'react';
-import {connect, useSelector} from 'react-redux';
-import {isLoaded, isEmpty} from 'react-redux-firebase';
-import {addProductToCart} from '../../actions/cart.action';
-import {addProductToWishlist} from '../../actions/wishlist.action';
 import {formatPrice} from '../../utils/utils';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -20,19 +16,8 @@ import useStyles from './card-item.styles';
 
 function CardItem({addProductToCart, addProductToWishlist, ...props}) {
   const classes = useStyles();
-  const {productImageUrl, productName, productColor, productPrice} = props;
+  const {productName, productBrand, productPrice, images} = props;
   const [isMouseInside, setIsMouseInside] = useState(false);
-
-  const data = {
-    'productName': props.productName,
-    'productLabel': props.productLabel,
-    'productImageUrl': props.productImageUrl,
-    'productColor': props.productColor,
-    'productSize': props.productSize,
-    'productPrice': props.productPrice,
-  };
-
-  const auth = useSelector((state) => state.firebase.auth);
 
   const mouseEnter = () => setIsMouseInside(true);
 
@@ -46,16 +31,11 @@ function CardItem({addProductToCart, addProductToWishlist, ...props}) {
           elevation={0}
           onMouseEnter={mouseEnter}
           onMouseLeave={mouseLeave}>
-          <CardMedia className={classes.cardImage} image={productImageUrl}/>
+          <CardMedia className={classes.cardImage} image={`http://localhost:4000/images/${images[0].productImage}`}/>
           <CardActions disableSpacing className={classes.cardActions}>
             <Grow in={isMouseInside}>
               <Paper className={classes.paper}>
-                <IconButton onClick={(event) => {
-                  event.preventDefault();
-                  if (isLoaded(auth) && !isEmpty(auth)) {
-                    addProductToWishlist(data);
-                  }
-                }}>
+                <IconButton>
                   <Icon className={classes.icon} icon={outlineFavoriteBorder}/>
                 </IconButton>
               </Paper>
@@ -65,27 +45,20 @@ function CardItem({addProductToCart, addProductToWishlist, ...props}) {
               style={{transformOrigin: '0 0 0'}}
               {...(isMouseInside ? {timeout: 1000} : {})}>
               <Paper className={`${classes.paper} ${classes.cartContainer}`}>
-                <IconButton onClick={(event) => {
-                  event.preventDefault();
-                  if (isLoaded(auth) && !isEmpty(auth)) {
-                    addProductToCart({...data, 'productAmount': 1});
-                  } else {
-                    console.log('you are not authorized');
-                  }
-                }}>
+                <IconButton>
                   <Icon className={classes.icon} icon={plusOutline}/>
                 </IconButton>
               </Paper>
             </Grow>
           </CardActions>
           <CardContent className={classes.cardContent}>
-            <Typography className={`${classes.text} ${classes.textHeader}`} variant="subtitle1">
-              {productName.toUpperCase()}
+            <Typography className={`${classes.text} ${classes.textHeader}`} variant="subtitle2">
+              {productName}
             </Typography>
-            <Typography className={classes.text} variant="subtitle1">
-              {productColor.toUpperCase()}
+            <Typography className={classes.text} variant="subtitle2">
+              {productBrand}
             </Typography>
-            <Typography className={classes.text} variant="subtitle1">
+            <Typography className={classes.text} variant="subtitle2">
               {formatPrice(productPrice)}
             </Typography>
           </CardContent>
@@ -95,11 +68,4 @@ function CardItem({addProductToCart, addProductToWishlist, ...props}) {
   );
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addProductToCart: (data) => dispatch(addProductToCart(data)),
-    addProductToWishlist: (data) => dispatch(addProductToWishlist(data)),
-  };
-};
-
-export default connect(null, mapDispatchToProps)(CardItem);
+export default CardItem;

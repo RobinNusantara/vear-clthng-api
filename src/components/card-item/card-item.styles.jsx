@@ -38,6 +38,8 @@ const useStyles = makeStyles((theme) => ({
   },
   cardContent: {
     textAlign: 'center',
+    paddingLeft: 0,
+    paddingRight: 0,
   },
   textHeader: {
     fontWeight: 'bold',

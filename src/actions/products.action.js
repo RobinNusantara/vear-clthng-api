@@ -4,20 +4,20 @@ import {ProductActionTypes} from '../helpers/helpers';
 
 function fetchProductStart() {
   return {
-    type: ProductActionTypes.FETCH_PRODUCT_START,
+    type: ProductActionTypes.FETCH_PRODUCTS_START,
   };
 }
 
 function fetchProductSuccess(products) {
   return {
-    type: ProductActionTypes.FETCH_PRODUCT_SUCCESS,
+    type: ProductActionTypes.FETCH_PRODUCTS_SUCCESS,
     payload: products,
   };
 }
 
 function fetchProductFailed(error) {
   return {
-    type: ProductActionTypes.FETCH_PRODUCT_FAILED,
+    type: ProductActionTypes.FETCH_PRODUCTS_FAILED,
     payload: error,
   };
 }
@@ -42,6 +42,12 @@ function insertProductFailed(error) {
   };
 }
 
+export function destroyProductsState() {
+  return {
+    type: ProductActionTypes.DESTOY_PRODUCTS_STATE,
+  };
+}
+
 export function insertProduct(values) {
   return (dispatch) => {
     const formData = new FormData();
@@ -63,14 +69,14 @@ export function insertProduct(values) {
   };
 }
 
-export function fetchProducts() {
+export function fetchProducts(params) {
   return (dispatch) => {
     const CancelToken = axios.CancelToken;
     const source = CancelToken.source();
     const cancellation = {cancelToken: source.token};
 
     dispatch(fetchProductStart());
-    API.get('products/all', cancellation)
+    API.get(`products/list/${params}`, cancellation)
         .then((res) => res.data)
         .then((res) => dispatch(fetchProductSuccess(res.data)))
         .catch((error) => dispatch(fetchProductFailed(error)));
