@@ -1,8 +1,8 @@
 import React, {Fragment, useState, useEffect} from 'react';
 import {useLocation, useParams} from 'react-router-dom';
-import {connect, useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {fetchProducts, destroyProductsState} from '../../actions/products.action';
-import {productsSelector, productsFetching} from '../../utils/products-selectors';
+import {productsFetchSelector, productsLoadSelector} from '../../utils/products-selectors';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Tabs from '@material-ui/core/Tabs';
@@ -17,19 +17,19 @@ import searchOutline from '@iconify/icons-eva/search-outline';
 import optionsOutline from '@iconify/icons-eva/options-outline';
 import useStyles from './products-page.styles';
 
-function ProductsPage({fetchProducts, destroyProducts}) {
+function ProductsPage() {
   const classes = useStyles();
+  const [value, setValue] = useState(0);
+  const dispatch = useDispatch();
+  const products = useSelector(productsFetchSelector);
+  const isFetching = useSelector(productsLoadSelector);
   const location = useLocation();
   const {category} = useParams();
-  const [value, setValue] = useState(0);
-
-  const products = useSelector(productsSelector);
-  const isFetching = useSelector(productsFetching);
 
   useEffect(() => {
-    fetchProducts(category);
-    return () => destroyProducts();
-  }, [fetchProducts, category, destroyProducts]);
+    dispatch(fetchProducts(category));
+    return () => dispatch(destroyProductsState());
+  }, [dispatch, category]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -79,11 +79,4 @@ function ProductsPage({fetchProducts, destroyProducts}) {
   );
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchProducts: (params) => dispatch(fetchProducts(params)),
-    destroyProducts: () => dispatch(destroyProductsState()),
-  };
-};
-
-export default connect(null, mapDispatchToProps)(ProductsPage);
+export default ProductsPage;

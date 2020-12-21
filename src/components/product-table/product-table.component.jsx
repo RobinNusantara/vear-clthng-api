@@ -1,7 +1,7 @@
 import React, {Fragment, useEffect} from 'react';
 import {Link as RouterLink, useParams} from 'react-router-dom';
-import {connect, useSelector} from 'react-redux';
-import {productsSelector, productsFetching} from '../../utils/products-selectors';
+import {useDispatch, useSelector} from 'react-redux';
+import {productsFetchSelector, productsLoadSelector} from '../../utils/products-selectors';
 import {fetchProducts, destroyProductsState} from '../../actions/products.action';
 import {formatPrice} from '../../utils/utils';
 import Spinner from '../../components/spinner/spinner.component';
@@ -15,18 +15,17 @@ import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import useStyles from './product-table.styles';
 
-function ProductTable({fetchProducts, destroyProducts}) {
+function ProductTable() {
   const classes = useStyles();
-  const products = useSelector(productsSelector);
-  const isFetching = useSelector(productsFetching);
+  const dispatch = useDispatch();
+  const products = useSelector(productsFetchSelector);
+  const isFetching = useSelector(productsLoadSelector);
   const {category} = useParams();
 
-  console.log(category);
-
   useEffect(() => {
-    fetchProducts(category);
-    return () => destroyProducts();
-  }, [fetchProducts, category, destroyProducts]);
+    dispatch(fetchProducts(category));
+    return () => dispatch(destroyProductsState());
+  }, [dispatch, category]);
 
   return (
     <Fragment>
@@ -108,11 +107,4 @@ function ProductTable({fetchProducts, destroyProducts}) {
   );
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchProducts: (params) => dispatch(fetchProducts(params)),
-    destroyProducts: () => dispatch(destroyProductsState()),
-  };
-};
-
-export default connect(null, mapDispatchToProps)(ProductTable);
+export default ProductTable;
