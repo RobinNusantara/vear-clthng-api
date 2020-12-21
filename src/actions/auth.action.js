@@ -1,3 +1,4 @@
+import API from '../api/api';
 import {AuthActionTypes} from '../helpers/helpers';
 import {push} from 'connected-react-router';
 
@@ -52,20 +53,20 @@ export function signInWithEmailAndPassword(credentials) {
   };
 }
 
-export function signUpWithEmailAndPassword(credentials) {
-  return async (dispatch, getState, getFirebase) => {
+export function signUpWithEmailAndPassword(values) {
+  return (dispatch) => {
+    const data = {
+      'username': values.username,
+      'email': values.email,
+      'password': values.password,
+    };
+
     dispatch(signUpStart());
-    return await getFirebase().createUser({
-      email: credentials.email,
-      password: credentials.password,
-    },
-    {
-      avatarUrl: '',
-      displayName: credentials.displayName,
-      email: credentials.email,
-    })
-        .then(() => dispatch(signUpSuccess()))
-        .then(() => dispatch(push('/shop')))
-        .catch((error) => dispatch(signUpFailed(error.message)));
+    API.post('user/auth/register', data)
+        .then((res) => dispatch(signUpSuccess(res)))
+        .catch((error) => {
+          const message = error.response.data.messages;
+          dispatch(signUpFailed(message));
+        });
   };
 }

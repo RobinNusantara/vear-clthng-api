@@ -1,6 +1,7 @@
 import React, {Fragment} from 'react';
-import {connect} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {signUpWithEmailAndPassword} from '../../actions/auth.action';
+import {authSignUpErrorSelector, authLoadingSelector} from '../../utils/auth-selectors';
 import {Formik, Form} from 'formik';
 import Alert from '@material-ui/lab/Alert';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -9,21 +10,24 @@ import CustomButton from '../custom-button/custom-button.component';
 import {SignUpSchema} from '../../validation/form-validation';
 import useStyles from './register-form.styles';
 
-function RegisterForm({signUp, isLoading, error}) {
+function RegisterForm() {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const error = useSelector(authSignUpErrorSelector);
+  const isLoading = useSelector(authLoadingSelector);
 
   return (
     <Fragment>
       <Formik
         initialValues={{
-          displayName: '',
+          username: '',
           email: '',
           password: '',
           confirmPassword: '',
         }}
         validationSchema={SignUpSchema}
-        onSubmit={async (values) => {
-          await signUp(values);
+        onSubmit={(values) => {
+          dispatch(signUpWithEmailAndPassword(values));
         }}>{({values, handleChange, errors}) => (
           <Form className={classes.root}>
             {error && <Alert
@@ -31,12 +35,12 @@ function RegisterForm({signUp, isLoading, error}) {
               severity="error"
               icon={false}>{error}</Alert>}
             <TextField
-              label="display name"
+              label="username"
               type="text"
-              name="displayName"
-              value={values.displayName}
+              name="username"
+              value={values.username}
               handleChange={handleChange}
-              error={errors.displayName}/>
+              error={errors.username}/>
             <TextField
               label="email"
               type="email"
@@ -73,17 +77,4 @@ function RegisterForm({signUp, isLoading, error}) {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    isLoading: state.auth.isLoading,
-    error: state.auth.signUpError,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    signUp: (values) => dispatch(signUpWithEmailAndPassword(values)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(RegisterForm);
+export default RegisterForm;
