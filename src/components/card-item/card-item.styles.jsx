@@ -44,13 +44,15 @@ const useStyles = makeStyles((theme) => ({
   textHeader: {
     fontWeight: 'bold',
     color: theme.palette.primary.main,
+    cursor: 'pointer',
   },
   text: {
     width: '100%',
-    color: theme.palette.secondary.main,
+    marginTop: theme.spacing(0.5),
+    textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
     overflow: 'hidden',
-    textOverflow: 'ellipsis',
+    color: theme.palette.secondary.main,
   },
 }));
 

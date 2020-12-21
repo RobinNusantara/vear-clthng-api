@@ -1,4 +1,5 @@
 import React, {Fragment, useState} from 'react';
+import {useHistory} from 'react-router-dom';
 import {formatPrice} from '../../utils/utils';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -16,8 +17,10 @@ import useStyles from './card-item.styles';
 
 function CardItem({addProductToCart, addProductToWishlist, ...props}) {
   const classes = useStyles();
-  const {productName, productBrand, productPrice, images} = props;
+  const history = useHistory();
+  const {id, productName, productBrand, productPrice, images} = props;
   const [isMouseInside, setIsMouseInside] = useState(false);
+  const url = process.env.REACT_APP_VEAR_CLOTHING_URL;
 
   const mouseEnter = () => setIsMouseInside(true);
 
@@ -31,7 +34,7 @@ function CardItem({addProductToCart, addProductToWishlist, ...props}) {
           elevation={0}
           onMouseEnter={mouseEnter}
           onMouseLeave={mouseLeave}>
-          <CardMedia className={classes.cardImage} image={`http://localhost:4000/images/${images[0].productImage}`}/>
+          <CardMedia className={classes.cardImage} image={`${url}/images/${images[0].productImage}`}/>
           <CardActions disableSpacing className={classes.cardActions}>
             <Grow in={isMouseInside}>
               <Paper className={classes.paper}>
@@ -52,7 +55,10 @@ function CardItem({addProductToCart, addProductToWishlist, ...props}) {
             </Grow>
           </CardActions>
           <CardContent className={classes.cardContent}>
-            <Typography className={`${classes.text} ${classes.textHeader}`} variant="subtitle2">
+            <Typography
+              className={`${classes.text} ${classes.textHeader}`}
+              variant="subtitle2"
+              onClick={() => history.push(`/collection/details/${id}`)}>
               {productName}
             </Typography>
             <Typography className={classes.text} variant="subtitle2">
