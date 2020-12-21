@@ -25,7 +25,7 @@ const productsReducer = (state = initialState, action) => {
         isLoading: false,
         products: action.error,
       };
-    case ProductActionTypes.DESTOY_PRODUCTS_STATE:
+    case ProductActionTypes.DESTROY_PRODUCTS_STATE:
       return initialState;
     default:
       return state;

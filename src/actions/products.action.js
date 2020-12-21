@@ -44,7 +44,7 @@ function insertProductFailed(error) {
 
 export function destroyProductsState() {
   return {
-    type: ProductActionTypes.DESTOY_PRODUCTS_STATE,
+    type: ProductActionTypes.DESTROY_PRODUCTS_STATE,
   };
 }
 
