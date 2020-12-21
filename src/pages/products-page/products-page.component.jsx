@@ -2,7 +2,7 @@ import React, {Fragment, useState, useEffect} from 'react';
 import {useLocation, useParams} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {fetchProducts, destroyProductsState} from '../../actions/products.action';
-import {productsFetchSelector, productsLoadSelector} from '../../utils/products-selectors';
+import {productsFetchSelector, productsLoadingSelector} from '../../utils/products-selectors';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Tabs from '@material-ui/core/Tabs';
@@ -22,7 +22,7 @@ function ProductsPage() {
   const [value, setValue] = useState(0);
   const dispatch = useDispatch();
   const products = useSelector(productsFetchSelector);
-  const isFetching = useSelector(productsLoadSelector);
+  const isFetching = useSelector(productsLoadingSelector);
   const location = useLocation();
   const {category} = useParams();
 

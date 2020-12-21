@@ -14,29 +14,7 @@ import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import ImageIcon from '@material-ui/icons/Image';
 import useStyles from './insert-product-form.styles';
-
-const categories = [
-  {
-    value: 't-shirt',
-    label: 'T-Shirt',
-  },
-  {
-    value: 'pants',
-    label: 'Pants',
-  },
-  {
-    value: 'hijab',
-    label: 'Hijab',
-  },
-  {
-    value: 'jackets',
-    label: 'Jackets',
-  },
-  {
-    value: 'sneakers',
-    label: 'Sneakers',
-  },
-];
+import categories from '../../data/categories';
 
 function InsertProductForm() {
   const classes = useStyles();
@@ -98,7 +76,7 @@ function InsertProductForm() {
                     Product Category
                   </label>
                   <TextField
-                    className={classes.inputSelectItem}
+                    className={classes.inputSelectMenu}
                     select
                     name="productCategory"
                     value={values.productCategory}
@@ -108,10 +86,10 @@ function InsertProductForm() {
                     {
                       categories.map((category, idx) => (
                         <MenuItem
-                          className={classes.inputSelectItem}
+                          className={classes.inputSelectMenu}
                           key={idx}
-                          value={category.value}>
-                          {category.label}
+                          value={category.name}>
+                          {category.name}
                         </MenuItem>
                       ))
                     }

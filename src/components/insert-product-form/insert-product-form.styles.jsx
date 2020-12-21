@@ -18,8 +18,9 @@ const useStyles = makeStyles((theme) => ({
       fontSize: 12,
     },
   },
-  inputSelectItem: {
+  inputSelectMenu: {
     fontSize: 14,
+    textTransform: 'capitalize',
     [theme.breakpoints.down('sm')]: {
       fontSize: 12,
     },

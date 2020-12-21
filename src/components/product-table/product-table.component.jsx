@@ -1,7 +1,7 @@
 import React, {Fragment, useEffect} from 'react';
 import {Link as RouterLink, useParams} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
-import {productsFetchSelector, productsLoadSelector} from '../../utils/products-selectors';
+import {productsFetchSelector, productsLoadingSelector} from '../../utils/products-selectors';
 import {fetchProducts, destroyProductsState} from '../../actions/products.action';
 import {formatPrice} from '../../utils/utils';
 import Spinner from '../../components/spinner/spinner.component';
@@ -19,7 +19,7 @@ function ProductTable() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const products = useSelector(productsFetchSelector);
-  const isFetching = useSelector(productsLoadSelector);
+  const isFetching = useSelector(productsLoadingSelector);
   const {category} = useParams();
 
   useEffect(() => {
