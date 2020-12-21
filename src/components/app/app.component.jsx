@@ -5,6 +5,7 @@ import NavigationBottom from '../../components/bottom-navigation/bottom-navigati
 import PrivateRoute from '../../routes/private-routes';
 import ShopPage from '../../pages/shop-page/shop-page.component';
 import ProductsPage from '../../pages/products-page/products-page.component';
+import ProductPage from '../../pages/product-page/product-page.component';
 import FavoritesPage from '../../pages/favorites-page/favorites-page.component';
 import CartPage from '../../pages/cart-page/cart-page.component';
 import SignInPage from '../../pages/signin-page/signin-page.component';
@@ -28,6 +29,7 @@ function App() {
         <Route path="/shop" component={ShopPage}/>
         <Route path="/favorites" component={FavoritesPage}/>
         <Route path="/collections/:category" render={() => <ProductsPage/>}/>
+        <Route path="/collection/details/:id" render={() => <ProductPage/>}/>
         <Route path="/cart" component={CartPage}/>
         <Route path="/signin" component={SignInPage}/>
         <Route path="/signup" component={SignUpPage}/>

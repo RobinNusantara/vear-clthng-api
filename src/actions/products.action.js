@@ -2,26 +2,6 @@ import axios from 'axios';
 import API from '../api/api';
 import {ProductActionTypes} from '../helpers/helpers';
 
-function fetchProductStart() {
-  return {
-    type: ProductActionTypes.FETCH_PRODUCTS_START,
-  };
-}
-
-function fetchProductSuccess(products) {
-  return {
-    type: ProductActionTypes.FETCH_PRODUCTS_SUCCESS,
-    payload: products,
-  };
-}
-
-function fetchProductFailed(error) {
-  return {
-    type: ProductActionTypes.FETCH_PRODUCTS_FAILED,
-    payload: error,
-  };
-}
-
 function insertProductStart() {
   return {
     type: ProductActionTypes.INSERT_PRODUCT_START,
@@ -38,6 +18,46 @@ function insertProductSuccess(product) {
 function insertProductFailed(error) {
   return {
     type: ProductActionTypes.INSERT_PRODUCT_FAILED,
+    payload: error,
+  };
+}
+
+function fetchProductsStart() {
+  return {
+    type: ProductActionTypes.FETCH_PRODUCTS_START,
+  };
+}
+
+function fetchProductsSuccess(products) {
+  return {
+    type: ProductActionTypes.FETCH_PRODUCTS_SUCCESS,
+    payload: products,
+  };
+}
+
+function fetchProductsFailed(error) {
+  return {
+    type: ProductActionTypes.FETCH_PRODUCTS_FAILED,
+    payload: error,
+  };
+}
+
+function fetchProductStart() {
+  return {
+    type: ProductActionTypes.FETCH_PRODUCT_START,
+  };
+}
+
+function fetchProductSuccess(product) {
+  return {
+    type: ProductActionTypes.FETCH_PRODUCT_SUCCESS,
+    payload: product,
+  };
+}
+
+function fetchProductFailed(error) {
+  return {
+    type: ProductActionTypes.FETCH_PRODUCT_FAILED,
     payload: error,
   };
 }
@@ -75,8 +95,18 @@ export function fetchProducts(params) {
     const source = CancelToken.source();
     const cancellation = {cancelToken: source.token};
 
-    dispatch(fetchProductStart());
+    dispatch(fetchProductsStart());
     API.get(`products/list/${params}`, cancellation)
+        .then((res) => res.data)
+        .then((res) => dispatch(fetchProductsSuccess(res.data)))
+        .catch((error) => dispatch(fetchProductsFailed(error)));
+  };
+}
+
+export function fetchProduct(params) {
+  return (dispatch) => {
+    dispatch(fetchProductStart());
+    API.get(`products/details/${params}`)
         .then((res) => res.data)
         .then((res) => dispatch(fetchProductSuccess(res.data)))
         .catch((error) => dispatch(fetchProductFailed(error)));
