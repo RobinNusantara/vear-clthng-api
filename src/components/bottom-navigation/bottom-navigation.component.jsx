@@ -1,6 +1,4 @@
 import React, {Fragment, useState, useEffect} from 'react';
-import {useSelector} from 'react-redux';
-import {isLoaded, isEmpty} from 'react-redux-firebase';
 import {Link, useLocation} from 'react-router-dom';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
@@ -16,7 +14,6 @@ function NavigationBottom() {
   const classes = useStyles();
   const [value, setValue] = useState(0);
   const location = useLocation();
-  const auth = useSelector((state) => state.firebase.auth);
 
   const navigations = [
     {
@@ -41,7 +38,7 @@ function NavigationBottom() {
       value: 3,
       label: 'account',
       icon: bxUser,
-      route: `${isLoaded(auth) && !isEmpty(auth) ? '/user' : '/signin'}`,
+      route: '',
     },
   ];
 
