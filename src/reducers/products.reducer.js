@@ -32,7 +32,7 @@ const productsReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: false,
-        products: action.error,
+        products: action.payload,
       };
     case ProductActionTypes.DESTROY_PRODUCTS_STATE:
       return initialState;
