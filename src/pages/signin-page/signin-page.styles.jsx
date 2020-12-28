@@ -12,11 +12,7 @@ const useStyles = makeStyles((theme) => ({
   },
   textHeader: {
     fontWeight: 'bold',
-    textTransform: 'uppercase',
     marginBottom: theme.spacing(2),
-  },
-  textSubtitle: {
-    textTransform: 'uppercase',
   },
   divider: {
     display: 'flex',
@@ -31,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
   },
   dividerText: {
     fontWeight: 'bold',
-    textTransform: 'uppercase',
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
     color: theme.palette.secondary.main,
@@ -41,7 +36,6 @@ const useStyles = makeStyles((theme) => ({
   },
   textFooter: {
     textAlign: 'center',
-    textTransform: 'uppercase',
   },
 }));
 
