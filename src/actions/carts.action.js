@@ -36,7 +36,7 @@ function fetchCartItemsSuccess(carts) {
 
 function fetchCartItemsFailed(error) {
   return {
-    type: CartActionTypes.FETCH_CART_ITEMS_SUCCESS,
+    type: CartActionTypes.FETCH_CART_ITEMS_FAILED,
     payload: error,
   };
 }

@@ -26,16 +26,16 @@ const cartsReducer = (state = initialState, action) => {
         isLoading: false,
         messages: action.payload,
       };
-    case CartActionTypes.REMOVE_ITEM_FROM_CART:
-      return {
-        ...state,
-        carts: state.carts.filter((cart) => cart.id !== action.payload),
-      };
     case CartActionTypes.FETCH_CART_ITEMS_FAILED:
       return {
         ...state,
         isLoading: false,
         error: action.payload,
+      };
+    case CartActionTypes.REMOVE_ITEM_FROM_CART:
+      return {
+        ...state,
+        carts: state.carts.filter((cart) => cart.id !== action.payload),
       };
     case CartActionTypes.DESTROY_CART_STATE:
       return initialState;
