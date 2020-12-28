@@ -3,6 +3,7 @@ import {makeStyles} from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   root: {
     width: (props) => props.width,
+    textTransform: 'capitalize',
     fontSize: 14,
     borderRadius: 4,
     paddingTop: theme.spacing(2),
