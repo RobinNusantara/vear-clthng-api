@@ -1,5 +1,8 @@
 import React, {Fragment, useState} from 'react';
 import {useHistory} from 'react-router-dom';
+import {useDispatch} from 'react-redux';
+import {insertItemToCart} from '../../actions/carts.action';
+import {insertItemToWishlist} from '../../actions/wishlist.action';
 import {formatPrice} from '../../utils/utils';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
@@ -15,10 +18,11 @@ import outlineFavoriteBorder from '@iconify/icons-ic/baseline-favorite-border';
 import plusOutline from '@iconify/icons-eva/plus-outline';
 import useStyles from './card-item.styles';
 
-function CardItem({addProductToCart, addProductToWishlist, ...props}) {
+function CardItem({...product}) {
   const classes = useStyles();
   const history = useHistory();
-  const {id, productName, productBrand, productPrice, images} = props;
+  const dispatch = useDispatch();
+  const {id, productName, productBrand, productPrice, images} = product;
   const [isMouseInside, setIsMouseInside] = useState(false);
   const url = process.env.REACT_APP_VEAR_CLOTHING_URL;
 
@@ -38,7 +42,9 @@ function CardItem({addProductToCart, addProductToWishlist, ...props}) {
           <CardActions disableSpacing className={classes.cardActions}>
             <Grow in={isMouseInside}>
               <Paper className={classes.paper}>
-                <IconButton>
+                <IconButton onClick={() => {
+                  dispatch(insertItemToWishlist(id));
+                }}>
                   <Icon className={classes.icon} icon={outlineFavoriteBorder}/>
                 </IconButton>
               </Paper>
@@ -48,7 +54,9 @@ function CardItem({addProductToCart, addProductToWishlist, ...props}) {
               style={{transformOrigin: '0 0 0'}}
               {...(isMouseInside ? {timeout: 1000} : {})}>
               <Paper className={`${classes.paper} ${classes.cartContainer}`}>
-                <IconButton>
+                <IconButton onClick={() => {
+                  dispatch(insertItemToCart(id));
+                }}>
                   <Icon className={classes.icon} icon={plusOutline}/>
                 </IconButton>
               </Paper>
