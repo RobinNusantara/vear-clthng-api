@@ -1,5 +1,6 @@
 import React, {Fragment} from 'react';
-import {useLocation} from 'react-router-dom';
+// import {useLocation} from 'react-router-dom';
+import {useDispatch} from 'react-redux';
 import {formatPrice} from '../../utils/utils';
 import Typography from '@material-ui/core/Typography';
 import Table from '@material-ui/core/Table';
@@ -11,17 +12,19 @@ import TableCell from '@material-ui/core/TableCell';
 import IconButton from '@material-ui/core/IconButton';
 import {Icon} from '@iconify/react';
 import closeOutline from '@iconify/icons-eva/close-outline';
-import CounterButton from '../../components/counter-button/counter-button.component';
+// import CounterButton from '../../components/counter-button/counter-button.component';
 import useStyles from './custom-table.styles';
 
-function Counter(currentLocation, document) {
-  if (currentLocation.pathname.match('/favorites')) return null;
-  return (<CounterButton document={document}/>);
-}
+// function Counter(location, document) {
+//   if (location.pathname.match('/favorites')) return null;
+//   return (<CounterButton document={document}/>);
+// }
 
-function CustomTable({collection, removeDocument}) {
+function CustomTable({items, removeItem}) {
   const classes = useStyles();
-  const location = useLocation();
+  // const location = useLocation();
+  const dispatch = useDispatch();
+  const url = process.env.REACT_APP_VEAR_CLOTHING_URL;
 
   return (
     <Fragment>
@@ -30,49 +33,49 @@ function CustomTable({collection, removeDocument}) {
           <TableHead>
             <TableRow>
               <TableCell className={classes.resetCell}>
-                <Typography variant="subtitle1">PRODUCT</Typography>
+                <Typography variant="subtitle1">Product</Typography>
               </TableCell>
               <TableCell align="left">
-                <Typography variant="subtitle1">DESCRIPTION</Typography>
+                <Typography variant="subtitle1">Description</Typography>
               </TableCell>
               <TableCell className={classes.productPrice} align="left">
-                <Typography variant="subtitle1">PRICE</Typography>
+                <Typography variant="subtitle1">Price</Typography>
               </TableCell>
               <TableCell className={classes.resetCell} align="right">
-                <Typography variant="subtitle1">ACTION</Typography>
+                <Typography variant="subtitle1">Action</Typography>
               </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {
-              collection.map((document, idx) => (
-                <TableRow key={idx}>
+              items.map((item) => (
+                <TableRow key={item.id}>
                   <TableCell className={classes.resetCell} align="left">
                     <div
                       className={classes.productImage}
-                      style={{backgroundImage: `url(${document.productImageUrl})`}}/>
+                      style={{backgroundImage: `url(${url}/images/${item.collection.images[0].productImage})`}}/>
                   </TableCell>
                   <TableCell className={classes.productDescription} align="left">
                     <Typography className={classes.productName} variant="subtitle1">
-                      {document.productName.toUpperCase()}
+                      {item.collection.productName}
                     </Typography>
                     <Typography className={classes.productColor} variant="subtitle1">
-                      {document.productColor.toUpperCase()}
+                      {item.collection.productColor}
                     </Typography>
                     <Typography className={classes.descriptionPrice} variant="subtitle1">
-                      {formatPrice(document.productPrice)}
+                      {formatPrice(item.collection.productPrice)}
                     </Typography>
                     <div className={classes.counterButton}>
-                      {Counter(location, document)}
+                      {/* {Counter(location, item)} */}
                     </div>
                   </TableCell>
                   <TableCell className={classes.productPrice} align="left">
-                    {formatPrice(document.productPrice)}
+                    {formatPrice(item.collection.productPrice)}
                   </TableCell>
                   <TableCell className={classes.resetCell} align="right">
-                    <IconButton onClick={(event) => {
-                      event.preventDefault();
-                      removeDocument(document.id);
+                    <IconButton onClick={(e) => {
+                      e.preventDefault();
+                      dispatch(removeItem(item.id));
                     }}>
                       <Icon
                         className={classes.icon}

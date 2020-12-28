@@ -5,5 +5,5 @@ export function formatPrice(data) {
 }
 
 export function totalPrice(data) {
-  return data.reduce((acc, val) => acc + val.productAmount * val.productPrice, 0);
+  return data.reduce((acc, val) => acc + val.productQuantity * val.collection.productPrice, 0);
 }

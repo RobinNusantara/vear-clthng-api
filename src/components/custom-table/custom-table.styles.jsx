@@ -32,11 +32,31 @@ const useStyles = makeStyles((theme) => ({
     table: {
       width: '100%',
     },
+    productName: {
+      width: 180,
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
+    },
+    productColor: {
+      width: 180,
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
+    },
     productPrice: {
       display: 'none',
     },
     descriptionPrice: {
       display: 'block',
+    },
+  },
+  [theme.breakpoints.down('xs')]: {
+    productName: {
+      width: 140,
+    },
+    productColor: {
+      width: 140,
     },
   },
 }));
