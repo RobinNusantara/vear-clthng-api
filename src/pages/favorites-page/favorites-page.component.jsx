@@ -5,7 +5,7 @@ import {fetchWishlistItems, removeItemFromWishlist, destroyWishlistState} from '
 import Container from '@material-ui/core/Container';
 import PageWrapper from '../../components/container/container.component';
 import Header from '../../components/header/header.component';
-import CustomTable from '../../components/custom-table/custom-table.component';
+import UserDataTable from '../../components/user-data-table/user-data-table.component';
 import Spinner from '../../components/spinner/spinner.component';
 import EmptyData from '../../components/empty-data/empty-data.component';
 
@@ -29,7 +29,7 @@ function FavoritesPage() {
             favorites.length === 0 ? <EmptyData {...messages}/> :
             <Fragment>
               <Header collection={favorites} title="Wishlist"/>
-              <CustomTable items={favorites} removeItem={removeItemFromWishlist}/>
+              <UserDataTable items={favorites} removeItem={removeItemFromWishlist}/>
             </Fragment>
           }
         </PageWrapper>

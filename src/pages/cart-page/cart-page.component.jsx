@@ -7,7 +7,7 @@ import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import PageWrapper from '../../components/container/container.component';
 import Header from '../../components/header/header.component';
-import CustomTable from '../../components/custom-table/custom-table.component';
+import UserDataTable from '../../components/user-data-table/user-data-table.component';
 import CustomButton from '../../components/custom-button/custom-button.component';
 import Spinner from '../../components/spinner/spinner.component';
 import EmptyData from '../../components/empty-data/empty-data.component';
@@ -34,7 +34,7 @@ function CartPage() {
             carts.length === 0 ? <EmptyData {...messages}/> :
             <Fragment>
               <Header collection={carts} title="Carts"/>
-              <CustomTable items={carts} removeItem={removeItemFromCart}/>
+              <UserDataTable items={carts} removeItem={removeItemFromCart}/>
               <div className={classes.content}>
                 <Typography className={classes.totalCount} variant="subtitle1">
                   {'Total ' + formatPrice(totalPrice(carts))}</Typography>
