@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react';
-// import {useLocation} from 'react-router-dom';
+import {useLocation} from 'react-router-dom';
 import {useDispatch} from 'react-redux';
 import {formatPrice} from '../../utils/utils';
 import Typography from '@material-ui/core/Typography';
@@ -12,17 +12,12 @@ import TableCell from '@material-ui/core/TableCell';
 import IconButton from '@material-ui/core/IconButton';
 import {Icon} from '@iconify/react';
 import closeOutline from '@iconify/icons-eva/close-outline';
-// import CounterButton from '../../components/counter-button/counter-button.component';
-import useStyles from './custom-table.styles';
+import CounterQuantity from '../counter-quantity/counter-quantity.component';
+import useStyles from './user-data-table.styles';
 
-// function Counter(location, document) {
-//   if (location.pathname.match('/favorites')) return null;
-//   return (<CounterButton document={document}/>);
-// }
-
-function CustomTable({items, removeItem}) {
+function UserDataTable({items, removeItem}) {
   const classes = useStyles();
-  // const location = useLocation();
+  const location = useLocation();
   const dispatch = useDispatch();
   const url = process.env.REACT_APP_VEAR_CLOTHING_URL;
 
@@ -38,7 +33,7 @@ function CustomTable({items, removeItem}) {
               <TableCell align="left">
                 <Typography variant="subtitle1">Description</Typography>
               </TableCell>
-              <TableCell className={classes.productPrice} align="left">
+              <TableCell className={classes.tableDataHidden} align="left">
                 <Typography variant="subtitle1">Price</Typography>
               </TableCell>
               <TableCell className={classes.resetCell} align="right">
@@ -55,21 +50,21 @@ function CustomTable({items, removeItem}) {
                       className={classes.productImage}
                       style={{backgroundImage: `url(${url}/images/${item.collection.images[0].productImage})`}}/>
                   </TableCell>
-                  <TableCell className={classes.productDescription} align="left">
-                    <Typography className={classes.productName} variant="subtitle1">
+                  <TableCell align="left">
+                    <Typography className={`${classes.productName} ${classes._textOverflow}`} variant="subtitle1">
                       {item.collection.productName}
                     </Typography>
-                    <Typography className={classes.productColor} variant="subtitle1">
+                    <Typography className={`${classes._textOverflow} ${classes.tableDataSpacing}`} variant="subtitle1">
                       {item.collection.productColor}
                     </Typography>
-                    <Typography className={classes.descriptionPrice} variant="subtitle1">
+                    <Typography className={`${classes.productPrice} ${classes.tableDataSpacing}`} variant="subtitle1">
                       {formatPrice(item.collection.productPrice)}
                     </Typography>
-                    <div className={classes.counterButton}>
-                      {/* {Counter(location, item)} */}
+                    <div className={classes.tableDataSpacing}>
+                      {location.pathname.match('/favorites') ? null : <CounterQuantity item={item}/>}
                     </div>
                   </TableCell>
-                  <TableCell className={classes.productPrice} align="left">
+                  <TableCell className={classes.tableDataHidden} align="left">
                     {formatPrice(item.collection.productPrice)}
                   </TableCell>
                   <TableCell className={classes.resetCell} align="right">
@@ -94,4 +89,4 @@ function CustomTable({items, removeItem}) {
   );
 };
 
-export default CustomTable;
+export default UserDataTable;

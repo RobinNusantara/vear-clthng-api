@@ -15,47 +15,31 @@ const useStyles = makeStyles((theme) => ({
   productName: {
     fontWeight: 'bold',
   },
-  productColor: {
-    marginTop: theme.spacing(1),
-  },
-  descriptionPrice: {
+  productPrice: {
     display: 'none',
-    marginTop: theme.spacing(1),
   },
-  counterButton: {
+  tableDataSpacing: {
     marginTop: theme.spacing(1),
   },
   icon: {
     color: theme.palette.secondary.main,
   },
   [theme.breakpoints.down('sm')]: {
-    table: {
-      width: '100%',
-    },
-    productName: {
-      width: 180,
-      textOverflow: 'ellipsis',
-      whiteSpace: 'nowrap',
-      overflow: 'hidden',
-    },
-    productColor: {
-      width: 180,
-      textOverflow: 'ellipsis',
-      whiteSpace: 'nowrap',
-      overflow: 'hidden',
-    },
     productPrice: {
-      display: 'none',
-    },
-    descriptionPrice: {
       display: 'block',
+    },
+    _textOverflow: {
+      minWidth: 180,
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
+    },
+    tableDataHidden: {
+      display: 'none',
     },
   },
   [theme.breakpoints.down('xs')]: {
-    productName: {
-      width: 140,
-    },
-    productColor: {
+    _textOverflow: {
       width: 140,
     },
   },
