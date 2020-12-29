@@ -9,51 +9,6 @@ const useStyles = makeStyles((theme) => ({
       marginBottom: theme.spacing(12),
     },
   },
-  mobileDeviceHeader: {
-    height: 50,
-    display: 'none',
-    marginTop: theme.spacing(4),
-    [theme.breakpoints.down('xs')]: {
-      display: 'flex',
-    },
-  },
-  searchContainer: {
-    flex: 5,
-    position: 'relative',
-    borderRadius: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.light,
-    [theme.breakpoints.xxs]: {
-      flex: 4,
-    },
-  },
-  searchInput: {
-    height: '100%',
-    width: '100%',
-    fontSize: 14,
-    paddingLeft: theme.spacing(6),
-    paddingRight: theme.spacing(2),
-  },
-  searchIcon: {
-    position: 'absolute',
-    height: '100%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingLeft: theme.spacing(2),
-  },
-  icon: {
-    color: theme.palette.secondary.main,
-    width: 20,
-    height: 20,
-  },
-  filterContainer: {
-    flex: 1,
-    display: 'flex',
-    justifyContent: 'center',
-    borderRadius: theme.spacing(1),
-    marginLeft: theme.spacing(2),
-    backgroundColor: theme.palette.secondary.light,
-  },
   tabs: {
     height: 50,
     marginTop: theme.spacing(2),

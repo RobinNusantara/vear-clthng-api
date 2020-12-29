@@ -7,14 +7,10 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import InputBase from '@material-ui/core/InputBase';
-import IconButton from '@material-ui/core/IconButton';
 import PageWrapper from '../../components/container/container.component';
 import Spinner from '../../components/spinner/spinner.component';
 import CardItem from '../../components/card-item/card-item.component';
-import {Icon} from '@iconify/react';
-import searchOutline from '@iconify/icons-eva/search-outline';
-import optionsOutline from '@iconify/icons-eva/options-outline';
+import SearchBar from '../../components/search-bar/search-bar.component';
 import useStyles from './products-page.styles';
 
 function ProductsPage() {
@@ -40,36 +36,22 @@ function ProductsPage() {
       <Container>
         <PageWrapper>
           <div className={classes.root}>
-            <div className={classes.mobileDeviceHeader}>
-              <div className={classes.searchContainer}>
-                <div className={classes.searchIcon}>
-                  <Icon className={classes.icon} icon={searchOutline}/>
-                </div>
-                <InputBase
-                  className={classes.searchInput}
-                  placeholder="Search"/>
-              </div>
-              <div className={classes.filterContainer}>
-                <IconButton>
-                  <Icon className={classes.icon} icon={optionsOutline}/>
-                </IconButton>
-              </div>
-            </div>
+            <SearchBar/>
             {
-                  location.pathname.match('/collections/hijab') ? null :
-                  <Tabs
-                    className={classes.tabs}
-                    value={value}
-                    onChange={handleChange}>
-                    <Tab className={classes.tab} label="all"/>
-                    <Tab className={classes.tab} label="men"/>
-                    <Tab className={classes.tab} label="women"/>
-                  </Tabs>
+              location.pathname.match('/collections/hijab') ? null :
+              <Tabs
+                className={classes.tabs}
+                value={value}
+                onChange={handleChange}>
+                <Tab className={classes.tab} label="all"/>
+                <Tab className={classes.tab} label="men"/>
+                <Tab className={classes.tab} label="women"/>
+              </Tabs>
             }
             <Grid className={classes.grid} container spacing={2}>
               {
-                    isFetching ? <Spinner /> :
-                    products.map((product) => <CardItem key={product.id} {...product}/>)
+                isFetching ? <Spinner /> :
+                products.map((product) => <CardItem key={product.id} {...product}/>)
               }
             </Grid>
           </div>
