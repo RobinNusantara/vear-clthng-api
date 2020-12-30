@@ -67,16 +67,11 @@ function NavigationBottom() {
     };
   }, [location]);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  const handleChange = (event, newValue) => setValue(newValue);
 
   return (
     <Fragment>
-      <BottomNavigation
-        className={classes.root}
-        value={value}
-        onChange={handleChange}>
+      <BottomNavigation className={classes.root} value={value} onChange={handleChange}>
         {
           navigations.map((nav, idx) => (
             <BottomNavigationAction
@@ -84,7 +79,7 @@ function NavigationBottom() {
               value={nav.value}
               label={
                 <Typography className={classes.label} variant="subtitle2">
-                  {nav.label.toUpperCase()}
+                  {nav.label}
                 </Typography>
               }
               icon={<Icon className={classes.icon} icon={nav.icon}/>}

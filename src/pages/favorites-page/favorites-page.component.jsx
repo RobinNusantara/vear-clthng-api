@@ -7,7 +7,7 @@ import PageWrapper from '../../components/container/container.component';
 import Header from '../../components/header/header.component';
 import UserDataTable from '../../components/user-data-table/user-data-table.component';
 import Spinner from '../../components/spinner/spinner.component';
-import EmptyData from '../../components/empty-data/empty-data.component';
+import UserEmptyData from '../../components/user-empty-data/user-empty-data.component';
 import EmptyWishlistImage from '../../assets/images/empty-wishlist.svg';
 
 function FavoritesPage() {
@@ -26,7 +26,7 @@ function FavoritesPage() {
         <PageWrapper>
           {
             isFetching ? <Spinner/> :
-            favorites.length === 0 ? <EmptyData icon={EmptyWishlistImage} title="wishlist"/> :
+            favorites.length === 0 ? <UserEmptyData icon={EmptyWishlistImage} title="wishlist"/> :
             <Fragment>
               <Header collection={favorites} title="Wishlist"/>
               <UserDataTable items={favorites} removeItem={removeItemFromWishlist}/>

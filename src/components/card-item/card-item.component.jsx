@@ -3,7 +3,7 @@ import {useHistory} from 'react-router-dom';
 import {useDispatch} from 'react-redux';
 import {insertItemToCart} from '../../actions/carts.action';
 import {insertItemToWishlist} from '../../actions/wishlist.action';
-import {formatPrice} from '../../utils/utils';
+import {formatPrice, url} from '../../utils/utils';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -22,13 +22,16 @@ function CardItem({...product}) {
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
-  const {id, productName, productBrand, productPrice, images} = product;
   const [isMouseInside, setIsMouseInside] = useState(false);
-  const url = process.env.REACT_APP_VEAR_CLOTHING_URL;
+  const {id, productName, productBrand, productPrice, images} = product;
 
   const mouseEnter = () => setIsMouseInside(true);
 
   const mouseLeave = () => setIsMouseInside(false);
+
+  const addItemToCart = () => dispatch(insertItemToCart(id));
+
+  const addItemToWishlist = () => dispatch(insertItemToWishlist(id));
 
   return (
     <Fragment>
@@ -42,9 +45,7 @@ function CardItem({...product}) {
           <CardActions disableSpacing className={classes.cardActions}>
             <Grow in={isMouseInside}>
               <Paper className={classes.paper}>
-                <IconButton onClick={() => {
-                  dispatch(insertItemToWishlist(id));
-                }}>
+                <IconButton onClick={addItemToWishlist}>
                   <Icon className={classes.icon} icon={outlineFavoriteBorder}/>
                 </IconButton>
               </Paper>
@@ -54,9 +55,7 @@ function CardItem({...product}) {
               style={{transformOrigin: '0 0 0'}}
               {...(isMouseInside ? {timeout: 1000} : {})}>
               <Paper className={`${classes.paper} ${classes.cartContainer}`}>
-                <IconButton onClick={() => {
-                  dispatch(insertItemToCart(id));
-                }}>
+                <IconButton onClick={addItemToCart}>
                   <Icon className={classes.icon} icon={plusOutline}/>
                 </IconButton>
               </Paper>
@@ -64,7 +63,7 @@ function CardItem({...product}) {
           </CardActions>
           <CardContent className={classes.cardContent}>
             <Typography
-              className={`${classes.text} ${classes.textHeader}`}
+              className={`${classes.text} ${classes.textBold}`}
               variant="subtitle2"
               onClick={() => history.push(`/collection/details/${id}`)}>
               {productName}

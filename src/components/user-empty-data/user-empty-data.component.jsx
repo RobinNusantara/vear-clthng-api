@@ -1,8 +1,8 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
-import useStyles from './empty-data.styles';
+import useStyles from './user-empty-data.styles';
 
-function EmptyData({...messages}) {
+function UserEmptyData({...messages}) {
   const classes = useStyles();
   const {icon, title} = messages;
 
@@ -23,4 +23,4 @@ function EmptyData({...messages}) {
   );
 }
 
-export default EmptyData;
+export default UserEmptyData;

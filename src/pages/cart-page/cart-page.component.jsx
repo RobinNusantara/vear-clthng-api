@@ -10,7 +10,7 @@ import Header from '../../components/header/header.component';
 import UserDataTable from '../../components/user-data-table/user-data-table.component';
 import CustomButton from '../../components/custom-button/custom-button.component';
 import Spinner from '../../components/spinner/spinner.component';
-import EmptyData from '../../components/empty-data/empty-data.component';
+import UserEmptyData from '../../components/user-empty-data/user-empty-data.component';
 import EmptyCartImage from '../../assets/images/empty-cart.svg';
 import useStyles from './cart-page.styles';
 
@@ -31,7 +31,7 @@ function CartPage() {
         <PageWrapper>
           {
             isFetching ? <Spinner/> :
-            carts.length === 0 ? <EmptyData icon={EmptyCartImage} title="cart"/> :
+            carts.length === 0 ? <UserEmptyData icon={EmptyCartImage} title="cart"/> :
             <Fragment>
               <Header collection={carts} title="Cart"/>
               <UserDataTable items={carts} removeItem={removeItemFromCart}/>

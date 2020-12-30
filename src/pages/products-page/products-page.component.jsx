@@ -15,21 +15,19 @@ import useStyles from './products-page.styles';
 
 function ProductsPage() {
   const classes = useStyles();
-  const [value, setValue] = useState(0);
   const dispatch = useDispatch();
   const products = useSelector(productsFetchSelector);
   const isFetching = useSelector(productsLoadingSelector);
   const location = useLocation();
   const {category} = useParams();
+  const [value, setValue] = useState(0);
 
   useEffect(() => {
     dispatch(fetchProducts(category));
     return () => dispatch(destroyProductsState());
   }, [dispatch, category]);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  const handleChange = (event, newValue) => setValue(newValue);
 
   return (
     <Fragment>

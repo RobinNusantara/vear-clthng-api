@@ -1,7 +1,7 @@
 import React, {Fragment} from 'react';
 import {useLocation} from 'react-router-dom';
 import {useDispatch} from 'react-redux';
-import {formatPrice} from '../../utils/utils';
+import {formatPrice, url} from '../../utils/utils';
 import Typography from '@material-ui/core/Typography';
 import Table from '@material-ui/core/Table';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -19,7 +19,6 @@ function UserDataTable({items, removeItem}) {
   const classes = useStyles();
   const location = useLocation();
   const dispatch = useDispatch();
-  const url = process.env.REACT_APP_VEAR_CLOTHING_URL;
 
   return (
     <Fragment>
@@ -43,44 +42,40 @@ function UserDataTable({items, removeItem}) {
           </TableHead>
           <TableBody>
             {
-              items.map((item) => (
-                <TableRow key={item.id}>
-                  <TableCell className={classes.resetCell} align="left">
-                    <div
-                      className={classes.productImage}
-                      style={{backgroundImage: `url(${url}/images/${item.collection.images[0].productImage})`}}/>
-                  </TableCell>
-                  <TableCell align="left">
-                    <Typography className={`${classes.productName} ${classes._textOverflow}`} variant="subtitle1">
-                      {item.collection.productName}
-                    </Typography>
-                    <Typography className={`${classes._textOverflow} ${classes.tableDataSpacing}`} variant="subtitle1">
-                      {item.collection.productColor}
-                    </Typography>
-                    <Typography className={`${classes.productPrice} ${classes.tableDataSpacing}`} variant="subtitle1">
-                      {formatPrice(item.collection.productPrice)}
-                    </Typography>
-                    <div className={classes.tableDataSpacing}>
-                      {location.pathname.match('/favorites') ? null : <CounterQuantity item={item}/>}
-                    </div>
-                  </TableCell>
-                  <TableCell className={classes.tableDataHidden} align="left">
-                    {formatPrice(item.collection.productPrice)}
-                  </TableCell>
-                  <TableCell className={classes.resetCell} align="right">
-                    <IconButton onClick={(e) => {
-                      e.preventDefault();
-                      dispatch(removeItem(item.id));
-                    }}>
-                      <Icon
-                        className={classes.icon}
-                        height={24}
-                        width={24}
-                        icon={closeOutline}/>
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              ))
+              items.map((item) => {
+                const {productName, productColor, productPrice, images} = item.collection;
+                const removeProduct = () => dispatch(removeItem(item.id));
+                const styles = {productImage: {backgroundImage: `url(${url}/images/${images[0].productImage})`}};
+                return (
+                  <TableRow key={item.id}>
+                    <TableCell className={classes.resetCell} align="left">
+                      <div className={classes.productImage} style={styles.productImage}/>
+                    </TableCell>
+                    <TableCell align="left">
+                      <Typography className={`${classes.productName} ${classes._textOverflow}`} variant="subtitle1">
+                        {productName}
+                      </Typography>
+                      <Typography className={`${classes._textOverflow} ${classes.tableDataSpacing}`} variant="subtitle1">
+                        {productColor}
+                      </Typography>
+                      <Typography className={`${classes.productPrice} ${classes.tableDataSpacing}`} variant="subtitle1">
+                        {formatPrice(productPrice)}
+                      </Typography>
+                      <div className={classes.tableDataSpacing}>
+                        {location.pathname.match('/favorites') ? null : <CounterQuantity item={item}/>}
+                      </div>
+                    </TableCell>
+                    <TableCell className={classes.tableDataHidden} align="left">
+                      {formatPrice(productPrice)}
+                    </TableCell>
+                    <TableCell className={classes.resetCell} align="right">
+                      <IconButton onClick={removeProduct}>
+                        <Icon className={classes.icon} icon={closeOutline}/>
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                );
+              })
             }
           </TableBody>
         </Table>

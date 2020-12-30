@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: 0,
     paddingRight: 0,
   },
-  textHeader: {
+  textBold: {
     fontWeight: 'bold',
     color: theme.palette.primary.main,
     cursor: 'pointer',
