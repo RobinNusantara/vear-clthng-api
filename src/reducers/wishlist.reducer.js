@@ -3,7 +3,6 @@ import {FavoriteActionTypes} from '../helpers/helpers';
 const initialState = {
   isLoading: false,
   wishlist: [],
-  messages: '',
   error: '',
 };
 
@@ -19,12 +18,6 @@ const wishlistReducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         wishlist: action.payload,
-      };
-    case FavoriteActionTypes.USER_FAVORITES_EMPTY:
-      return {
-        ...state,
-        isLoading: false,
-        messages: action.payload,
       };
     case FavoriteActionTypes.FETCH_FAVORITE_ITEMS_FAILED:
       return {

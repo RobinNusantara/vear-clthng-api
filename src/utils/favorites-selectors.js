@@ -7,11 +7,6 @@ export const favoritesFetchSelector = createSelector(
     (favorites) => favorites.wishlist,
 );
 
-export const favoritesMessagesSelector = createSelector(
-    [selectFavorites],
-    (favorites) => favorites.messages,
-);
-
 export const favoritesLoadingSelector = createSelector(
     [selectFavorites],
     (favorites) => favorites.isLoading,

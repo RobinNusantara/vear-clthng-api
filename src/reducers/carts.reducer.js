@@ -3,7 +3,6 @@ import {CartActionTypes} from '../helpers/helpers';
 const initialState = {
   isLoading: false,
   carts: [],
-  messages: '',
   error: '',
 };
 
@@ -19,12 +18,6 @@ const cartsReducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         carts: action.payload,
-      };
-    case CartActionTypes.USER_CART_EMPTY:
-      return {
-        ...state,
-        isLoading: false,
-        messages: action.payload,
       };
     case CartActionTypes.FETCH_CART_ITEMS_FAILED:
       return {

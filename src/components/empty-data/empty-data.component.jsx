@@ -4,19 +4,18 @@ import useStyles from './empty-data.styles';
 
 function EmptyData({...messages}) {
   const classes = useStyles();
-  const {title, description, icon} = messages;
-  const url = process.env.REACT_APP_VEAR_CLOTHING_URL;
+  const {icon, title} = messages;
 
   return (
     <div className={classes.root}>
       <figure className={classes.figure}>
-        <img src={`${url}/${icon}`} alt="empty-data"/>
+        <img src={icon} alt="empty-data"/>
         <figcaption>
           <Typography className={classes.title} variant="h6">
-            {title}
+            Your {title} is empty
           </Typography>
           <Typography className={classes.description} variant="subtitle1">
-            {description}
+            Looks like you haven&apos;t made your choices yet
           </Typography>
         </figcaption>
       </figure>

@@ -41,13 +41,6 @@ function fetchCartItemsFailed(error) {
   };
 }
 
-function userCartEmpty(messages) {
-  return {
-    type: CartActionTypes.USER_CART_EMPTY,
-    payload: messages,
-  };
-}
-
 function removeCartItemSuccess(id) {
   return {
     type: CartActionTypes.REMOVE_ITEM_FROM_CART,
@@ -82,7 +75,6 @@ export function fetchCartsItems() {
     API.get('carts/list', headers)
         .then((res) => {
           const carts = res.data;
-          if (carts.data.length === 0) return dispatch(userCartEmpty(carts.messages));
           dispatch(fetchCartItemsSuccess(carts.data));
         })
         .catch((error) => {

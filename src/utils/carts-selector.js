@@ -7,11 +7,6 @@ export const bagsFetchSelector = createSelector(
     (bags) => bags.carts,
 );
 
-export const bagsMessagesSelector = createSelector(
-    [selectBags],
-    (bags) => bags.messages,
-);
-
 export const bagsLoadingSelector = createSelector(
     [selectBags],
     (bags) => bags.isLoading,

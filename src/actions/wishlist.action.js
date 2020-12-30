@@ -41,13 +41,6 @@ function fetchWishlistItemsFailed(error) {
   };
 }
 
-function userFavoritesEmpty(messages) {
-  return {
-    type: FavoriteActionTypes.USER_FAVORITES_EMPTY,
-    payload: messages,
-  };
-}
-
 function removeFavoriteItemSuccess(id) {
   return {
     type: FavoriteActionTypes.REMOVE_ITEM_FROM_FAVORITE,
@@ -82,7 +75,6 @@ export function fetchWishlistItems() {
     API.get('wishlist/list', headers)
         .then((res) => {
           const wishlist = res.data;
-          if (wishlist.data.length === 0) return dispatch(userFavoritesEmpty(wishlist.messages));
           dispatch(fetchWishlistItemsSuccess(wishlist.data));
         })
         .catch((error) => {
