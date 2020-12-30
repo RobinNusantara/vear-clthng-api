@@ -11,3 +11,8 @@ export const bagsLoadingSelector = createSelector(
     [selectBags],
     (bags) => bags.isLoading,
 );
+
+export const bagsErrorSelector = createSelector(
+    [selectBags],
+    (bags) => bags.error,
+);
