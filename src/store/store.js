@@ -3,6 +3,8 @@ import logger from 'redux-logger';
 import thunk from 'redux-thunk';
 import {routerMiddleware} from 'connected-react-router';
 import {createBrowserHistory} from 'history';
+import {persistReducer} from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 import rootReducer from '../reducers/root.reducer';
 
 export const history = createBrowserHistory();
@@ -14,8 +16,13 @@ if (process.env.NODE_ENV === 'development') {
 };
 
 export default function configureStore(preLoadedState) {
+  const persistConfig = {
+    key: 'root',
+    storage,
+    whitelist: ['auth'],
+  };
   const store = createStore(
-      rootReducer(history),
+      persistReducer(persistConfig, rootReducer(history)),
       preLoadedState,
       compose(applyMiddleware(...middlewares)));
   return store;
