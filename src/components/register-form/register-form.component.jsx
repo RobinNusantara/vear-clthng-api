@@ -13,8 +13,8 @@ import useStyles from './register-form.styles';
 function RegisterForm() {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const error = useSelector(authSignUpErrorSelector);
   const isLoading = useSelector(authLoadingSelector);
+  const error = useSelector(authSignUpErrorSelector);
 
   return (
     <Fragment>

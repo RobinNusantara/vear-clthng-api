@@ -1,6 +1,7 @@
 import React, {Fragment} from 'react';
-import {connect} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {signInWithEmailAndPassword} from '../../actions/auth.action';
+import {authLoadingSelector, authSignInErrorSelector} from '../../utils/auth-selectors';
 import {Formik, Form} from 'formik';
 import Alert from '@material-ui/lab/Alert';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -9,8 +10,11 @@ import CustomButton from '../custom-button/custom-button.component';
 import {SignInSchema} from '../../validation/form-validation';
 import useStyles from './login-form.styles';
 
-function LoginForm({signIn, isLoading, error}) {
+function LoginForm() {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const isLoading = useSelector(authLoadingSelector);
+  const error = useSelector(authSignInErrorSelector);
 
   return (
     <Fragment>
@@ -20,8 +24,8 @@ function LoginForm({signIn, isLoading, error}) {
           password: '',
         }}
         validationSchema={SignInSchema}
-        onSubmit={async (values) => {
-          await signIn(values);
+        onSubmit={(values) => {
+          dispatch(signInWithEmailAndPassword(values));
         }}>{({values, handleChange, errors}) => (
           <Form className={classes.root}>
             {error && <Alert
@@ -57,17 +61,4 @@ function LoginForm({signIn, isLoading, error}) {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    isLoading: state.auth.isLoading,
-    error: state.auth.signInError,
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    signIn: (values) => dispatch(signInWithEmailAndPassword(values)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(LoginForm);
+export default LoginForm;
