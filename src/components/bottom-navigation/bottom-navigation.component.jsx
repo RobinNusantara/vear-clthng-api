@@ -1,5 +1,7 @@
 import React, {Fragment, useState, useEffect} from 'react';
 import {Link, useLocation} from 'react-router-dom';
+import {useSelector} from 'react-redux';
+import {authUserSelector} from '../../utils/auth-selectors';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import Typography from '@material-ui/core/Typography';
@@ -12,8 +14,9 @@ import useStyles from './bottom-navigation.styles';
 
 function NavigationBottom() {
   const classes = useStyles();
-  const [value, setValue] = useState(0);
   const location = useLocation();
+  const user = useSelector(authUserSelector);
+  const [value, setValue] = useState(0);
 
   const navigations = [
     {
@@ -38,7 +41,7 @@ function NavigationBottom() {
       value: 3,
       label: 'account',
       icon: bxUser,
-      route: '',
+      route: user ? '/user' : '/signin',
     },
   ];
 

@@ -1,5 +1,7 @@
 import React, {Fragment} from 'react';
 import {Link as RouterLink} from 'react-router-dom';
+import {useSelector} from 'react-redux';
+import {authUserSelector} from '../../utils/auth-selectors';
 import Container from '@material-ui/core/Container';
 import Appbar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -15,6 +17,7 @@ import useStyles from './navbar.styles';
 
 function Navbar() {
   const classes = useStyles();
+  const user = useSelector(authUserSelector);
 
   return (
     <Fragment>
@@ -52,7 +55,7 @@ function Navbar() {
                   <Icon className={classes.icon} icon={outlineShoppingBag}/>
                 </IconButton>
               </RouterLink>
-              <RouterLink to="/signin">
+              <RouterLink to={user ? '/user' : '/signin'}>
                 <IconButton className={classes.menu}>
                   <Icon className={classes.icon} icon={bxUser}/>
                 </IconButton>
