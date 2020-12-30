@@ -17,6 +17,7 @@
     "axios": "^0.21.0",
     "connected-react-router": "^6.8.0",
     "formik": "^2.2.0",
+    "node-notifier": "^9.0.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-dropzone": "^11.2.4",
