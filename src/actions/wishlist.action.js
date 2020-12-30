@@ -16,7 +16,7 @@ function insertItemToWishlistSuccess(id) {
 
 function insertItemToWishlistFailed(error) {
   return {
-    type: FavoriteActionTypes.REMOVE_ITEM_FROM_FAVORITE,
+    type: FavoriteActionTypes.ADD_ITEM_TO_FAVORITE_FAILED,
     payload: error,
   };
 }
