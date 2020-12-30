@@ -1,60 +1,35 @@
-import React, {Fragment} from 'react';
-import {useSelector, connect} from 'react-redux';
-import {useFirestoreConnect} from 'react-redux-firebase';
-import {removeProductFromWishlist} from '../../actions/wishlist.action';
+import React, {Fragment, useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {favoritesFetchSelector, favoritesLoadingSelector} from '../../utils/favorites-selectors';
+import {fetchWishlistItems, removeItemFromWishlist, destroyWishlistState} from '../../actions/wishlist.action';
 import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
-import {Icon} from '@iconify/react';
-import trashOutline from '@iconify/icons-eva/trash-outline';
 import PageWrapper from '../../components/container/container.component';
 import Header from '../../components/header/header.component';
-import CustomTable from '../../components/custom-table/custom-table.component';
+import UserDataTable from '../../components/user-data-table/user-data-table.component';
 import Spinner from '../../components/spinner/spinner.component';
-import EmptyFavoriteIllustration from '../../assets/images/empty-wishlist.svg';
-import useStyles from './favorites-page.styles';
+import UserEmptyData from '../../components/user-empty-data/user-empty-data.component';
+import EmptyWishlistImage from '../../assets/images/empty-wishlist.svg';
 
-function FavoritesPage({removeProduct}) {
-  const classes = useStyles();
-  const uid = useSelector((state) => state.firebase.auth.uid);
+function FavoritesPage() {
+  const dispatch = useDispatch();
+  const favorites = useSelector(favoritesFetchSelector);
+  const isFetching = useSelector(favoritesLoadingSelector);
 
-  const wishlistPath = `users/${uid}/wishlist`;
-  useFirestoreConnect(() => [{collection: wishlistPath}]);
-  const wishlist = useSelector((state) => state.firestore.ordered[wishlistPath]);
+  useEffect(() => {
+    dispatch(fetchWishlistItems());
+    return () => dispatch(destroyWishlistState());
+  }, [dispatch]);
 
   return (
     <Fragment>
       <Container>
         <PageWrapper>
           {
-            !wishlist ? <Spinner/> :
-            wishlist.length === 0 ?
-            <div className={classes.message}>
-              <figure className={classes.figure}>
-                <img src={EmptyFavoriteIllustration} alt="empty-favorite"/>
-                <figcaption>
-                  <Typography className={classes.textHeader} variant="h6">
-                    YOUR WISHLIST IS EMPTY
-                  </Typography>
-                  <Typography className={classes.textSubtitle} variant="subtitle1">
-                    LOOKS LIKE YOU HAVEN&apos;T MADE YOUR CHOICES YET
-                  </Typography>
-                </figcaption>
-              </figure>
-            </div> :
+            isFetching ? <Spinner/> :
+            favorites.length === 0 ? <UserEmptyData icon={EmptyWishlistImage} title="wishlist"/> :
             <Fragment>
-              <Header
-                collection={wishlist}
-                uid={uid}
-                textHeader="FAVORITE"
-                iconButton={
-                  <Icon
-                    height={24}
-                    width={24}
-                    icon={trashOutline}/>
-                }/>
-              <CustomTable
-                collection={wishlist}
-                removeDocument={removeProduct}/>
+              <Header collection={favorites} title="Wishlist"/>
+              <UserDataTable items={favorites} removeItem={removeItemFromWishlist}/>
             </Fragment>
           }
         </PageWrapper>
@@ -63,10 +38,4 @@ function FavoritesPage({removeProduct}) {
   );
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    removeProduct: (id) => dispatch(removeProductFromWishlist(id)),
-  };
-};
-
-export default connect(null, mapDispatchToProps)(FavoritesPage);
+export default FavoritesPage;

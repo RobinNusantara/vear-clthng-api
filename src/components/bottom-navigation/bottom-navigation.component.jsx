@@ -1,7 +1,7 @@
 import React, {Fragment, useState, useEffect} from 'react';
-import {useSelector} from 'react-redux';
-import {isLoaded, isEmpty} from 'react-redux-firebase';
 import {Link, useLocation} from 'react-router-dom';
+import {useSelector} from 'react-redux';
+import {authUserSelector} from '../../utils/auth-selectors';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import Typography from '@material-ui/core/Typography';
@@ -14,16 +14,16 @@ import useStyles from './bottom-navigation.styles';
 
 function NavigationBottom() {
   const classes = useStyles();
-  const [value, setValue] = useState(0);
   const location = useLocation();
-  const auth = useSelector((state) => state.firebase.auth);
+  const user = useSelector(authUserSelector);
+  const [value, setValue] = useState(0);
 
   const navigations = [
     {
       value: 0,
       label: 'home',
       icon: homeOption,
-      route: '/',
+      route: '/shop',
     },
     {
       value: 1,
@@ -41,14 +41,14 @@ function NavigationBottom() {
       value: 3,
       label: 'account',
       icon: bxUser,
-      route: `${isLoaded(auth) && !isEmpty(auth) ? '/user' : '/signin'}`,
+      route: user ? '/user' : '/signin',
     },
   ];
 
   useEffect(() => {
     const path = location.pathname;
     switch (path) {
-      case '/':
+      case '/shop':
         setValue(0);
         break;
       case '/favorites':
@@ -67,16 +67,11 @@ function NavigationBottom() {
     };
   }, [location]);
 
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  const handleChange = (event, newValue) => setValue(newValue);
 
   return (
     <Fragment>
-      <BottomNavigation
-        className={classes.root}
-        value={value}
-        onChange={handleChange}>
+      <BottomNavigation className={classes.root} value={value} onChange={handleChange}>
         {
           navigations.map((nav, idx) => (
             <BottomNavigationAction
@@ -84,7 +79,7 @@ function NavigationBottom() {
               value={nav.value}
               label={
                 <Typography className={classes.label} variant="subtitle2">
-                  {nav.label.toUpperCase()}
+                  {nav.label}
                 </Typography>
               }
               icon={<Icon className={classes.icon} icon={nav.icon}/>}

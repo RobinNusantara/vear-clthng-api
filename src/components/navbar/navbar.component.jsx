@@ -1,7 +1,7 @@
 import React, {Fragment} from 'react';
-import {useSelector} from 'react-redux';
-import {isLoaded, isEmpty} from 'react-redux-firebase';
 import {Link as RouterLink} from 'react-router-dom';
+import {useSelector} from 'react-redux';
+import {authUserSelector} from '../../utils/auth-selectors';
 import Container from '@material-ui/core/Container';
 import Appbar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -17,7 +17,7 @@ import useStyles from './navbar.styles';
 
 function Navbar() {
   const classes = useStyles();
-  const auth = useSelector((state) => state.firebase.auth);
+  const user = useSelector(authUserSelector);
 
   return (
     <Fragment>
@@ -37,7 +37,7 @@ function Navbar() {
                 className={classes.menu}
                 variant="h6"
                 underline="none"
-                to="/collections"
+                to="/shop"
                 component={RouterLink}>SHOP</Link>
               <Link
                 className={classes.menu}
@@ -55,7 +55,7 @@ function Navbar() {
                   <Icon className={classes.icon} icon={outlineShoppingBag}/>
                 </IconButton>
               </RouterLink>
-              <RouterLink to={isLoaded(auth) && !isEmpty(auth) ? '/user' : '/signin'}>
+              <RouterLink to={user ? '/user' : '/signin'}>
                 <IconButton className={classes.menu}>
                   <Icon className={classes.icon} icon={bxUser}/>
                 </IconButton>

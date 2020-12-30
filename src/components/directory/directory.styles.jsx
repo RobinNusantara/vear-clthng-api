@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   image: {
     'height': '100%',
     'width': '100%',
-    'backgroundImage': (props) => `url(${props.imageUrl})`,
+    'backgroundImage': (props) => `url(${props.image})`,
     'backgroundPosition': 'center',
     'backgroundSize': 'cover',
     'opacity': 0.6,

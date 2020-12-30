@@ -1,9 +1,9 @@
 import React, {Fragment, useState} from 'react';
-import {connect, useSelector} from 'react-redux';
-import {isLoaded, isEmpty} from 'react-redux-firebase';
-import {addProductToCart} from '../../actions/cart.action';
-import {addProductToWishlist} from '../../actions/wishlist.action';
-import {formatPrice} from '../../utils/utils';
+import {useHistory} from 'react-router-dom';
+import {useDispatch} from 'react-redux';
+import {insertItemToCart} from '../../actions/carts.action';
+import {insertItemToWishlist} from '../../actions/wishlist.action';
+import {formatPrice, url} from '../../utils/utils';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -18,25 +18,20 @@ import outlineFavoriteBorder from '@iconify/icons-ic/baseline-favorite-border';
 import plusOutline from '@iconify/icons-eva/plus-outline';
 import useStyles from './card-item.styles';
 
-function CardItem({addProductToCart, addProductToWishlist, ...props}) {
+function CardItem({...product}) {
   const classes = useStyles();
-  const {productImageUrl, productName, productColor, productPrice} = props;
+  const history = useHistory();
+  const dispatch = useDispatch();
   const [isMouseInside, setIsMouseInside] = useState(false);
-
-  const data = {
-    'productName': props.productName,
-    'productLabel': props.productLabel,
-    'productImageUrl': props.productImageUrl,
-    'productColor': props.productColor,
-    'productSize': props.productSize,
-    'productPrice': props.productPrice,
-  };
-
-  const auth = useSelector((state) => state.firebase.auth);
+  const {id, productName, productBrand, productPrice, images} = product;
 
   const mouseEnter = () => setIsMouseInside(true);
 
   const mouseLeave = () => setIsMouseInside(false);
+
+  const addItemToCart = () => dispatch(insertItemToCart(id));
+
+  const addItemToWishlist = () => dispatch(insertItemToWishlist(id));
 
   return (
     <Fragment>
@@ -46,16 +41,11 @@ function CardItem({addProductToCart, addProductToWishlist, ...props}) {
           elevation={0}
           onMouseEnter={mouseEnter}
           onMouseLeave={mouseLeave}>
-          <CardMedia className={classes.cardImage} image={productImageUrl}/>
+          <CardMedia className={classes.cardImage} image={`${url}/images/${images[0].productImage}`}/>
           <CardActions disableSpacing className={classes.cardActions}>
             <Grow in={isMouseInside}>
               <Paper className={classes.paper}>
-                <IconButton onClick={(event) => {
-                  event.preventDefault();
-                  if (isLoaded(auth) && !isEmpty(auth)) {
-                    addProductToWishlist(data);
-                  }
-                }}>
+                <IconButton onClick={addItemToWishlist}>
                   <Icon className={classes.icon} icon={outlineFavoriteBorder}/>
                 </IconButton>
               </Paper>
@@ -65,27 +55,23 @@ function CardItem({addProductToCart, addProductToWishlist, ...props}) {
               style={{transformOrigin: '0 0 0'}}
               {...(isMouseInside ? {timeout: 1000} : {})}>
               <Paper className={`${classes.paper} ${classes.cartContainer}`}>
-                <IconButton onClick={(event) => {
-                  event.preventDefault();
-                  if (isLoaded(auth) && !isEmpty(auth)) {
-                    addProductToCart({...data, 'productAmount': 1});
-                  } else {
-                    console.log('you are not authorized');
-                  }
-                }}>
+                <IconButton onClick={addItemToCart}>
                   <Icon className={classes.icon} icon={plusOutline}/>
                 </IconButton>
               </Paper>
             </Grow>
           </CardActions>
           <CardContent className={classes.cardContent}>
-            <Typography className={`${classes.text} ${classes.textHeader}`} variant="subtitle1">
-              {productName.toUpperCase()}
+            <Typography
+              className={`${classes.text} ${classes.textBold}`}
+              variant="subtitle2"
+              onClick={() => history.push(`/collection/details/${id}`)}>
+              {productName}
             </Typography>
-            <Typography className={classes.text} variant="subtitle1">
-              {productColor.toUpperCase()}
+            <Typography className={classes.text} variant="subtitle2">
+              {productBrand}
             </Typography>
-            <Typography className={classes.text} variant="subtitle1">
+            <Typography className={classes.text} variant="subtitle2">
               {formatPrice(productPrice)}
             </Typography>
           </CardContent>
@@ -95,11 +81,4 @@ function CardItem({addProductToCart, addProductToWishlist, ...props}) {
   );
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addProductToCart: (data) => dispatch(addProductToCart(data)),
-    addProductToWishlist: (data) => dispatch(addProductToWishlist(data)),
-  };
-};
-
-export default connect(null, mapDispatchToProps)(CardItem);
+export default CardItem;

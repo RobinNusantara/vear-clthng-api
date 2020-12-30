@@ -1,9 +1,10 @@
 import {AuthActionTypes} from '../helpers/helpers';
 
 const initialState = {
+  isLoading: false,
+  user: null,
   signInError: '',
   signUpError: '',
-  isLoading: false,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -18,20 +19,24 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: false,
+        user: action.payload,
       };
     case AuthActionTypes.SIGN_UP_FAILED:
       return {
         ...state,
-        signUpError: action.payload,
         isLoading: false,
+        signUpError: action.payload,
       };
     case AuthActionTypes.SIGN_IN_FAILED:
       return {
         ...state,
-        signInError: action.payload,
         isLoading: false,
+        signInError: action.payload,
       };
-    default: return state;
+    case AuthActionTypes.SIGN_OUT:
+      return initialState;
+    default:
+      return state;
   };
 };
 

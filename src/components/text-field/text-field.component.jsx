@@ -6,7 +6,16 @@ import useStyles from './text-field.styles';
 
 function TextField({...props}) {
   const classes = useStyles();
-  const {label, type, name, value, handleChange, error, endAdornment} = props;
+  const {
+    label,
+    type,
+    placeholder,
+    name,
+    value,
+    handleChange,
+    error,
+    endAdornment,
+  } = props;
   return (
     <FormControl className={classes.root}>
       <label className={classes.label}>{label}</label>
@@ -14,6 +23,7 @@ function TextField({...props}) {
         className={classes.input}
         autoComplete="off"
         type={type}
+        placeholder={placeholder}
         name={name}
         value={value}
         onChange={handleChange}

@@ -6,19 +6,19 @@ import useStyles from './directory.styles';
 
 function Directory({...props}) {
   const classes = useStyles(props);
-  const {id, title, xs, md} = props;
   const history = useHistory();
+  const {name, xs, md} = props;
+
+  const moveToCollections = () => history.push(`/collections/${name}`);
 
   return (
     <Fragment>
       <Grid item xs={xs} md={md}>
-        <div
-          className={classes.root}
-          onClick={() => history.push(`/collections/${id}`)}>
+        <div className={classes.root} onClick={moveToCollections}>
           <div className={classes.image}/>
           <div className={classes.content}>
             <Typography className={classes.textHeader} variant="h6">
-              {title.toUpperCase()}
+              {name.toUpperCase()}
             </Typography>
             <Typography variant="h6">SHOP NOW</Typography>
           </div>

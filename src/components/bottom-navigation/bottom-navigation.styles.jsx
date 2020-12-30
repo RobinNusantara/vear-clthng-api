@@ -2,12 +2,15 @@ import {makeStyles} from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '100%',
     position: 'fixed',
     bottom: 0,
+    width: '100%',
     display: 'none',
-    boxShadow: theme.boxShadow.secondary,
-    zIndex: 1,
+    boxShadow: theme.boxShadow.primary,
+    zIndex: 2000,
+  },
+  label: {
+    textTransform: 'capitalize',
   },
   icon: {
     height: 24,

@@ -1,71 +1,49 @@
-import React, {Fragment} from 'react';
-import {useSelector, connect} from 'react-redux';
-import {useFirestoreConnect} from 'react-redux-firebase';
-import {removeProductFromCart} from '../../actions/cart.action';
+import React, {Fragment, useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {bagsFetchSelector, bagsLoadingSelector} from '../../utils/carts-selector';
+import {fetchCartsItems, removeItemFromCart, destroyCartsState} from '../../actions/carts.action';
 import {totalPrice, formatPrice} from '../../utils/utils';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
-import {Icon} from '@iconify/react';
-import trashOutline from '@iconify/icons-eva/trash-outline';
 import PageWrapper from '../../components/container/container.component';
 import Header from '../../components/header/header.component';
-import CustomTable from '../../components/custom-table/custom-table.component';
+import UserDataTable from '../../components/user-data-table/user-data-table.component';
 import CustomButton from '../../components/custom-button/custom-button.component';
 import Spinner from '../../components/spinner/spinner.component';
-import EmptyCartIllustration from '../../assets/images/empty-cart.svg';
+import UserEmptyData from '../../components/user-empty-data/user-empty-data.component';
+import EmptyCartImage from '../../assets/images/empty-cart.svg';
 import useStyles from './cart-page.styles';
 
-function CartPage({removeProduct}) {
+function CartPage() {
   const classes = useStyles();
-  const uid = useSelector((state) => state.firebase.auth.uid);
+  const dispatch = useDispatch();
+  const carts = useSelector(bagsFetchSelector);
+  const isFetching = useSelector(bagsLoadingSelector);
 
-  const cartPath = `users/${uid}/cart`;
-  useFirestoreConnect(() => [{collection: cartPath}]);
-  const cart = useSelector((state) => state.firestore.ordered[cartPath]);
+  useEffect(() => {
+    dispatch(fetchCartsItems());
+    return () => dispatch(destroyCartsState());
+  }, [dispatch]);
 
   return (
     <Fragment>
       <Container>
         <PageWrapper>
           {
-            !cart ? <Spinner/> :
-            cart.length === 0 ?
-            <div className={classes.message}>
-              <figure className={classes.figure}>
-                <img src={EmptyCartIllustration} alt="empty-cart"/>
-                <figcaption>
-                  <Typography className={classes.textHeader} variant="h6">
-                    YOUR CART IS EMPTY
-                  </Typography>
-                  <Typography className={classes.textSubtitle} variant="subtitle1">
-                    LOOKS LIKE YOU HAVEN&apos;T MADE YOUR CHOICES YET
-                  </Typography>
-                </figcaption>
-              </figure>
-            </div> :
+            isFetching ? <Spinner/> :
+            carts.length === 0 ? <UserEmptyData icon={EmptyCartImage} title="cart"/> :
             <Fragment>
-              <Header
-                collection={cart}
-                uid={uid}
-                textHeader="CART"
-                iconButton={
-                  <Icon
-                    height={24}
-                    width={24}
-                    icon={trashOutline}/>
-                }/>
-              <CustomTable
-                collection={cart}
-                removeDocument={removeProduct}/>
+              <Header collection={carts} title="Cart"/>
+              <UserDataTable items={carts} removeItem={removeItemFromCart}/>
               <div className={classes.content}>
                 <Typography className={classes.totalCount} variant="subtitle1">
-                  {'TOTAL ' + formatPrice(totalPrice(cart))}</Typography>
+                  {'Total ' + formatPrice(totalPrice(carts))}</Typography>
                 <div className={classes.button}>
                   <CustomButton
                     width={180}
                     smScreen="100%"
                     variant="contained"
-                    color="primary">CHECKOUT</CustomButton>
+                    color="primary">Checkout</CustomButton>
                 </div>
               </div>
             </Fragment>
@@ -76,10 +54,4 @@ function CartPage({removeProduct}) {
   );
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    removeProduct: (id) => dispatch(removeProductFromCart(id)),
-  };
-};
-
-export default connect(null, mapDispatchToProps)(CartPage);
+export default CartPage;

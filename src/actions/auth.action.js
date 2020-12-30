@@ -1,3 +1,4 @@
+import API from '../api/api';
 import {AuthActionTypes} from '../helpers/helpers';
 import {push} from 'connected-react-router';
 
@@ -7,9 +8,10 @@ function signInStart() {
   };
 }
 
-function signInSuccess() {
+function signInSuccess(user) {
   return {
     type: AuthActionTypes.SIGN_IN_SUCCESS,
+    payload: user,
   };
 }
 
@@ -26,9 +28,10 @@ function signUpStart() {
   };
 }
 
-function signUpSuccess() {
+function signUpSuccess(user) {
   return {
     type: AuthActionTypes.SIGN_UP_SUCCESS,
+    payload: user,
   };
 };
 
@@ -39,33 +42,58 @@ function signUpFailed(error) {
   };
 }
 
-export function signInWithEmailAndPassword(credentials) {
-  return async (dispatch, getState, getFirebase) => {
-    dispatch(signInStart());
-    return await getFirebase().login({
-      email: credentials.email,
-      password: credentials.password,
-    })
-        .then(() => dispatch(signInSuccess()))
-        .then(() => dispatch(push('/')))
-        .catch((error) => dispatch(signInFailed(error.message)));
+function signOut() {
+  return {
+    type: AuthActionTypes.SIGN_OUT,
   };
 }
 
-export function signUpWithEmailAndPassword(credentials) {
-  return async (dispatch, getState, getFirebase) => {
+export function signInWithEmailAndPassword(values) {
+  return (dispatch) => {
+    const data = {
+      'username': values.username,
+      'email': values.email,
+      'password': values.password,
+    };
+
+    dispatch(signInStart());
+    API.post('/auth/signin', data)
+        .then((res) => {
+          const user = res.data;
+          const {data, accessToken} = user;
+          localStorage.setItem('token', accessToken);
+          dispatch(signInSuccess(data));
+        })
+        .then(() => dispatch(push('/shop')))
+        .catch((error) => {
+          const message = error.response.data.messages;
+          dispatch(signInFailed(message));
+        });
+  };
+};
+
+export function signUpWithEmailAndPassword(values) {
+  return (dispatch) => {
+    const data = {
+      'username': values.username,
+      'email': values.email,
+      'password': values.password,
+    };
+
     dispatch(signUpStart());
-    return await getFirebase().createUser({
-      email: credentials.email,
-      password: credentials.password,
-    },
-    {
-      avatarUrl: '',
-      displayName: credentials.displayName,
-      email: credentials.email,
-    })
-        .then(() => dispatch(signUpSuccess()))
-        .then(() => dispatch(push('/')))
-        .catch((error) => dispatch(signUpFailed(error.message)));
+    API.post('/auth/signup', data)
+        .then((res) => dispatch(signUpSuccess(res)))
+        .catch((error) => {
+          const message = error.response.data.messages;
+          dispatch(signUpFailed(message));
+        });
+  };
+}
+
+export function userSignOut() {
+  return (dispatch) => {
+    dispatch(signOut());
+    localStorage.removeItem('token');
+    dispatch(push('/signin'));
   };
 }
