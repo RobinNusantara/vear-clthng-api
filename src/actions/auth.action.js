@@ -82,7 +82,13 @@ export function signUpWithEmailAndPassword(values) {
 
     dispatch(signUpStart());
     API.post('/auth/signup', data)
-        .then((res) => dispatch(signUpSuccess(res)))
+        .then((res) => {
+          const user = res.data;
+          const {data, accessToken} = user;
+          localStorage.setItem('token', accessToken);
+          dispatch(signUpSuccess(data));
+        })
+        .then(() => dispatch(push('/shop')))
         .catch((error) => {
           const message = error.response.data.messages;
           dispatch(signUpFailed(message));
