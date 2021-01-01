@@ -3,7 +3,7 @@ import {useHistory} from 'react-router-dom';
 import {useDispatch} from 'react-redux';
 import {insertItemToCart} from '../../actions/carts.action';
 import {insertItemToWishlist} from '../../actions/wishlist.action';
-import {formatPrice, url} from '../../utils/utils';
+import {formatPrice} from '../../utils/utils';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -41,7 +41,7 @@ function CardItem({...product}) {
           elevation={0}
           onMouseEnter={mouseEnter}
           onMouseLeave={mouseLeave}>
-          <CardMedia className={classes.cardImage} image={`${url}/images/${images[0].productImage}`}/>
+          <CardMedia className={classes.cardImage} image={images[0].productImage}/>
           <CardActions disableSpacing className={classes.cardActions}>
             <Grow in={isMouseInside}>
               <Paper className={classes.paper}>

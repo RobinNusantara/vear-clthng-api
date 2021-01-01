@@ -1,7 +1,7 @@
 import React, {Fragment} from 'react';
 import {useLocation} from 'react-router-dom';
 import {useDispatch} from 'react-redux';
-import {formatPrice, url} from '../../utils/utils';
+import {formatPrice} from '../../utils/utils';
 import Typography from '@material-ui/core/Typography';
 import Table from '@material-ui/core/Table';
 import TableContainer from '@material-ui/core/TableContainer';
@@ -45,11 +45,10 @@ function UserDataTable({items, removeItem}) {
               items.map((item) => {
                 const {productName, productColor, productPrice, images} = item.collection;
                 const removeProduct = () => dispatch(removeItem(item.id));
-                const styles = {productImage: {backgroundImage: `url(${url}/images/${images[0].productImage})`}};
                 return (
                   <TableRow key={item.id}>
                     <TableCell className={classes.resetCell} align="left">
-                      <div className={classes.productImage} style={styles.productImage}/>
+                      <img className={classes.productImage} src={images[0].productImage} alt={productName}/>
                     </TableCell>
                     <TableCell align="left">
                       <Typography className={`${classes.productName} ${classes._textOverflow}`} variant="subtitle1">
