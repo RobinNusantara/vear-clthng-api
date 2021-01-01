@@ -16,6 +16,15 @@ import ImageIcon from '@material-ui/icons/Image';
 import useStyles from './insert-product-form.styles';
 import categories from '../../data/categories';
 
+const types = [
+  {
+    'name': 'Men',
+  },
+  {
+    'name': 'Women',
+  },
+];
+
 function InsertProductForm() {
   const classes = useStyles();
   const dispatch = useDispatch();
@@ -49,6 +58,7 @@ function InsertProductForm() {
           productName: '',
           productBrand: '',
           productCategory: '',
+          productType: '',
           productColor: '',
           productSize: '',
           productPrice: '',
@@ -90,6 +100,30 @@ function InsertProductForm() {
                           key={idx}
                           value={category.name}>
                           {category.name}
+                        </MenuItem>
+                      ))
+                    }
+                  </TextField>
+                </FormControl>
+                <FormControl className={classes.inputSelectContainer}>
+                  <label className={classes.inputSelectLabel}>
+                    Product Type
+                  </label>
+                  <TextField
+                    className={classes.inputSelectMenu}
+                    select
+                    name="productType"
+                    value={values.productType}
+                    variant="outlined"
+                    onChange={handleChange}
+                    inputProps={{className: classes.inputSelectField}}>
+                    {
+                      types.map((type, idx) => (
+                        <MenuItem
+                          className={classes.inputSelectMenu}
+                          key={idx}
+                          value={type.name}>
+                          {type.name}
                         </MenuItem>
                       ))
                     }

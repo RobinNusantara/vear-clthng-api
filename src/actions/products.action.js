@@ -77,6 +77,7 @@ export function insertProduct(values) {
     formData.append('productName', values.productName);
     formData.append('productBrand', values.productBrand);
     formData.append('productCategory', values.productCategory);
+    formData.append('productType', values.productType);
     formData.append('productColor', values.productColor);
     formData.append('productSize', values.productSize);
     formData.append('productPrice', values.productPrice);
