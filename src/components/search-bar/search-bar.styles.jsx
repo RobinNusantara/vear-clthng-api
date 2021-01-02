@@ -6,17 +6,14 @@ const useStyles = makeStyles((theme) => ({
     display: 'none',
     marginTop: theme.spacing(4),
     [theme.breakpoints.down('xs')]: {
-      display: 'flex',
+      display: 'block',
     },
   },
   searchContainer: {
-    flex: 5,
+    height: '100%',
     position: 'relative',
     borderRadius: theme.spacing(0.5),
     backgroundColor: theme.palette.secondary.light,
-    [theme.breakpoints.xxs]: {
-      flex: 4,
-    },
   },
   searchContainerInput: {
     height: '100%',
@@ -37,19 +34,6 @@ const useStyles = makeStyles((theme) => ({
     width: 20,
     height: 20,
     color: theme.palette.secondary.main,
-  },
-  filterContainerIcon: {
-    flex: 1,
-    display: 'flex',
-    justifyContent: 'center',
-    marginLeft: theme.spacing(2),
-    borderRadius: theme.spacing(0.5),
-    backgroundColor: theme.palette.primary.main,
-  },
-  filterIcon: {
-    width: 20,
-    height: 20,
-    color: theme.palette.secondary.light,
   },
 }));
 
