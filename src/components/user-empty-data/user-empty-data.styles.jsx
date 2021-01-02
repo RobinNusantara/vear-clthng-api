@@ -13,9 +13,11 @@ const useStyles = makeStyles((theme) => ({
   title: {
     marginTop: theme.spacing(2),
     fontWeight: 'bold',
+    textTransform: 'uppercase',
   },
   description: {
     marginTop: theme.spacing(2),
+    textTransform: 'uppercase',
   },
 }));
 
