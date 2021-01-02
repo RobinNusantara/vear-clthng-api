@@ -104,6 +104,26 @@ export function fetchProducts(params) {
   };
 }
 
+export function filterMenCollections(products) {
+  return {
+    type: ProductActionTypes.FILTER_MEN_PRODUCTS,
+    payload: products.filter((product) => product.productType === 'Men'),
+  };
+};
+
+export function filterWomenCollections(products) {
+  return {
+    type: ProductActionTypes.FILTER_WOMEN_PRODUCTS,
+    payload: products.filter((product) => product.productType === 'Women'),
+  };
+}
+
+export function defaultCollections() {
+  return {
+    type: ProductActionTypes.DEFAULT_PRODUCTS,
+  };
+}
+
 export function fetchProduct(params) {
   return (dispatch) => {
     dispatch(fetchProductStart());

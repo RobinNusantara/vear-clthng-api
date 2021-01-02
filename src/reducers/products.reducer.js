@@ -4,6 +4,8 @@ const initialState = {
   isLoading: false,
   products: [],
   product: {},
+  value: 0,
+  _filter: [],
   error: '',
 };
 
@@ -33,6 +35,23 @@ const productsReducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         products: action.payload,
+      };
+    case ProductActionTypes.DEFAULT_PRODUCTS:
+      return {
+        ...state,
+        value: 0,
+      };
+    case ProductActionTypes.FILTER_MEN_PRODUCTS:
+      return {
+        ...state,
+        value: 1,
+        _filter: action.payload,
+      };
+    case ProductActionTypes.FILTER_WOMEN_PRODUCTS:
+      return {
+        ...state,
+        value: 2,
+        _filter: action.payload,
       };
     case ProductActionTypes.DESTROY_PRODUCTS_STATE:
       return initialState;
