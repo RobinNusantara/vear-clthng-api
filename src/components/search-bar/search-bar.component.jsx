@@ -4,7 +4,7 @@ import {Icon} from '@iconify/react';
 import searchOutline from '@iconify/icons-eva/search-outline';
 import useStyle from './search-bar.styles';
 
-function SearchBar() {
+function SearchBar({handleChange, disabled}) {
   const classes = useStyle();
 
   return (
@@ -14,7 +14,12 @@ function SearchBar() {
           <div className={classes.searchContainerIcon}>
             <Icon className={classes.searchIcon} icon={searchOutline}/>
           </div>
-          <InputBase className={classes.searchContainerInput} placeholder="Search"/>
+          <InputBase
+            className={classes.searchContainerInput}
+            type="text"
+            placeholder="Search"
+            onChange={handleChange}
+            disabled={disabled}/>
         </div>
       </div>
     </Fragment>

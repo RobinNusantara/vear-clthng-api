@@ -104,17 +104,24 @@ export function fetchProducts(params) {
   };
 }
 
-export function filterMenCollections(products) {
+export function searchAnyProduct(value) {
+  return {
+    type: ProductActionTypes.SEARCH_ANY_PRODUCT,
+    payload: value,
+  };
+}
+
+export function filterMenCollections(results) {
   return {
     type: ProductActionTypes.FILTER_MEN_PRODUCTS,
-    payload: products.filter((product) => product.productType === 'Men'),
+    payload: results.filter((product) => product.productType === 'Men'),
   };
 };
 
-export function filterWomenCollections(products) {
+export function filterWomenCollections(results) {
   return {
     type: ProductActionTypes.FILTER_WOMEN_PRODUCTS,
-    payload: products.filter((product) => product.productType === 'Women'),
+    payload: results.filter((product) => product.productType === 'Women'),
   };
 }
 

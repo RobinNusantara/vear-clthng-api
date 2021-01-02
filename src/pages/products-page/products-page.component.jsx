@@ -3,6 +3,7 @@ import {useLocation, useParams} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {
   fetchProducts,
+  searchAnyProduct,
   filterMenCollections,
   filterWomenCollections,
   defaultCollections,
@@ -11,6 +12,7 @@ import {
 import {
   productsFetchSelector,
   productsLoadingSelector,
+  productQuerySelector,
   productsValueSelector,
   productsFilterSelector,
 } from '../../utils/products-selectors';
@@ -29,8 +31,9 @@ function ProductsPage() {
   const dispatch = useDispatch();
   const products = useSelector(productsFetchSelector);
   const isFetching = useSelector(productsLoadingSelector);
+  const query = useSelector(productQuerySelector);
   const value = useSelector(productsValueSelector);
-  const _filter = useSelector(productsFilterSelector);
+  const results = useSelector(productsFilterSelector);
   const location = useLocation();
   const {category} = useParams();
 
@@ -39,12 +42,16 @@ function ProductsPage() {
     return () => dispatch(destroyProductsState());
   }, [dispatch, category]);
 
+  const handleChange = (event) => dispatch(searchAnyProduct(event.target.value));
+
+  const collection = (val) => val.productName.toLowerCase().includes(query.toLowerCase());
+
   return (
     <Fragment>
       <Container>
         <PageWrapper>
           <div className={classes.root}>
-            <SearchBar/>
+            <SearchBar handleChange={handleChange} disabled={isFetching}/>
             {
               location.pathname.match('/collections/hijab') ? null :
               <Tabs className={classes.tabs} value={value}>
@@ -69,18 +76,18 @@ function ProductsPage() {
               <Grid className={classes.grid} container spacing={2}>
                 {
                   isFetching ? <Spinner /> :
-                  products.map((product) => <CardItem key={product.id} {...product}/>)
+                  products.filter(collection).map((product) => <CardItem key={product.id} {...product}/>)
                 }
               </Grid>
             </TabPanel>
             <TabPanel value={value} index={1}>
               <Grid className={classes.grid} container spacing={2}>
-                {_filter.map((product) => <CardItem key={product.id} {...product}/>)}
+                {results.filter(collection).map((product) => <CardItem key={product.id} {...product}/>)}
               </Grid>
             </TabPanel>
             <TabPanel value={value} index={2}>
               <Grid className={classes.grid} container spacing={2}>
-                {_filter.map((product) => <CardItem key={product.id} {...product}/>)}
+                {results.filter(collection).map((product) => <CardItem key={product.id} {...product}/>)}
               </Grid>
             </TabPanel>
           </div>
@@ -100,9 +107,7 @@ function TabPanel(props) {
       id={`product-tabpanel-${index}`}
       aria-labelledby={`product-tab-${index}`}
       {...other}>
-      {value === index && (
-        <div>{children}</div>
-      )}
+      {value === index && (<div>{children}</div>)}
     </div>
   );
 }

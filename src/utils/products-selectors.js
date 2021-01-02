@@ -7,10 +7,14 @@ export const productsFetchSelector = createSelector(
     (shop) => shop.products,
 );
 
-
 export const productFetchSelector = createSelector(
     [selectShop],
     (shop) => shop.product,
+);
+
+export const productQuerySelector = createSelector(
+    [selectShop],
+    (shop) => shop.query,
 );
 
 export const productsValueSelector = createSelector(
@@ -20,7 +24,7 @@ export const productsValueSelector = createSelector(
 
 export const productsFilterSelector = createSelector(
     [selectShop],
-    (shop) => shop._filter,
+    (shop) => shop.results,
 );
 
 export const productsLoadingSelector = createSelector(

@@ -4,8 +4,9 @@ const initialState = {
   isLoading: false,
   products: [],
   product: {},
+  query: '',
   value: 0,
-  _filter: [],
+  results: [],
   error: '',
 };
 
@@ -36,6 +37,11 @@ const productsReducer = (state = initialState, action) => {
         isLoading: false,
         products: action.payload,
       };
+    case ProductActionTypes.SEARCH_ANY_PRODUCT:
+      return {
+        ...state,
+        query: action.payload,
+      };
     case ProductActionTypes.DEFAULT_PRODUCTS:
       return {
         ...state,
@@ -45,13 +51,13 @@ const productsReducer = (state = initialState, action) => {
       return {
         ...state,
         value: 1,
-        _filter: action.payload,
+        results: action.payload,
       };
     case ProductActionTypes.FILTER_WOMEN_PRODUCTS:
       return {
         ...state,
         value: 2,
-        _filter: action.payload,
+        results: action.payload,
       };
     case ProductActionTypes.DESTROY_PRODUCTS_STATE:
       return initialState;
