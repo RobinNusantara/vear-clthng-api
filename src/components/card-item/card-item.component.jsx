@@ -65,7 +65,7 @@ function CardItem({...product}) {
             <Typography
               className={`${classes.text} ${classes.textBold}`}
               variant="subtitle2"
-              onClick={() => history.push(`/collection/details/${id}`)}>
+              onClick={() => history.push(`/product/details/${id}`)}>
               {productName}
             </Typography>
             <Typography className={classes.text} variant="subtitle2">

@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react';
-import {Link as RouterLink} from 'react-router-dom';
+import {Link as RouterLink, useLocation, useHistory} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 import {authUserSelector} from '../../utils/auth-selectors';
 import Container from '@material-ui/core/Container';
@@ -11,6 +11,7 @@ import {Icon} from '@iconify/react';
 import bxUser from '@iconify/icons-bx/bx-user';
 import outlineFavoriteBorder from '@iconify/icons-ic/baseline-favorite-border';
 import outlineShoppingBag from '@iconify/icons-ic/outline-shopping-bag';
+import arrowBackOutline from '@iconify/icons-eva/arrow-back-outline';
 import {ReactComponent as VearClothingLogoDark} from '../../assets/icons/vear-logo-dark.svg';
 import {ReactComponent as VearClothingLogoLight} from '../../assets/icons/vear-logo-light.svg';
 import useStyles from './navbar.styles';
@@ -18,12 +19,22 @@ import useStyles from './navbar.styles';
 function Navbar() {
   const classes = useStyles();
   const user = useSelector(authUserSelector);
+  const location = useLocation();
+  const history = useHistory();
+
+  const backToPreviousPage = () => history.goBack();
 
   return (
     <Fragment>
       <Appbar className={classes.root} elevation={0}>
         <Container>
           <Toolbar className={classes.toolbar}>
+            {
+              location.pathname.match('product') ?
+              <IconButton className={classes.backButton} edge="start" onClick={backToPreviousPage}>
+                <Icon className={classes.backIcon} icon={arrowBackOutline} />
+              </IconButton> : null
+            }
             <Link
               variant="h5"
               underline="none"

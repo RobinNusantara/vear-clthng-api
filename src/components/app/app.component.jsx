@@ -13,23 +13,22 @@ import SignUpPage from '../../pages/signup-page/signup-page.component';
 import ProfilePage from '../../pages/profile-page/profile-page.component';
 import AdminPage from '../../pages/admin-pages/admin-pages.component';
 
-function Component(location, Component) {
-  if (location.pathname.match('/admin')) return null;
-  return Component;
-}
-
 function App() {
   const location = useLocation();
 
   return (
     <Fragment>
-      {Component(location, <Navbar/>)}
-      {Component(location, <NavigationBottom/>)}
+      {location.pathname.match('/admin') ? null : <Navbar/>}
+      {
+        location.pathname.match('/admin') ||
+        location.pathname.match('/product') ? null :
+        <NavigationBottom/>
+      }
       <Switch>
         <Route path="/shop" component={ShopPage}/>
         <Route path="/favorites" component={FavoritesPage}/>
         <Route path="/collections/:category" render={() => <ProductsPage/>}/>
-        <Route path="/collection/details/:id" render={() => <ProductPage/>}/>
+        <Route path="/product/details/:id" render={() => <ProductPage/>}/>
         <Route path="/cart" component={CartPage}/>
         <Route path="/signin" component={SignInPage}/>
         <Route path="/signup" component={SignUpPage}/>

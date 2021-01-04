@@ -13,6 +13,12 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: 'none',
     borderBottom: `2px solid ${theme.palette.secondary.main}`,
   },
+  backButton: {
+    display: 'none',
+  },
+  backIcon: {
+    color: theme.palette.common.white,
+  },
   logoDark: {
     display: 'block',
   },
@@ -32,16 +38,23 @@ const useStyles = makeStyles((theme) => ({
   },
   [theme.breakpoints.down('sm')]: {
     root: {
+      width: '100%',
       backgroundColor: theme.palette.primary.main,
     },
     toolbar: {
       borderBottom: 'none',
-      justifyContent: 'center',
+    },
+    backButton: {
+      display: 'block',
     },
     logoDark: {
       display: 'none',
     },
     logoLight: {
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)',
       display: 'block',
     },
     menus: {
