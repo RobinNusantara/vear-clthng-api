@@ -6,9 +6,9 @@ import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import PageWrapper from '../../components/container/container.component';
-import LoginForm from '../../components/login-form/login-form.component';
-import CustomButton from '../../components/custom-button/custom-button.component';
-import useStyles from './signin-page.styles';
+import SignInForm from '../../components/signin-form/signin-form.component';
+import MuiButton from '../../components/mui-button/mui-button.component';
+import useStyles from '../../styles/signin-signup-page.styles';
 
 function SignInPage() {
   const classes = useStyles();
@@ -28,17 +28,17 @@ function SignInPage() {
                 <Typography variant="subtitle1">
                   Sign in with email and password
                 </Typography>
-                <LoginForm/>
+                <SignInForm/>
                 <div className={classes.divider}>
                   <hr className={classes.line}/>
                   <Typography className={classes.dividerText} variant="subtitle1">or</Typography>
                   <hr className={classes.line}/>
                 </div>
                 <div className={classes.button}>
-                  <CustomButton
+                  <MuiButton
                     type="click"
                     width="100%"
-                    variant="outlined">sign in with google</CustomButton>
+                    variant="outlined">sign in with google</MuiButton>
                 </div>
                 <div className={classes.textFooter}>
                   <Typography variant="subtitle1">

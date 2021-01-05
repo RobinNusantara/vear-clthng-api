@@ -2,12 +2,15 @@ import {makeStyles} from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    height: (props) => props.mdScreen,
     position: 'relative',
+    height: (props) => props.mdScreen,
     border: `2px solid ${theme.palette.secondary.main}`,
     backgroundColor: theme.palette.primary.main,
     cursor: 'pointer',
     overflow: 'hidden',
+    [theme.breakpoints.down('sm')]: {
+      height: (props) => props.smScreen,
+    },
   },
   image: {
     'height': '100%',
@@ -26,20 +29,15 @@ const useStyles = makeStyles((theme) => ({
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
+    textAlign: 'center',
     padding: theme.spacing(2),
     border: `2px solid ${theme.palette.secondary.main}`,
-    textAlign: 'center',
     color: theme.palette.secondary.main,
     backgroundColor: theme.palette.common.white,
     opacity: 0.7,
   },
   textHeader: {
     fontWeight: 'bold',
-  },
-  [theme.breakpoints.down('sm')]: {
-    root: {
-      height: (props) => props.smScreen,
-    },
   },
 }));
 

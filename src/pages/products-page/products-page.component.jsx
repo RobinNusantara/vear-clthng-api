@@ -21,9 +21,9 @@ import Grid from '@material-ui/core/Grid';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import PageWrapper from '../../components/container/container.component';
-import Spinner from '../../components/spinner/spinner.component';
-import CardItem from '../../components/card-item/card-item.component';
-import SearchBar from '../../components/search-bar/search-bar.component';
+import MuiSpinner from '../../components/mui-spinner/mui-spinner.component';
+import MuiCard from '../../components/mui-card/mui-card.component';
+import MuiSearchBar from '../../components/mui-search-bar/mui-search-bar.component';
 import useStyles from './products-page.styles';
 
 function ProductsPage() {
@@ -51,7 +51,7 @@ function ProductsPage() {
       <Container>
         <PageWrapper>
           <div className={classes.root}>
-            <SearchBar handleChange={handleChange} disabled={isFetching}/>
+            <MuiSearchBar handleChange={handleChange} disabled={isFetching}/>
             {
               location.pathname.match('/collections/hijab') ? null :
               <Tabs className={classes.tabs} value={value}>
@@ -75,19 +75,19 @@ function ProductsPage() {
             <TabPanel value={value} index={0}>
               <Grid className={classes.grid} container spacing={2}>
                 {
-                  isFetching ? <Spinner /> :
-                  products.filter(collection).map((product) => <CardItem key={product.id} {...product}/>)
+                  isFetching ? <MuiSpinner /> :
+                  products.filter(collection).map((product) => <MuiCard key={product.id} {...product}/>)
                 }
               </Grid>
             </TabPanel>
             <TabPanel value={value} index={1}>
               <Grid className={classes.grid} container spacing={2}>
-                {results.filter(collection).map((product) => <CardItem key={product.id} {...product}/>)}
+                {results.filter(collection).map((product) => <MuiCard key={product.id} {...product}/>)}
               </Grid>
             </TabPanel>
             <TabPanel value={value} index={2}>
               <Grid className={classes.grid} container spacing={2}>
-                {results.filter(collection).map((product) => <CardItem key={product.id} {...product}/>)}
+                {results.filter(collection).map((product) => <MuiCard key={product.id} {...product}/>)}
               </Grid>
             </TabPanel>
           </div>

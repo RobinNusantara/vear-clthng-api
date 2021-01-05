@@ -9,12 +9,12 @@ function Directory({...props}) {
   const history = useHistory();
   const {name, xs, md} = props;
 
-  const moveToCollections = () => history.push(`/collections/${name}`);
+  const moveToCollectionsPage = () => history.push(`/collections/${name}`);
 
   return (
     <Fragment>
       <Grid item xs={xs} md={md}>
-        <div className={classes.root} onClick={moveToCollections}>
+        <div className={classes.root} onClick={moveToCollectionsPage}>
           <div className={classes.image}/>
           <div className={classes.content}>
             <Typography className={classes.textHeader} variant="h6">

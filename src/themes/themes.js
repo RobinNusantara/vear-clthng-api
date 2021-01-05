@@ -27,9 +27,6 @@ const theme = createMuiTheme({
   },
   typography: {
     fontFamily: 'Montserrat',
-    h5: {
-      fontSize: 20,
-    },
     h6: {
       'fontSize': 16,
       '@media screen and (max-width: 600px)': {
@@ -45,12 +42,6 @@ const theme = createMuiTheme({
     subtitle2: {
       fontSize: 12,
     },
-  },
-  boxShadow: {
-    primary: 'rgba(100, 100, 111, 0.2) 0px 7px 29px 0px',
-  },
-  breakpoints: {
-    xxs: '@media screen and (max-width: 360px)',
   },
   overrides: {
     MuiTabs: {
