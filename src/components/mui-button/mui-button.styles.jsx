@@ -13,7 +13,6 @@ const useStyles = makeStyles((theme) => ({
       fontSize: 12,
     },
   },
-
 }));
 
 export default useStyles;

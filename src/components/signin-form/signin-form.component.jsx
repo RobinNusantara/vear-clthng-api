@@ -8,7 +8,7 @@ import Alert from '@material-ui/lab/Alert';
 import MuiTextField from '../mui-text-field/mui-text-field.component';
 import MuiButton from '../mui-button/mui-button.component';
 import {SignInSchema} from '../../validation/form-validation';
-import useStyles from './signin-form.styles';
+import useStyles from '../../styles/signin-signup-form.styles';
 
 function SignInForm() {
   const classes = useStyles();

@@ -4,6 +4,7 @@ import useStyles from './mui-spinner.styles';
 
 function MuiSpinner() {
   const classes = useStyles();
+
   return (
     <div className={classes.root}>
       <CircularProgress color="secondary"/>

@@ -30,9 +30,7 @@ function ProfilePage() {
           </ListItem>
           <Divider/>
           <ListItem button onClick={signOut}>
-            <StyledListItemText
-              disableTypography
-              primary="logout"/>
+            <StyledListItemText disableTypography primary="logout"/>
           </ListItem>
         </List>
       </Container>

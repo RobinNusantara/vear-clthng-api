@@ -11,13 +11,13 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
   },
   title: {
-    marginTop: theme.spacing(2),
     fontWeight: 'bold',
     textTransform: 'uppercase',
+    marginTop: theme.spacing(2),
   },
   description: {
-    marginTop: theme.spacing(2),
     textTransform: 'uppercase',
+    marginTop: theme.spacing(2),
   },
 }));
 

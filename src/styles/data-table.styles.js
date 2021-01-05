@@ -12,8 +12,8 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1),
   },
   productImage: {
-    width: 100,
     height: 130,
+    width: 100,
     border: ` 1px solid ${theme.palette.secondary.main}`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',

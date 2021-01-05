@@ -20,8 +20,8 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(2),
   },
   line: {
-    width: '100%',
     height: '2px',
+    width: '100%',
     borderWidth: 0,
     backgroundColor: theme.palette.secondary.main,
   },

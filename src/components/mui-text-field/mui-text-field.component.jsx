@@ -15,6 +15,7 @@ function MuiTextField({...props}) {
     handleChange,
     error,
   } = props;
+
   return (
     <FormControl className={classes.root}>
       <label className={classes.label}>{label}</label>
