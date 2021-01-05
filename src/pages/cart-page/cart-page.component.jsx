@@ -1,11 +1,13 @@
 import React, {Fragment, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
+import {removeItemsFromCart} from '../../actions/carts.action';
 import {bagsFetchSelector, bagsLoadingSelector} from '../../utils/carts-selector';
 import {fetchCartsItems, destroyCartsState} from '../../actions/carts.action';
 import {totalPrice, formatPrice} from '../../utils/utils';
 import Container from '@material-ui/core/Container';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
+import Delayed from '../../components/delayed/delayed.component';
 import PageWrapper from '../../components/container/container.component';
 import MuiButton from '../../components/mui-button/mui-button.component';
 import MuiSpinner from '../../components/mui-spinner/mui-spinner.component';
@@ -32,7 +34,10 @@ function CartPage() {
         <PageWrapper>
           {
             isFetching ? <MuiSpinner/> :
-            carts.length === 0 ? <DataEmptyTable icon={EmptyCartImage} title="cart"/> :
+            carts.length === 0 ?
+            <Delayed waitBeforeShow={500}>
+              <DataEmptyTable icon={EmptyCartImage} title="cart"/>
+            </Delayed> :
             <Fragment>
               <CartHeader/>
               <DataTableCart/>
@@ -47,7 +52,10 @@ function CartPage() {
 
 function CartHeader() {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const carts = useSelector(bagsFetchSelector);
+
+  const removeCarts = () => dispatch(removeItemsFromCart());
 
   return (
     <div className={classes.header}>
@@ -63,7 +71,7 @@ function CartHeader() {
         </Typography>
       </div>
       <div className={classes.rightBox}>
-        <IconButton className={classes.icon}>
+        <IconButton className={classes.icon} onClick={removeCarts}>
           <Icon height={24} width={24} icon={trashOutline}/>
         </IconButton>
       </div>
@@ -78,7 +86,7 @@ function CartContent() {
   return (
     <div className={classes.content}>
       <Typography className={classes.totalCount} variant="subtitle1">
-        {`Total ${formatPrice(totalPrice(carts))}`}</Typography>
+        Total {formatPrice(totalPrice(carts))}</Typography>
       <div className={classes.button}>
         <MuiButton
           width={180}

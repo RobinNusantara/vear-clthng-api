@@ -48,6 +48,12 @@ function removeCartItemSuccess(id) {
   };
 }
 
+function removeCartItemsSuccess() {
+  return {
+    type: CartActionTypes.REMOVE_ITEMS_FROM_CART,
+  };
+}
+
 export function insertItemToCart(id) {
   return (dispatch) => {
     const token = localStorage.getItem('token');
@@ -94,6 +100,20 @@ export function removeItemFromCart(id) {
           const cart = res.data;
           dispatch(removeCartItemSuccess(cart.data.id));
         })
+        .catch((error) => {
+          const message = error.response.data.messages;
+          console.log(message);
+        });
+  };
+}
+
+export function removeItemsFromCart() {
+  return (dispatch) => {
+    const token = localStorage.getItem('token');
+    const headers = {headers: {'Authorization': `Bearer ${token}`}};
+
+    API.delete('carts/delete/all', headers)
+        .then(() => dispatch(removeCartItemsSuccess()))
         .catch((error) => {
           const message = error.response.data.messages;
           console.log(message);

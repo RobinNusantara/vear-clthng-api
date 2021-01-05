@@ -1,10 +1,12 @@
 import React, {Fragment, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
+import {removeItemsFromWishlist} from '../../actions/wishlist.action';
 import {favoritesFetchSelector, favoritesLoadingSelector} from '../../utils/favorites-selectors';
 import {fetchWishlistItems, destroyWishlistState} from '../../actions/wishlist.action';
 import Container from '@material-ui/core/Container';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
+import Delayed from '../../components/delayed/delayed.component';
 import PageWrapper from '../../components/container/container.component';
 import MuiSpinner from '../../components/mui-spinner/mui-spinner.component';
 import DataTableFavorite from '../../components/data-table-favorite/data-table-favorite';
@@ -30,10 +32,13 @@ function FavoritesPage() {
         <PageWrapper>
           {
             isFetching ? <MuiSpinner/> :
-            favorites.length === 0 ? <DataEmptyTable icon={EmptyWishlistImage} title="wishlist"/> :
+            favorites.length === 0 ?
+            <Delayed waitBeforeShow={500}>
+              <DataEmptyTable icon={EmptyWishlistImage} title="wishlist"/>
+            </Delayed> :
             <Fragment>
               <FavoriteHeader/>
-              <DataTableFavorite />
+              <DataTableFavorite/>
             </Fragment>
           }
         </PageWrapper>
@@ -44,7 +49,10 @@ function FavoritesPage() {
 
 function FavoriteHeader() {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const favorites = useSelector(favoritesFetchSelector);
+
+  const removeFavorites = () => dispatch(removeItemsFromWishlist());
 
   return (
     <div className={classes.header}>
@@ -60,7 +68,7 @@ function FavoriteHeader() {
         </Typography>
       </div>
       <div className={classes.rightBox}>
-        <IconButton className={classes.icon}>
+        <IconButton className={classes.icon} onClick={removeFavorites}>
           <Icon height={24} width={24} icon={trashOutline}/>
         </IconButton>
       </div>

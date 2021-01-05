@@ -30,6 +30,11 @@ const wishlistReducer = (state = initialState, action) => {
         ...state,
         wishlist: state.wishlist.filter((item) => item.id !== action.payload),
       };
+    case FavoriteActionTypes.REMOVE_ITEMS_FROM_FAVORITE:
+      return {
+        ...state,
+        wishlist: [],
+      };
     case FavoriteActionTypes.DESTROY_FAVORITES_STATE:
       return initialState;
     default:

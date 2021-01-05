@@ -47,6 +47,11 @@ function removeFavoriteItemSuccess(id) {
     payload: id,
   };
 }
+function removeFavoriteItemsSuccess() {
+  return {
+    type: FavoriteActionTypes.REMOVE_ITEMS_FROM_FAVORITE,
+  };
+}
 
 export function insertItemToWishlist(id) {
   return (dispatch) => {
@@ -94,6 +99,20 @@ export function removeItemFromWishlist(id) {
           const wishlist = res.data;
           dispatch(removeFavoriteItemSuccess(wishlist.data.id));
         })
+        .catch((error) => {
+          const message = error.response.data.messages;
+          console.log(message);
+        });
+  };
+}
+
+export function removeItemsFromWishlist() {
+  return (dispatch) => {
+    const token = localStorage.getItem('token');
+    const headers = {headers: {'Authorization': `Bearer ${token}`}};
+
+    API.delete('wishlist/delete/all', headers)
+        .then(() => dispatch(removeFavoriteItemsSuccess()))
         .catch((error) => {
           const message = error.response.data.messages;
           console.log(message);
