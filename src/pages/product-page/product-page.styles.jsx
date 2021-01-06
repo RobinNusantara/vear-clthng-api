@@ -11,6 +11,12 @@ const useStyles = makeStyles((theme) => ({
   textBold: {
     fontWeight: 'bold',
   },
+  textUppercase: {
+    textTransform: 'uppercase',
+  },
+  textCapitalize: {
+    textTransform: 'capitalize',
+  },
   topSpacing: {
     marginTop: theme.spacing(1),
   },
@@ -46,36 +52,11 @@ const useStyles = makeStyles((theme) => ({
       width: '100%',
       marginTop: theme.spacing(4),
     },
-    buttons: {
-      position: 'fixed',
-      bottom: 20,
-      width: '100%',
+    _buttons: {
+      marginTop: theme.spacing(2),
     },
-    actions: {
-      display: 'flex',
-    },
-    paper: {
-      width: 80,
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      borderRadius: theme.spacing(0.5),
-      backgroundColor: theme.palette.common.white,
-    },
-    favoriteButton: {
-      height: '100%',
-      width: '100%',
-      border: `2px solid ${theme.palette.primary.main}`,
-      borderRadius: theme.spacing(0.5),
-    },
-    favoriteIcon: {
-      color: theme.palette.primary.main,
-    },
-    cartButton: {
-      height: 56,
-      width: '100%',
-      textTransform: 'capitalize',
-      marginLeft: theme.spacing(2),
+    _button: {
+      marginTop: theme.spacing(2),
     },
   },
 }));
