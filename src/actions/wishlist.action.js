@@ -62,7 +62,7 @@ export function insertItemToWishlist(id) {
     API.post('wishlist/insert', {'collectionId': id}, headers)
         .then((res) => {
           const wishlist = res.data;
-          dispatch(insertItemToWishlistSuccess(wishlist));
+          dispatch(insertItemToWishlistSuccess(wishlist.data.id));
         })
         .catch((error) => {
           const message = error.response.data.messages;

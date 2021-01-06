@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {removeItemFromWishlist} from '../../actions/wishlist.action';
 import {favoritesFetchSelector} from '../../utils/favorites-selectors';
@@ -10,6 +10,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import IconButton from '@material-ui/core/IconButton';
+import MuiSnackbar from '../mui-snackbar/mui-snackbar.component';
 import Typography from '@material-ui/core/Typography';
 import {Icon} from '@iconify/react';
 import closeOutline from '@iconify/icons-eva/close-outline';
@@ -19,6 +20,12 @@ function DataTableFavorite() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const favorites = useSelector(favoritesFetchSelector);
+  const [open, setOpen] = useState(false);
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') return;
+    setOpen(false);
+  };
 
   return (
     <Fragment>
@@ -44,7 +51,12 @@ function DataTableFavorite() {
             {
               favorites.map((favorite) => {
                 const {productName, productColor, productPrice, images} = favorite.collection;
-                const removeWishlist = () => dispatch(removeItemFromWishlist(favorite.id));
+
+                const handleClick = () => {
+                  setOpen(true);
+                  dispatch(removeItemFromWishlist(favorite.id));
+                };
+
                 return (
                   <TableRow key={favorite.id}>
                     <TableCell className={classes.resetCell} align="left">
@@ -65,7 +77,7 @@ function DataTableFavorite() {
                       {formatPrice(productPrice)}
                     </TableCell>
                     <TableCell className={classes.resetCell} align="right">
-                      <IconButton onClick={removeWishlist}>
+                      <IconButton onClick={handleClick}>
                         <Icon className={classes.icon} icon={closeOutline}/>
                       </IconButton>
                     </TableCell>
@@ -76,6 +88,9 @@ function DataTableFavorite() {
           </TableBody>
         </Table>
       </TableContainer>
+      <MuiSnackbar open={open} handleClose={handleClose} severity="success">
+        Product removed from wishlist!
+      </MuiSnackbar>
     </Fragment>
   );
 };

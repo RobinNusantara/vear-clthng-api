@@ -20,6 +20,7 @@ const cartsReducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         id: action.payload,
+        error: '',
       };
     case CartActionTypes.FETCH_CART_ITEMS_SUCCESS:
       return {

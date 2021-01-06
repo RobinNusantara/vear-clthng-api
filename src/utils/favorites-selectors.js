@@ -11,3 +11,8 @@ export const favoritesLoadingSelector = createSelector(
     [selectFavorites],
     (favorites) => favorites.isLoading,
 );
+
+export const favoritesErrorSelector = createSelector(
+    [selectFavorites],
+    (favorites) => favorites.error,
+);

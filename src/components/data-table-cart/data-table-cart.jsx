@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {removeItemFromCart} from '../../actions/carts.action';
 import {bagsFetchSelector} from '../../utils/carts-selector';
@@ -10,6 +10,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import IconButton from '@material-ui/core/IconButton';
+import MuiSnackbar from '../mui-snackbar/mui-snackbar.component';
 import Typography from '@material-ui/core/Typography';
 import {Icon} from '@iconify/react';
 import closeOutline from '@iconify/icons-eva/close-outline';
@@ -19,6 +20,12 @@ function DataTableCart() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const carts = useSelector(bagsFetchSelector);
+  const [open, setOpen] = useState(false);
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') return;
+    setOpen(false);
+  };
 
   return (
     <Fragment>
@@ -44,7 +51,12 @@ function DataTableCart() {
             {
               carts.map((cart) => {
                 const {productName, productColor, productPrice, images} = cart.collection;
-                const removeCart = () => dispatch(removeItemFromCart(cart.id));
+
+                const handleClick = () => {
+                  setOpen(true);
+                  dispatch(removeItemFromCart(cart.id));
+                };
+
                 return (
                   <TableRow key={cart.id}>
                     <TableCell className={classes.resetCell} align="left">
@@ -65,7 +77,7 @@ function DataTableCart() {
                       {formatPrice(productPrice)}
                     </TableCell>
                     <TableCell className={classes.resetCell} align="right">
-                      <IconButton onClick={removeCart}>
+                      <IconButton onClick={handleClick}>
                         <Icon className={classes.icon} icon={closeOutline}/>
                       </IconButton>
                     </TableCell>
@@ -76,6 +88,9 @@ function DataTableCart() {
           </TableBody>
         </Table>
       </TableContainer>
+      <MuiSnackbar open={open} handleClose={handleClose} severity="success">
+        Product removed from cart!
+      </MuiSnackbar>
     </Fragment>
   );
 };

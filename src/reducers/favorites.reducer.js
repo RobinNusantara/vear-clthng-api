@@ -3,15 +3,24 @@ import {FavoriteActionTypes} from '../helpers/helpers';
 const initialState = {
   isLoading: false,
   wishlist: [],
+  id: null,
   error: '',
 };
 
 const wishlistReducer = (state = initialState, action) => {
   switch (action.type) {
+    case FavoriteActionTypes.ADD_ITEM_TO_FAVORITE_START:
     case FavoriteActionTypes.FETCH_FAVORITE_ITEMS_START:
       return {
         ...state,
         isLoading: true,
+      };
+    case FavoriteActionTypes.ADD_ITEM_TO_FAVORITE_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        id: action.payload,
+        error: '',
       };
     case FavoriteActionTypes.FETCH_FAVORITE_ITEMS_SUCCESS:
       return {
@@ -19,6 +28,7 @@ const wishlistReducer = (state = initialState, action) => {
         isLoading: false,
         wishlist: action.payload,
       };
+    case FavoriteActionTypes.ADD_ITEM_TO_FAVORITE_FAILED:
     case FavoriteActionTypes.FETCH_FAVORITE_ITEMS_FAILED:
       return {
         ...state,

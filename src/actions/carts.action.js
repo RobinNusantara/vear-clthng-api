@@ -63,7 +63,7 @@ export function insertItemToCart(id) {
     API.post('carts/insert', {'collectionId': id}, headers)
         .then((res) => {
           const cart = res.data;
-          dispatch(insertItemToCartSuccess(cart));
+          dispatch(insertItemToCartSuccess(cart.data.id));
         })
         .catch((error) => {
           const message = error.response.data.messages;
