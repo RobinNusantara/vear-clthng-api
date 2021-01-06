@@ -6,17 +6,14 @@ import {authUserSelector} from '../utils/auth-selectors';
 function PrivateRoute({children, ...rest}) {
   const user = useSelector(authUserSelector);
 
+  const destination = (location) => {
+    return {pathname: '/signin', state: {from: location}};
+  };
+
   return (
     <Route
       {...rest}
-      render={({location}) =>
-        user ? (children) :
-        (<Redirect
-          to={{
-            pathname: '/signin',
-            state: {from: location},
-          }}/>)
-      }/>
+      render={({location}) => user ? (children) : <Redirect to={destination(location)}/>}/>
   );
 }
 
