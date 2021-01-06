@@ -25,6 +25,7 @@
         "quotes": ["error","single"],
         "linebreak-style": ["off", "windows"],
         "react/prop-types": "off",
+        "react/display-name": "off",
         "require-jsdoc": "off",
         "no-invalid-this": "off",
         "no-unused-vars":"warn",
