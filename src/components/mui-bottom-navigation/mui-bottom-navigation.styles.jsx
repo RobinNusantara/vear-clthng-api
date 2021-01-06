@@ -6,6 +6,7 @@ const useStyles = makeStyles((theme) => ({
     bottom: 0,
     width: '100%',
     display: 'none',
+    boxShadow: 'rgba(0, 0, 0, 0.05) 0px 0px 0px 1px',
     zIndex: 2000,
     [theme.breakpoints.down('sm')]: {
       display: 'flex',
