@@ -12,7 +12,11 @@ const useStyles = makeStyles((theme) => ({
   },
   textHeader: {
     fontWeight: 'bold',
+    textTransform: 'uppercase',
     marginBottom: theme.spacing(2),
+  },
+  textSpacing: {
+    marginBottom: theme.spacing(1),
   },
   divider: {
     display: 'flex',

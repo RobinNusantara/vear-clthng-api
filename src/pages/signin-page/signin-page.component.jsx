@@ -25,7 +25,7 @@ function SignInPage() {
                 <Typography className={classes.textHeader} variant="h6">
                   I already have an account
                 </Typography>
-                <Typography variant="subtitle1">
+                <Typography variant="body2">
                   Sign in with email and password
                 </Typography>
                 <SignInForm/>
@@ -41,12 +41,12 @@ function SignInPage() {
                     variant="outlined">sign in with google</MuiButton>
                 </div>
                 <div className={classes.textFooter}>
-                  <Typography variant="subtitle1">
+                  <Typography className={classes.textSpacing} variant="body2">
                     Don&apos;t have an account?
                   </Typography>
                   <Link
                     underline="always"
-                    variant="subtitle1"
+                    variant="body2"
                     to="/signup"
                     component={RouterLink}>Sign Up</Link>
                 </div>
