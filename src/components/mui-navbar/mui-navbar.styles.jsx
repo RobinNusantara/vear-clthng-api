@@ -11,7 +11,6 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-between',
     textDecoration: 'none',
-    borderBottom: `2px solid ${theme.palette.secondary.main}`,
   },
   backButton: {
     display: 'none',
@@ -44,9 +43,6 @@ const useStyles = makeStyles((theme) => ({
     root: {
       width: '100%',
       backgroundColor: theme.palette.primary.main,
-    },
-    toolbar: {
-      borderBottom: 'none',
     },
     backButton: {
       display: 'block',

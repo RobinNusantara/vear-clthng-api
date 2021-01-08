@@ -4,6 +4,9 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: 340,
     textAlign: 'center',
+    [theme.breakpoints.down('xs')]: {
+      width: 'auto',
+    },
   },
 }));
 

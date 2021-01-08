@@ -1,8 +1,9 @@
 import React, {Fragment} from 'react';
 import {Switch, Route, useLocation} from 'react-router-dom';
-import MuiNavbar from '../../components/mui-navbar/mui-navbar.component';
-import MuiBottomNavigation from '../../components/mui-bottom-navigation/mui-bottom-navigation.component';
+import MuiNavbar from '../mui-navbar/mui-navbar.component';
+import MuiBottomNavigation from '../mui-bottom-navigation/mui-bottom-navigation.component';
 import PrivateRoute from '../../routes/private-routes';
+import LandingPage from '../../pages/landing-page/landing-page.component';
 import ShopPage from '../../pages/shop-page/shop-page.component';
 import ProductsPage from '../../pages/products-page/products-page.component';
 import ProductPage from '../../pages/product-page/product-page.component';
@@ -18,8 +19,9 @@ function App() {
   return (
     <Fragment>
       <MuiNavbar/>
-      {location.pathname.match('/product') ? null : <MuiBottomNavigation/>}
+      {location.pathname.match('/product') || location.pathname === '/' ? null : <MuiBottomNavigation/>}
       <Switch>
+        <Route exact path="/" component={LandingPage}/>
         <Route path="/shop" component={ShopPage}/>
         <Route path="/favorites" component={FavoritesPage}/>
         <Route path="/collections/:category" render={() => <ProductsPage/>}/>

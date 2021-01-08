@@ -26,21 +26,27 @@ function FavoritesPage() {
     return () => dispatch(destroyWishlistState());
   }, [dispatch]);
 
+  const Content = () => {
+    if (!favorites.length) {
+      return (
+        <Delayed waitBeforeShow={500}>
+          <DataEmptyTable icon={EmptyWishlistImage} title="wishlist"/>
+        </Delayed>
+      );
+    }
+    return (
+      <Fragment>
+        <FavoriteHeader/>
+        <DataTableFavorite/>
+      </Fragment>
+    );
+  };
+
   return (
     <Fragment>
       <Container>
         <PageWrapper>
-          {
-            isFetching ? <MuiSpinner/> :
-            favorites.length === 0 ?
-            <Delayed waitBeforeShow={500}>
-              <DataEmptyTable icon={EmptyWishlistImage} title="wishlist"/>
-            </Delayed> :
-            <Fragment>
-              <FavoriteHeader/>
-              <DataTableFavorite/>
-            </Fragment>
-          }
+          {isFetching ? <MuiSpinner/> : Content()}
         </PageWrapper>
       </Container>
     </Fragment>

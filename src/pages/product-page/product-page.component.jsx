@@ -66,6 +66,18 @@ function ProductPage() {
     setWishlistOpenSnackbar(false);
   };
 
+  const Snackbar = (loading, value, error, message) => {
+    if (loading) return null;
+    return (
+      <MuiSnackbar
+        open={value}
+        handleClose={handleClose}
+        severity={errorMessage(error) ? 'success' : 'error'}>
+        {actionError(error, user, message)}
+      </MuiSnackbar>
+    );
+  };
+
   return (
     <Fragment>
       {
@@ -142,26 +154,10 @@ function ProductPage() {
             </div>
           </div>
           <Fragment>
-            {
-              cartLoading ? null :
-              <MuiSnackbar
-                open={cartOpenSnackbar}
-                handleClose={handleClose}
-                severity={errorMessage(cartErrorMessage) ? 'success' : 'error'}>
-                {actionError(cartErrorMessage, user, 'shopping cart')}
-              </MuiSnackbar>
-            }
+            {Snackbar(cartLoading, cartOpenSnackbar, cartErrorMessage, 'shopping cart')}
           </Fragment>
           <Fragment>
-            {
-              wishlistLoading ? null :
-              <MuiSnackbar
-                open={wishlistOpenSnackbar}
-                handleClose={handleClose}
-                severity={errorMessage(wishlistErrorMessage) ? 'success' : 'error'}>
-                {actionError(wishlistErrorMessage, user, 'shopping wishlist')}
-              </MuiSnackbar>
-            }
+            {Snackbar(wishlistLoading, wishlistOpenSnackbar, wishlistErrorMessage, 'shopping wishlist')}
           </Fragment>
         </Delayed>
       }

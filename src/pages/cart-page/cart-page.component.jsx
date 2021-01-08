@@ -28,22 +28,28 @@ function CartPage() {
     return () => dispatch(destroyCartsState());
   }, [dispatch]);
 
+  const Content = () => {
+    if (!carts.length) {
+      return (
+        <Delayed waitBeforeShow={500}>
+          <DataEmptyTable icon={EmptyCartImage} title="cart"/>
+        </Delayed>
+      );
+    }
+    return (
+      <Fragment>
+        <CartHeader/>
+        <DataTableCart/>
+        <CartContent/>
+      </Fragment>
+    );
+  };
+
   return (
     <Fragment>
       <Container>
         <PageWrapper>
-          {
-            isFetching ? <MuiSpinner/> :
-            carts.length === 0 ?
-            <Delayed waitBeforeShow={500}>
-              <DataEmptyTable icon={EmptyCartImage} title="cart"/>
-            </Delayed> :
-            <Fragment>
-              <CartHeader/>
-              <DataTableCart/>
-              <CartContent/>
-            </Fragment>
-          }
+          {isFetching ? <MuiSpinner/> : Content()}
         </PageWrapper>
       </Container>
     </Fragment>

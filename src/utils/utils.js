@@ -12,10 +12,10 @@ export function totalPrice(data) {
   }, 0);
 }
 
-export const errorMessage = (error) => error.length === 0;
+export const errorMessage = (error) => !error.length;
 
 export function actionError(error, user, message) {
-  if (error.length === 0) {
+  if (!error.length) {
     return `Successfully added this product to your ${message}!`;
   } else {
     if (user) {

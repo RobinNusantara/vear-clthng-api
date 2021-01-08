@@ -46,48 +46,58 @@ function ProductsPage() {
 
   const collection = (val) => val.productName.toLowerCase().includes(query.toLowerCase());
 
+  const TabLayout = () => {
+    if (location.pathname.match('/collections/hijab')) return null;
+    return (
+      <Tabs className={classes.tabs} value={value}>
+        <Tab
+          className={classes.tab}
+          label="all" {...a11yProps(0)}
+          onClick={() => dispatch(defaultCollections())}
+          disabled={isFetching}/>
+        <Tab
+          className={classes.tab}
+          label="men" {...a11yProps(1)}
+          onClick={() => dispatch(filterMenCollections(products))}
+          disabled={isFetching}/>
+        <Tab
+          className={classes.tab}
+          label="women" {...a11yProps(2)}
+          onClick={() => dispatch(filterWomenCollections(products))}
+          disabled={isFetching}/>
+      </Tabs>
+    );
+  };
+
+  const FetchingContent = () => {
+    if (isFetching) return <MuiSpinner/>;
+    return Content(products);
+  };
+
+  const Content = (data) => {
+    return data.filter(collection).map((product) => <MuiCard key={product.id} {...product}/>);
+  };
+
   return (
     <Fragment>
       <Container>
         <PageWrapper>
           <div className={classes.root}>
             <MuiSearchBar handleChange={handleChange} disabled={isFetching}/>
-            {
-              location.pathname.match('/collections/hijab') ? null :
-              <Tabs className={classes.tabs} value={value}>
-                <Tab
-                  className={classes.tab}
-                  label="all" {...a11yProps(0)}
-                  onClick={() => dispatch(defaultCollections())}
-                  disabled={isFetching}/>
-                <Tab
-                  className={classes.tab}
-                  label="men" {...a11yProps(1)}
-                  onClick={() => dispatch(filterMenCollections(products))}
-                  disabled={isFetching}/>
-                <Tab
-                  className={classes.tab}
-                  label="women" {...a11yProps(2)}
-                  onClick={() => dispatch(filterWomenCollections(products))}
-                  disabled={isFetching}/>
-              </Tabs>
-            }
+            {TabLayout()}
             <TabPanel value={value} index={0}>
               <Grid className={classes.grid} container spacing={2}>
-                {
-                  isFetching ? <MuiSpinner /> :
-                  products.filter(collection).map((product) => <MuiCard key={product.id} {...product}/>)
-                }
+                {FetchingContent()}
               </Grid>
             </TabPanel>
             <TabPanel value={value} index={1}>
               <Grid className={classes.grid} container spacing={2}>
-                {results.filter(collection).map((product) => <MuiCard key={product.id} {...product}/>)}
+                {Content(results)}
               </Grid>
             </TabPanel>
             <TabPanel value={value} index={2}>
               <Grid className={classes.grid} container spacing={2}>
-                {results.filter(collection).map((product) => <MuiCard key={product.id} {...product}/>)}
+                {Content(results)}
               </Grid>
             </TabPanel>
           </div>

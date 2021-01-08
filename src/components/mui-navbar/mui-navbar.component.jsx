@@ -2,6 +2,8 @@ import React, {Fragment} from 'react';
 import {Link as RouterLink, useLocation, useHistory} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 import {authUserSelector} from '../../utils/auth-selectors';
+import {useTheme} from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Container from '@material-ui/core/Container';
 import Appbar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -18,23 +20,38 @@ import useStyles from './mui-navbar.styles';
 
 function Navbar() {
   const classes = useStyles();
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.down('sm'));
   const user = useSelector(authUserSelector);
   const location = useLocation();
   const history = useHistory();
 
   const backToPreviousPage = () => history.goBack();
 
+  const BackButton = () => {
+    if (location.pathname.match('product')) {
+      return (
+        <IconButton className={classes.backButton} edge="start" onClick={backToPreviousPage}>
+          <Icon className={classes.backIcon} icon={arrowBackOutline} />
+        </IconButton>
+      );
+    }
+    return null;
+  };
+
+  const ToolbarStyle = () => {
+    if (location.pathname === '/' || matches) {
+      return {borderBottom: 'none'};
+    }
+    return {borderBottom: `2px solid ${theme.palette.secondary.main}`};
+  };
+
   return (
     <Fragment>
       <Appbar className={classes.root} elevation={0}>
         <Container>
-          <Toolbar className={classes.toolbar}>
-            {
-              location.pathname.match('product') ?
-              <IconButton className={classes.backButton} edge="start" onClick={backToPreviousPage}>
-                <Icon className={classes.backIcon} icon={arrowBackOutline} />
-              </IconButton> : null
-            }
+          <Toolbar className={classes.toolbar} style={ToolbarStyle()}>
+            {BackButton()}
             <Link
               variant="h5"
               underline="none"
