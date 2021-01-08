@@ -32,13 +32,19 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1),
   },
   secondSection: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(4),
     marginBottom: theme.spacing(8),
   },
-  directory: {
-    position: 'relative',
-    height: 400,
-    border: `1px solid ${theme.palette.secondary.main}`,
+  textHeader: {
+    textAlign: 'center',
+    fontWeight: 'bold',
+    marginBottom: theme.spacing(2),
+    color: theme.palette.primary.main,
+  },
+  divider: {
+    width: 260,
+    border: `2px solid ${theme.palette.primary.main}`,
+    marginBottom: theme.spacing(4),
   },
   thirdSection: {
     position: 'relative',

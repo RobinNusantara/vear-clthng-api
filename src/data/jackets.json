@@ -1,0 +1,26 @@
+{
+    "name": "Jacket Collection",
+    "link": "/collections/jackets",
+    "tags": [
+        {
+            "tagName": "Jackets"
+        },
+        {
+            "tagName": "Men"
+        },
+        {
+            "tagName": "Women"
+        }
+    ],
+    "images": [
+        {
+            "imageUrl": "https://i.ibb.co/vJrd8yZ/linoleum-magazine-3-An-VG5-ENdi8-unsplash.jpg"
+        },
+        {
+            "imageUrl": "https://i.ibb.co/yQCCxwX/toa-heftiba-O3ymv-T7-Wf9-U-unsplash.jpg"
+        },
+        {
+            "imageUrl": "https://i.ibb.co/hymw99t/toa-heftiba-ua9-Re-Zlzc-IE-unsplash.jpg"
+        }
+    ]
+}

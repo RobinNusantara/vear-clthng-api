@@ -1,0 +1,26 @@
+{
+    "name": "T-Shirt Collection",
+    "link": "/collections/t-shirt",
+    "tags": [
+        {
+            "tagName": "T-Shirts"
+        },
+        {
+            "tagName": "Men"
+        },
+        {
+            "tagName": "Women"
+        }
+    ],
+    "images": [
+        {
+            "imageUrl": "https://i.ibb.co/2Prt26w/ian-dooley-C6-Br-EIuc-DDU-unsplash.jpg"
+        },
+        {
+            "imageUrl": "https://i.ibb.co/jW0DNbw/ian-dooley-HBGUs-KKTxd-U-unsplash.jpg"
+        },
+        {
+            "imageUrl": "https://i.ibb.co/y0MtQ6m/taylor-z-Oq-KOa-Aztj-A-unsplash.jpg"
+        }
+    ]
+}

@@ -2,9 +2,13 @@ import React, {Fragment} from 'react';
 import {useHistory} from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
+import Directory from './components/directory/directory.component';
 import Button from './components/button/button.component';
 import Footer from '../../components/footer/footer.component';
+import shirts from '../../data/shirts.json';
+import jackets from '../../data/jackets.json';
 import useStyles from './landing-page.styles';
 
 function LandingPage() {
@@ -25,19 +29,16 @@ function LandingPage() {
       </section>
       <section className={classes.secondSection}>
         <Container>
-          <Grid container spacing={2}>
+          <Typography className={classes.textHeader} variant="h5">Our Collections</Typography>
+          <Box display="flex" justifyContent="center">
+            <div className={classes.divider}/>
+          </Box>
+          <Grid container spacing={4}>
             <Grid item xs={12} md={6}>
-              <div className={classes.directory}>
-              </div>
+              <Directory contents={shirts}/>
             </Grid>
             <Grid item xs={12} md={6}>
-              <div className={classes.directory}></div>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <div className={classes.directory}></div>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <div className={classes.directory}></div>
+              <Directory contents={jackets}/>
             </Grid>
           </Grid>
         </Container>
