@@ -40,9 +40,7 @@ function Navbar() {
   };
 
   const ToolbarStyle = () => {
-    if (location.pathname === '/' || matches) {
-      return {borderBottom: 'none'};
-    }
+    if (location.pathname === '/' || matches) return {borderBottom: 'none'};
     return {borderBottom: `2px solid ${theme.palette.secondary.main}`};
   };
 
