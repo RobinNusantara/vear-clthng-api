@@ -10,8 +10,9 @@ import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import IconButton from '@material-ui/core/IconButton';
-import MuiSnackbar from '../mui-snackbar/mui-snackbar.component';
 import Typography from '@material-ui/core/Typography';
+import MuiSnackbar from '../mui-snackbar/mui-snackbar.component';
+import MuiCounter from '../mui-counter/mui-counter.component';
 import {Icon} from '@iconify/react';
 import closeOutline from '@iconify/icons-eva/close-outline';
 import useStyles from '../../styles/data-table.styles';
@@ -72,6 +73,7 @@ function DataTableCart() {
                       <Typography className={`${classes.productPrice} ${classes.tableDataSpacing}`} variant="subtitle1">
                         {formatPrice(productPrice)}
                       </Typography>
+                      <MuiCounter initialValue={cart.productQuantity}/>
                     </TableCell>
                     <TableCell className={classes.tableDataHidden} align="left">
                       {formatPrice(productPrice)}
