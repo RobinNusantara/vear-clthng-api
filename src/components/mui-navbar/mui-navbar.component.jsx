@@ -1,9 +1,11 @@
 import React, {Fragment} from 'react';
+import PropTypes from 'prop-types';
 import {Link as RouterLink, useLocation, useHistory} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 import {authUserSelector} from '../../utils/auth-selectors';
 import {useTheme} from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import Container from '@material-ui/core/Container';
 import Appbar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -18,7 +20,7 @@ import {ReactComponent as VearClothingLogoDark} from '../../assets/icons/vear-lo
 import {ReactComponent as VearClothingLogoLight} from '../../assets/icons/vear-logo-light.svg';
 import useStyles from './mui-navbar.styles';
 
-function Navbar() {
+function Navbar(props) {
   const classes = useStyles();
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down('sm'));
@@ -46,50 +48,72 @@ function Navbar() {
 
   return (
     <Fragment>
-      <Appbar className={classes.root} elevation={0}>
-        <Container>
-          <Toolbar className={classes.toolbar} style={ToolbarStyle()}>
-            {BackButton()}
-            <Link
-              variant="h5"
-              underline="none"
-              to="/"
-              component={RouterLink}>
-              <VearClothingLogoDark className={classes.logoDark}/>
-              <VearClothingLogoLight className={classes.logoLight}/>
-            </Link>
-            <div className={classes.menus}>
+      <ElevationScroll {...props}>
+        <Appbar className={classes.root} elevation={0}>
+          <Container>
+            <Toolbar className={classes.toolbar} style={ToolbarStyle()}>
+              {BackButton()}
               <Link
-                variant="h6"
+                variant="h5"
                 underline="none"
-                to="/shop"
-                component={RouterLink}>SHOP</Link>
-              <Link
-                variant="h6"
-                underline="none"
-                to="/contact"
-                component={RouterLink}>CONTACT</Link>
-              <RouterLink to="/favorites">
-                <IconButton>
-                  <Icon className={classes.icon} icon={outlineFavoriteBorder}/>
-                </IconButton>
-              </RouterLink>
-              <RouterLink to="/cart">
-                <IconButton>
-                  <Icon className={classes.icon} icon={outlineShoppingBag}/>
-                </IconButton>
-              </RouterLink>
-              <RouterLink to={user ? '/user' : '/signin'}>
-                <IconButton>
-                  <Icon className={classes.icon} icon={bxUser}/>
-                </IconButton>
-              </RouterLink>
-            </div>
-          </Toolbar>
-        </Container>
-      </Appbar>
+                to="/"
+                component={RouterLink}>
+                <VearClothingLogoDark className={classes.logoDark}/>
+                <VearClothingLogoLight className={classes.logoLight}/>
+              </Link>
+              <div className={classes.menus}>
+                <Link
+                  variant="h6"
+                  underline="none"
+                  to="/shop"
+                  component={RouterLink}>SHOP</Link>
+                <Link
+                  variant="h6"
+                  underline="none"
+                  to="/contact"
+                  component={RouterLink}>CONTACT</Link>
+                <RouterLink to="/favorites">
+                  <IconButton>
+                    <Icon className={classes.icon} icon={outlineFavoriteBorder}/>
+                  </IconButton>
+                </RouterLink>
+                <RouterLink to="/cart">
+                  <IconButton>
+                    <Icon className={classes.icon} icon={outlineShoppingBag}/>
+                  </IconButton>
+                </RouterLink>
+                <RouterLink to={user ? '/user' : '/signin'}>
+                  <IconButton>
+                    <Icon className={classes.icon} icon={bxUser}/>
+                  </IconButton>
+                </RouterLink>
+              </div>
+            </Toolbar>
+          </Container>
+        </Appbar>
+      </ElevationScroll>
     </Fragment>
   );
+};
+
+function ElevationScroll(props) {
+  const {children, window} = props;
+  const location = useLocation();
+
+  const trigger = useScrollTrigger({
+    disableHysteresis: true,
+    threshold: 0,
+    target: window ? window() : undefined,
+  });
+
+  return React.cloneElement(children, {
+    elevation: trigger && location.pathname === '/' ? 1 : 0,
+  });
+}
+
+ElevationScroll.propTypes = {
+  children: PropTypes.element.isRequired,
+  window: PropTypes.func,
 };
 
 export default Navbar;
