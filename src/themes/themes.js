@@ -27,6 +27,12 @@ const theme = createMuiTheme({
   },
   typography: {
     fontFamily: 'Montserrat',
+    h4: {
+      'fontWeight': 'bold',
+      '@media screen and (max-width: 600px)': {
+        fontSize: 24,
+      },
+    },
     h6: {
       'fontSize': 16,
       '@media screen and (max-width: 600px)': {
