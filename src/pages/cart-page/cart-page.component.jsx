@@ -66,7 +66,7 @@ function CartHeader() {
   return (
     <div className={classes.header}>
       <div className={classes.leftBox}>
-        <Typography className={classes.textHeader} variant="body2">
+        <Typography variant="h6">
           Cart
         </Typography>
         <Typography

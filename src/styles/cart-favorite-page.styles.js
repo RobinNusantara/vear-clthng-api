@@ -15,9 +15,6 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     justifyContent: 'center',
   },
-  textHeader: {
-    fontWeight: 'bold',
-  },
   textSubtitle: {
     marginTop: theme.spacing(2),
   },

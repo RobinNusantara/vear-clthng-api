@@ -35,9 +35,7 @@ const theme = createMuiTheme({
     },
     h6: {
       'fontSize': 16,
-      '@media screen and (max-width: 600px)': {
-        fontSize: 14,
-      },
+      'fontWeight': 'bold',
     },
     subtitle1: {
       'fontSize': 14,

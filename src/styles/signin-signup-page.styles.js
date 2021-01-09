@@ -11,8 +11,6 @@ const useStyles = makeStyles((theme) => ({
     width: 320,
   },
   textHeader: {
-    fontWeight: 'bold',
-    textTransform: 'uppercase',
     marginBottom: theme.spacing(2),
   },
   textSpacing: {

@@ -64,11 +64,13 @@ function Navbar(props) {
               </Link>
               <div className={classes.menus}>
                 <Link
+                  className={classes.textButton}
                   variant="h6"
                   underline="none"
                   to="/shop"
                   component={RouterLink}>SHOP</Link>
                 <Link
+                  className={classes.textButton}
                   variant="h6"
                   underline="none"
                   to="/contact"

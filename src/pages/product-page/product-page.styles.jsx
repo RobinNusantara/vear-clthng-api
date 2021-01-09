@@ -8,9 +8,6 @@ const useStyles = makeStyles((theme) => ({
       marginBottom: theme.spacing(12),
     },
   },
-  textBold: {
-    fontWeight: 'bold',
-  },
   textUppercase: {
     textTransform: 'uppercase',
   },

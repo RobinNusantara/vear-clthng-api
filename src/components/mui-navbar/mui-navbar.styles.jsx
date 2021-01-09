@@ -12,6 +12,9 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
     textDecoration: 'none',
   },
+  textButton: {
+    color: theme.palette.primary.main,
+  },
   backButton: {
     display: 'none',
   },
@@ -37,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
   icon: {
     height: 24,
     width: 24,
-    color: theme.palette.secondary.main,
+    color: theme.palette.primary.main,
   },
   [theme.breakpoints.down('sm')]: {
     root: {

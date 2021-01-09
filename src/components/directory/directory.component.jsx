@@ -17,10 +17,10 @@ function Directory({...props}) {
         <div className={classes.root} onClick={moveToCollectionsPage}>
           <div className={classes.image}/>
           <div className={classes.content}>
-            <Typography className={classes.textHeader} variant="h6">
+            <Typography className={classes.textHeader} variant="body2">
               {name.toUpperCase()}
             </Typography>
-            <Typography variant="h6">SHOP NOW</Typography>
+            <Typography variant="body2">SHOP NOW</Typography>
           </div>
         </div>
       </Grid>

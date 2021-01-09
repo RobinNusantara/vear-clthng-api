@@ -110,7 +110,7 @@ function ProductPage() {
             <div className={classes.mobileContent}>
               <Container>
                 <PageWrapper>
-                  <Typography className={`${classes.textBold} ${classes.textUppercase}`} variant="body2">
+                  <Typography className={classes.textUppercase} variant="h6">
                     {productName}
                   </Typography>
                   <Typography variant="body2" className={classes.topSpacing}>
