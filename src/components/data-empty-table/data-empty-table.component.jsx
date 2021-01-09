@@ -11,7 +11,7 @@ function DataEmptyTable({...messages}) {
       <figure className={classes.figure}>
         <img src={icon} alt="empty-data"/>
         <figcaption>
-          <Typography className={classes.title} variant="h6">
+          <Typography className={classes.title} variant="body2">
             Your {title} is empty
           </Typography>
           <Typography className={classes.description} variant="body2">
