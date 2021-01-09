@@ -17,9 +17,6 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 14,
     marginLeft: 0,
     color: theme.palette.secondary.main,
-    [theme.breakpoints.down('xs')]: {
-      fontSize: 12,
-    },
   },
   grid: {
     marginTop: theme.spacing(2),

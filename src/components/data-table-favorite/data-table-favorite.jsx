@@ -34,16 +34,16 @@ function DataTableFavorite() {
           <TableHead>
             <TableRow>
               <TableCell className={classes.resetCell}>
-                <Typography variant="subtitle1">Product</Typography>
+                <Typography variant="body2">Product</Typography>
               </TableCell>
               <TableCell align="left">
-                <Typography variant="subtitle1">Description</Typography>
+                <Typography variant="body2">Description</Typography>
               </TableCell>
               <TableCell className={classes.tableDataHidden} align="left">
-                <Typography variant="subtitle1">Price</Typography>
+                <Typography variant="body2">Price</Typography>
               </TableCell>
               <TableCell className={classes.resetCell} align="right">
-                <Typography variant="subtitle1">Action</Typography>
+                <Typography variant="body2">Action</Typography>
               </TableCell>
             </TableRow>
           </TableHead>

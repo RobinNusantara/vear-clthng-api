@@ -66,12 +66,12 @@ function CartHeader() {
   return (
     <div className={classes.header}>
       <div className={classes.leftBox}>
-        <Typography className={classes.textHeader} variant="h6">
+        <Typography className={classes.textHeader} variant="body2">
           Cart
         </Typography>
         <Typography
           className={classes.textSubtitle}
-          variant="subtitle1"
+          variant="body2"
           color="textSecondary">
           {carts.length} Items
         </Typography>
@@ -91,7 +91,7 @@ function CartContent() {
 
   return (
     <div className={classes.content}>
-      <Typography className={classes.totalCount} variant="subtitle1">
+      <Typography className={classes.totalCount} variant="body2">
         Total {formatPrice(totalPrice(carts))}</Typography>
       <div className={classes.button}>
         <MuiButton

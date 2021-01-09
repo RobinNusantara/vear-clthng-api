@@ -63,12 +63,12 @@ function FavoriteHeader() {
   return (
     <div className={classes.header}>
       <div className={classes.leftBox}>
-        <Typography className={classes.textHeader} variant="h6">
+        <Typography className={classes.textHeader} variant="body2">
           Wishlist
         </Typography>
         <Typography
           className={classes.textSubtitle}
-          variant="subtitle1"
+          variant="body2"
           color="textSecondary">
           {favorites.length} Items
         </Typography>

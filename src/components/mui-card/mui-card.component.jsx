@@ -91,7 +91,7 @@ function MuiCard({...product}) {
               in={isMouseInside}
               style={{transformOrigin: '0 0 0'}}
               {...(isMouseInside ? {timeout: 1000} : {})}>
-              <Paper className={`${classes.paper} ${classes.cartContainer}`}>
+              <Paper className={`${classes.paper} ${classes.spacing}`}>
                 <IconButton onClick={handleOpenCartSnackbar}>
                   <Icon className={classes.icon} icon={plusOutline}/>
                 </IconButton>
@@ -100,15 +100,15 @@ function MuiCard({...product}) {
           </CardActions>
           <CardContent className={classes.cardContent}>
             <Typography
-              className={`${classes.textBold} ${classes._textOverflow}`}
+              className={classes.textBold}
               variant="subtitle1"
               onClick={moveToCollectionPage}>
               {productName}
             </Typography>
-            <Typography className={classes.text} variant="subtitle1">
+            <Typography variant="subtitle1" color="secondary">
               {productBrand}
             </Typography>
-            <Typography className={classes.text} variant="subtitle1">
+            <Typography className={`${classes.textBold} ${classes.spacing}`} variant="subtitle1">
               {formatPrice(productPrice)}
             </Typography>
           </CardContent>

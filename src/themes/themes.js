@@ -58,9 +58,11 @@ const theme = createMuiTheme({
     MuiTab: {
       root: {
         'textTransform': 'capitalize',
+        'borderRadius': 4,
+        'paddingLeft': 18,
+        'paddingRight': 18,
         'marginRight': 8,
         'marginLeft': 8,
-        'borderRadius': 4,
         'backgroundColor': blueGrey[50],
         '&$selected': {
           color: 'white',

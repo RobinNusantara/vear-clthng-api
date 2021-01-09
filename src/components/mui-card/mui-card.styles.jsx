@@ -5,6 +5,9 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative',
     backgroundColor: 'transparent',
   },
+  spacing: {
+    marginTop: theme.spacing(1),
+  },
   cardImage: {
     height: 360,
     width: '100%',
@@ -28,16 +31,12 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: theme.spacing(1),
     backgroundColor: theme.palette.primary.main,
   },
-  cartContainer: {
-    marginTop: theme.spacing(1),
-  },
   icon: {
     height: 20,
     width: 20,
     color: theme.palette.common.white,
   },
   cardContent: {
-    textAlign: 'center',
     paddingLeft: 0,
     paddingRight: 0,
   },

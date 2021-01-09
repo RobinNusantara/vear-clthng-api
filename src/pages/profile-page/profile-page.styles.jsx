@@ -5,8 +5,5 @@ export const StyledListItemText = withStyles((theme) => ({
   root: {
     textTransform: 'uppercase',
     fontSize: 14,
-    [theme.breakpoints.down('sm')]: {
-      fontSize: 12,
-    },
   },
 }))(ListItemText);

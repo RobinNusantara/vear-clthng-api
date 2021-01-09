@@ -14,7 +14,7 @@ function DataEmptyTable({...messages}) {
           <Typography className={classes.title} variant="h6">
             Your {title} is empty
           </Typography>
-          <Typography className={classes.description} variant="subtitle1">
+          <Typography className={classes.description} variant="body2">
             Looks like you haven&apos;t made your choices yet
           </Typography>
         </figcaption>
