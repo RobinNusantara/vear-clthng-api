@@ -39,7 +39,7 @@ function MuiBottomNavigation() {
     },
     {
       value: 3,
-      label: 'account',
+      label: user ? 'account' : 'sign in',
       icon: bxUser,
       route: user ? '/user' : '/signin',
     },

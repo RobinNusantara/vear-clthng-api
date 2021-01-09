@@ -10,7 +10,6 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: theme.spacing(2),
     [theme.breakpoints.down('sm')]: {
       width: (props) => props._width,
-      fontSize: 12,
     },
   },
 }));

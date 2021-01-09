@@ -9,6 +9,7 @@ import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import Container from '@material-ui/core/Container';
 import Appbar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
+import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import Link from '@material-ui/core/Link';
 import {Icon} from '@iconify/react';
@@ -73,19 +74,25 @@ function Navbar(props) {
                   to="/contact"
                   component={RouterLink}>CONTACT</Link>
                 <RouterLink to="/favorites">
-                  <IconButton>
-                    <Icon className={classes.icon} icon={outlineFavoriteBorder}/>
-                  </IconButton>
+                  <Tooltip title="Favorites">
+                    <IconButton>
+                      <Icon className={classes.icon} icon={outlineFavoriteBorder}/>
+                    </IconButton>
+                  </Tooltip>
                 </RouterLink>
                 <RouterLink to="/cart">
-                  <IconButton>
-                    <Icon className={classes.icon} icon={outlineShoppingBag}/>
-                  </IconButton>
+                  <Tooltip title="Cart">
+                    <IconButton>
+                      <Icon className={classes.icon} icon={outlineShoppingBag}/>
+                    </IconButton>
+                  </Tooltip>
                 </RouterLink>
                 <RouterLink to={user ? '/user' : '/signin'}>
-                  <IconButton>
-                    <Icon className={classes.icon} icon={bxUser}/>
-                  </IconButton>
+                  <Tooltip title={user ? 'Account' : 'Sign In'}>
+                    <IconButton>
+                      <Icon className={classes.icon} icon={bxUser}/>
+                    </IconButton>
+                  </Tooltip>
                 </RouterLink>
               </div>
             </Toolbar>
