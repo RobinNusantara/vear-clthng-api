@@ -25,5 +25,3 @@ export function actionError(error, user, message) {
     }
   }
 }
-
-export const url = process.env.REACT_APP_VEAR_CLOTHING_URL;
