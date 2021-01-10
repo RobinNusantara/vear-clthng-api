@@ -26,8 +26,7 @@
     "start": "node src/index.js",
     "server": "nodemon src/index.js",
     "client": "npm start --prefix client",
-    "dev": "concurrently \"yarn run server\" \"cd client && yarn start\"",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+    "dev": "concurrently \"yarn run server\" \"cd client && yarn start\""
   },
   "devDependencies": {
     "eslint": "^6.6.0",
