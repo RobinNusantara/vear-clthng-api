@@ -1,7 +1,9 @@
 {
-  "name": "vear-clthng",
+  "name": "vear-clthng-client",
   "version": "0.1.0",
   "private": true,
+  "author": "Robin Nusantara",
+  "repository": "https://github.com/RobinNusantara/vear-clthng",
   "dependencies": {
     "@iconify/icons-bx": "^1.0.4",
     "@iconify/icons-eva": "^1.0.0",
@@ -35,7 +37,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build && echo '/* /index.html 200' | cat >build/_redirects ",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

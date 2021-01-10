@@ -1,0 +1,36 @@
+{
+  "name": "vear-clthng-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "author": "Robin Nusantara",
+  "repository": "https://github.com/RobinNusantara/vear-clthng",
+  "dependencies": {
+    "@prisma/client": "^2.12.1",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "cloudinary": "^1.23.0",
+    "concurrently": "^5.3.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "joi": "^17.3.0",
+    "jsonwebtoken": "^8.5.1",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.2"
+  },
+  "scripts": {
+    "migrate": "npx prisma migrate dev --preview-feature",
+    "generate": "npx prisma generate",
+    "build": "cd client && yarn build",
+    "watch": "nodemon src/index.js",
+    "dev": "concurrently \"yarn run watch\" \"cd ../client && yarn start\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix ../client && npm run build --prefix ../client"
+  },
+  "devDependencies": {
+    "@prisma/cli": "^2.12.1",
+    "eslint": "^7.17.0",
+    "eslint-config-google": "^0.14.0",
+    "nodemon": "^2.0.6"
+  }
+}

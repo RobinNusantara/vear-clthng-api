@@ -1,0 +1,88 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id              Int        @id @default(autoincrement())
+  email           String     @unique
+  username        String     @unique
+  password        String
+  role            Role       @default(USER)
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @default(now())
+  profile         Profile?
+  bags            Cart[]
+  favorites       Wishlist[]
+}
+
+model Profile {
+  id          Int      @id @default(autoincrement())
+  ownerId     Int      @unique
+  avatar      String   
+  firstName   String
+  lastName    String
+  dateOfBirth String
+  gender      String
+  address     String
+  postalCode  String
+  city        String
+  phoneNumber String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now())
+  owner       User     @relation(fields: [ownerId], references: [id])
+}
+
+model Wishlist {
+  id           Int      @id @default(autoincrement())
+  ownerId      Int
+  collectionId Int
+  createdAt    DateTime @default(now())
+  owner        User     @relation(fields: [ownerId], references: [id])
+  collection   Product  @relation(fields: [collectionId], references: [id])
+}
+
+model Cart {
+  id              Int      @id @default(autoincrement())
+  ownerId         Int
+  collectionId    Int
+  productQuantity Int
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @default(now())
+  owner           User     @relation(fields: [ownerId], references: [id])
+  collection      Product  @relation(fields: [collectionId], references: [id])
+}
+
+model Product {
+  id              Int            @id @default(autoincrement())
+  productName     String
+  productBrand    String
+  productCategory String
+  productType     String
+  productColor    String
+  productSize     String
+  productPrice    Int
+  images          ProductImage[]
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @default(now())
+  bags            Cart[]
+  favorites       Wishlist[]
+}
+
+model ProductImage {
+  id           Int      @id @default(autoincrement())
+  productImage String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @default(now())
+  collectionId Int
+  collection   Product  @relation(fields: [collectionId], references: [id])
+}
+
+enum Role {
+  USER
+  ADMIN
+}
