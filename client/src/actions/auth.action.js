@@ -51,7 +51,6 @@ function signOut() {
 export function signInWithEmailAndPassword(values) {
   return (dispatch) => {
     const data = {
-      'username': values.username,
       'email': values.email,
       'password': values.password,
     };
@@ -66,8 +65,13 @@ export function signInWithEmailAndPassword(values) {
         })
         .then(() => dispatch(push('/shop')))
         .catch((error) => {
-          const message = error.response.data.messages;
-          dispatch(signInFailed(message));
+          const {response, message} = error;
+          if (!response) {
+            dispatch(signInFailed(message))
+          } else {
+            const {message} = response.data;
+            dispatch(signInFailed(message));
+          }
         });
   };
 };
@@ -90,8 +94,13 @@ export function signUpWithEmailAndPassword(values) {
         })
         .then(() => dispatch(push('/shop')))
         .catch((error) => {
-          const message = error.response.data.messages;
-          dispatch(signUpFailed(message));
+          const {response, message} = error;
+          if (!response) {
+            dispatch(signUpFailed(message))
+          } else {
+            const {message} = response.data;
+            dispatch(signUpFailed(message));
+          }
         });
   };
 }

@@ -27,10 +27,7 @@ async function index(req, res, next) {
       'data': products,
     });
   } catch (error) {
-    res.status(400).json({
-      'status': 'error',
-      'messages': error.message,
-    });
+    next(error);
   }
 }
 
@@ -68,10 +65,7 @@ async function insert(req, res, next) {
       'data': product,
     });
   } catch (error) {
-    res.status(400).json({
-      'status': 'error',
-      'messages': error.message,
-    });
+    next(error);
   }
 }
 
@@ -98,10 +92,7 @@ async function select(req, res, next) {
       'data': product,
     });
   } catch (error) {
-    res.status(400).json({
-      'status': 'error',
-      'messages': error.message,
-    });
+    next(error);
   }
 }
 
@@ -129,10 +120,7 @@ async function patch(req, res, next) {
       'data': product,
     });
   } catch (error) {
-    res.status(400).json({
-      'status': 'error',
-      'messages': error.message,
-    });
+    next(error);
   }
 }
 
@@ -152,10 +140,7 @@ async function remove(req, res, next) {
       'data': product,
     });
   } catch (error) {
-    res.status(400).json({
-      'status': 'error',
-      'messages': error.message,
-    });
+    next(error);
   }
 }
 

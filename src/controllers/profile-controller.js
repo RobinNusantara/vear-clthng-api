@@ -37,10 +37,7 @@ async function insert(req, res, next) {
       'data': profile,
     });
   } catch (error) {
-    res.status(400).json({
-      'status': 'error',
-      'messages': error.message,
-    });
+    next(error);
   }
 }
 
@@ -60,10 +57,7 @@ async function select(req, res, next) {
       'data': profile,
     });
   } catch (error) {
-    res.status(400).json({
-      'status': 'error',
-      'messages': error.message,
-    });
+    next(error);
   }
 }
 

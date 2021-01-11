@@ -65,8 +65,13 @@ export function insertItemToWishlist(id) {
           dispatch(insertItemToWishlistSuccess(wishlist.data.id));
         })
         .catch((error) => {
-          const message = error.response.data.messages;
-          dispatch(insertItemToWishlistFailed(message));
+          const {response, message} = error;
+          if (!response) {
+            dispatch(insertItemToWishlistFailed(message));
+          } else {
+            const {message} = response.data;
+            dispatch(insertItemToWishlistFailed(message));
+          }
         });
   };
 }
@@ -83,8 +88,13 @@ export function fetchWishlistItems() {
           dispatch(fetchWishlistItemsSuccess(wishlist.data));
         })
         .catch((error) => {
-          const message = error.response.data.messages;
-          dispatch(fetchWishlistItemsFailed(message));
+          const {response, message} = error;
+          if (!response) {
+            dispatch(fetchWishlistItemsFailed(message));
+          } else {
+            const {message} = response.data;
+            dispatch(fetchWishlistItemsFailed(message));
+          }
         });
   };
 }

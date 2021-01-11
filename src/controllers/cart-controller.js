@@ -1,4 +1,5 @@
 const {PrismaClient} = require('@prisma/client');
+const {ErrorHandler} = require('../helpers/error');
 
 const prisma = new PrismaClient();
 
@@ -28,23 +29,19 @@ async function index(req, res, next) {
 
     if (cart.length === 0) {
       return res.status(201).json({
-        'status': 'ok',
-        'messages': 'Your cart is empty',
-        'data': [],
+        status: 'ok',
+        messages: 'Your shopping cart is empty',
+        data: [],
       });
     } else {
       return res.status(201).json({
-        'status': 'ok',
-        'messages': '',
-        'data': cart,
+        status: 'ok',
+        messages: '',
+        data: cart,
       });
     }
   } catch (error) {
-    res.status(400).json({
-      'status': 'error',
-      'messages': error.message,
-      'data': [],
-    });
+    next(error);
   }
 }
 
@@ -62,10 +59,7 @@ async function insert(req, res, next) {
     const isCartExist = carts.filter((cart) => cart.collectionId === collectionId);
 
     if (!!isCartExist.length) {
-      return res.status(400).json({
-        'status': 'error',
-        'messages': 'This item already in your cart',
-      });
+      throw new ErrorHandler(400, 'This product already in your shopping cart');
     }
 
     const cart = await prisma.cart.create({
@@ -85,15 +79,13 @@ async function insert(req, res, next) {
     });
 
     res.status(201).json({
-      'status': 'ok',
-      'messages': 'Item successfully added to your cart',
-      'data': cart,
+      status: 'ok',
+      messages: 'Successfully inserted a product to your shopping cart',
+      data: cart,
     });
+    next();
   } catch (error) {
-    res.status(400).json({
-      'status': 'error',
-      'messages': error.message,
-    });
+    next(error);
   }
 }
 
@@ -112,15 +104,12 @@ async function patch(req, res, next) {
     });
 
     res.status(201).json({
-      'status': 'ok',
-      'messages': 'Successfully updated item in your cart',
-      'data': cart,
+      status: 'ok',
+      messages: 'Successfully updated a product in your shopping cart',
+      data: cart,
     });
   } catch (error) {
-    res.status(400).json({
-      'status': 'error',
-      'messages': error.message,
-    });
+    next(error);
   }
 }
 
@@ -135,15 +124,12 @@ async function remove(req, res, next) {
     });
 
     res.status(201).json({
-      'status': 'ok',
-      'messages': '',
-      'data': cart,
+      status: 'ok',
+      messages: 'Successfully removed a product in your shopping cart',
+      data: cart,
     });
   } catch (error) {
-    res.status(400).json({
-      'status': 'error',
-      'messages': error.message,
-    });
+    next(error);
   }
 }
 
@@ -158,15 +144,12 @@ async function removeMany(req, res, next) {
     });
 
     res.status(201).json({
-      'status': 'ok',
-      'messages': 'Successfully removed all items in your cart',
-      'data': cart,
+      status: 'ok',
+      messages: 'Successfully removed products in your shopping cart',
+      data: cart,
     });
   } catch (error) {
-    res.status(400).json({
-      'status': 'error',
-      'messages': error.message,
-    });
+    next(error);
   }
 }
 

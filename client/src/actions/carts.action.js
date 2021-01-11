@@ -66,8 +66,14 @@ export function insertItemToCart(id) {
           dispatch(insertItemToCartSuccess(cart.data.id));
         })
         .catch((error) => {
-          const message = error.response.data.messages;
-          dispatch(insertItemToCartFailed(message));
+          const {response, message} = error;
+          if (!response) {
+            console.log(message);
+            dispatch(insertItemToCartFailed(message));
+          } else {
+            const {message} = response.data;
+            dispatch(insertItemToCartFailed(message));
+          }
         });
   };
 }
@@ -84,8 +90,13 @@ export function fetchCartsItems() {
           dispatch(fetchCartItemsSuccess(carts.data));
         })
         .catch((error) => {
-          const message = error.response.data.messages;
-          dispatch(fetchCartItemsFailed(message));
+          const {response, message} = error;
+          if (!response) {
+            dispatch(fetchCartItemsFailed(message));
+          } else {
+            const {message} = response.data;
+            dispatch(fetchCartItemsFailed(message));
+          }
         });
   };
 }
@@ -101,7 +112,7 @@ export function removeItemFromCart(id) {
           dispatch(removeCartItemSuccess(cart.data.id));
         })
         .catch((error) => {
-          const message = error.response.data.messages;
+          const {message} = error.response.data;
           console.log(message);
         });
   };
@@ -115,7 +126,7 @@ export function removeItemsFromCart() {
     API.delete('carts/delete/all', headers)
         .then(() => dispatch(removeCartItemsSuccess()))
         .catch((error) => {
-          const message = error.response.data.messages;
+          const {message} = error.response.data;
           console.log(message);
         });
   };

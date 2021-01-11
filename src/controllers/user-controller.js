@@ -18,10 +18,7 @@ async function index(req, res, next) {
       'data': user,
     });
   } catch (error) {
-    res.status(400).json({
-      'status': 'error',
-      'messages': error.message,
-    });
+    next(error);
   }
 }
 

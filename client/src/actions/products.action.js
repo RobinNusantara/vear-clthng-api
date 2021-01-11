@@ -82,11 +82,19 @@ export function insertProduct(values) {
     formData.append('productSize', values.productSize);
     formData.append('productPrice', values.productPrice);
 
-    files.forEach((file) => formData.append('productImage', file));
+    files.map((file) => formData.append('productImage', file));
     dispatch(insertProductStart());
     API.post('products/insert', formData, headers)
         .then((res) => dispatch(insertProductSuccess(res)))
-        .catch((error) => dispatch(insertProductFailed(error)));
+        .catch((error) => {
+          const {response, message} = error;
+          if (!response) {
+            dispatch(insertProductFailed(message));
+          } else {
+            const {message} = response.data;
+            dispatch(insertProductFailed(message))
+          }
+        });
   };
 }
 
@@ -98,9 +106,19 @@ export function fetchProducts(params) {
 
     dispatch(fetchProductsStart());
     API.get(`products/list/${params}`, cancellation)
-        .then((res) => res.data)
-        .then((res) => dispatch(fetchProductsSuccess(res.data)))
-        .catch((error) => dispatch(fetchProductsFailed(error)));
+        .then((res) => {
+          const products = res.data;
+          dispatch(fetchProductsSuccess(products.data))
+        })
+        .catch((error) => {
+          const {response, message} = error;
+          if (!response) {
+            dispatch(fetchProductsFailed(message))
+          } else {
+            const {message} = response.data;
+            dispatch(fetchProductsFailed(message));
+          }
+        });
   };
 }
 
@@ -135,8 +153,18 @@ export function fetchProduct(params) {
   return (dispatch) => {
     dispatch(fetchProductStart());
     API.get(`products/details/${params}`)
-        .then((res) => res.data)
-        .then((res) => dispatch(fetchProductSuccess(res.data)))
-        .catch((error) => dispatch(fetchProductFailed(error)));
+        .then((res) => {
+          const product = res.data;
+          dispatch(fetchProductSuccess(product.data));
+        })
+        .catch((error) => {
+          const {response, message} = error;
+          if (!response) {
+            dispatch(fetchProductFailed(message))
+          } else {
+            const {message} = response.data;
+            dispatch(fetchProductFailed(message));
+          }
+        });
   };
 }
