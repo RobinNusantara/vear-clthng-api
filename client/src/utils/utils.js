@@ -4,6 +4,11 @@ export function formatPrice(data) {
     currency: 'IDR'}).format(data);
 }
 
+export function formatDate(date) {
+  const timestamp = new Date(date.replace(' ', 'T'));
+  return new Intl.DateTimeFormat('en-US', {dateStyle: 'medium'}).format(timestamp);
+}
+
 export function totalPrice(data) {
   return data.reduce((acc, val) => {
     const {productQuantity} = val;

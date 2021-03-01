@@ -54,79 +54,73 @@ function removeFavoriteItemsSuccess() {
 }
 
 export function insertItemToWishlist(id) {
-  return (dispatch) => {
-    const token = localStorage.getItem('token');
-    const headers = {headers: {'Authorization': `Bearer ${token}`}};
-
-    dispatch(insertItemToWishlistStart());
-    API.post('wishlist/insert', {'collectionId': id}, headers)
-        .then((res) => {
-          const wishlist = res.data;
-          dispatch(insertItemToWishlistSuccess(wishlist.data.id));
-        })
-        .catch((error) => {
-          const {response, message} = error;
-          if (!response) {
-            dispatch(insertItemToWishlistFailed(message));
-          } else {
-            const {message} = response.data;
-            dispatch(insertItemToWishlistFailed(message));
-          }
-        });
+  return async (dispatch) => {
+    try {
+      const token = localStorage.getItem('token');
+      const headers = {headers: {'Authorization': `Bearer ${token}`}};
+      dispatch(insertItemToWishlistStart());
+      const response = await API.post('wishlist/insert', {'collectionId': id}, headers);
+      const {results} = response.data;
+      dispatch(insertItemToWishlistSuccess(results.id));
+    } catch (error) {
+      const {response, message} = error;
+      if (!response) {
+        dispatch(insertItemToWishlistFailed(message));
+      } else {
+        const {message} = response.data;
+        dispatch(insertItemToWishlistFailed(message));
+      }
+    }
   };
 }
 
 export function fetchWishlistItems() {
-  return (dispatch) => {
-    const token = localStorage.getItem('token');
-    const headers = {headers: {'Authorization': `Bearer ${token}`}};
-
-    dispatch(fetchWishlistItemsStart());
-    API.get('wishlist/list', headers)
-        .then((res) => {
-          const wishlist = res.data;
-          dispatch(fetchWishlistItemsSuccess(wishlist.data));
-        })
-        .catch((error) => {
-          const {response, message} = error;
-          if (!response) {
-            dispatch(fetchWishlistItemsFailed(message));
-          } else {
-            const {message} = response.data;
-            dispatch(fetchWishlistItemsFailed(message));
-          }
-        });
+  return async (dispatch) => {
+    try {
+      const token = localStorage.getItem('token');
+      const headers = {headers: {'Authorization': `Bearer ${token}`}};
+      dispatch(fetchWishlistItemsStart());
+      const response = await API.get('wishlist/list', headers);
+      const {results} = response.data; 
+      dispatch(fetchWishlistItemsSuccess(results));
+    } catch (error) {
+      const {response, message} = error;
+      if (!response) {
+        dispatch(fetchWishlistItemsFailed(message));
+      } else {
+        const {message} = response.data;
+        dispatch(fetchWishlistItemsFailed(message));
+      }
+    }
   };
 }
 
 export function removeItemFromWishlist(id) {
-  return (dispatch) => {
-    const token = localStorage.getItem('token');
-    const headers = {headers: {'Authorization': `Bearer ${token}`}};
-
-    API.delete(`wishlist/remove/${id}`, headers)
-        .then((res) => {
-          const wishlist = res.data;
-          dispatch(removeFavoriteItemSuccess(wishlist.data.id));
-        })
-        .catch((error) => {
-          const message = error.response.data.messages;
-          console.log(message);
-        });
+  return async (dispatch) => {
+    try {
+      const token = localStorage.getItem('token');
+      const headers = {headers: {'Authorization': `Bearer ${token}`}};
+      const response = await API.delete(`wishlist/remove/${id}`, headers);
+      const {results} = response.data;
+      dispatch(removeFavoriteItemSuccess(results.id));
+    } catch (error) {
+      const {message} = error.response.data;
+      console.error(message);
+    }
   };
 }
 
 export function removeItemsFromWishlist() {
-  return (dispatch) => {
-    const token = localStorage.getItem('token');
-    const headers = {headers: {'Authorization': `Bearer ${token}`}};
-
-    API.delete('wishlist/delete/all', headers)
-        .then(() => dispatch(removeFavoriteItemsSuccess()))
-        .catch((error) => {
-          const message = error.response.data.messages;
-          console.log(message);
-        });
+  return async (dispatch) => {
+    try {
+      const token = localStorage.getItem('token');
+      const headers = {headers: {'Authorization': `Bearer ${token}`}};
+      await API.delete('wishlist/delete/all', headers);
+      dispatch(removeFavoriteItemsSuccess())
+    } catch (error) {
+      const message = error.response.data.messages;
+      console.error(message);
+    }
   };
 }
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import FormControl from '@material-ui/core/FormControl';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
+import TextField from '@material-ui/core/TextField';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import useStyles from './mui-text-field.styles';
 
@@ -19,14 +19,15 @@ function MuiTextField({...props}) {
   return (
     <FormControl className={classes.root}>
       <label className={classes.label}>{label}</label>
-      <OutlinedInput
-        className={classes.input}
+      <TextField
         autoComplete="off"
+        variant="outlined"
         type={type}
         placeholder={placeholder}
         name={name}
         value={value}
-        onChange={handleChange}/>
+        onChange={handleChange}
+        inputProps={{className: `${classes.input}`}}/>
       <FormHelperText className={classes.error}>{error}</FormHelperText>
     </FormControl>
   );

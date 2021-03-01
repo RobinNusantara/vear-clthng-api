@@ -7,41 +7,25 @@ async function index(req, res, next) {
   try {
     const {id} = req.user;
 
-    const wishlist = await prisma.wishlist.findMany({
-      where: {
-        ownerId: id,
-      },
-      include: {
-        collection: {
-          include: {
-            images: {
-              select: {
-                productImage: true,
-              },
-            },
-          },
-        },
-      },
-      orderBy: {
-        createdAt: 'asc',
-      },
-    });
+    const wishlist = await prisma.user
+        .findUnique({where: {id}})
+        .favorites({include: {collection: {include: {images: true}}}});
 
     if (wishlist.length === 0) {
       return res.status(201).json({
         status: 'ok',
-        messages: 'Your shopping wishlist is empty',
-        data: [],
+        message: 'Your shopping wishlist is empty',
+        results: [],
       });
     } else {
       return res.status(201).json({
         status: 'ok',
-        messages: '',
-        data: wishlist,
+        message: '',
+        results: wishlist,
       });
     }
   } catch (error) {
-    next(error);
+    next(new ErrorHandler(400, error.message.toString()));
   }
 }
 
@@ -79,12 +63,12 @@ async function insert(req, res, next) {
 
     res.status(201).json({
       status: 'ok',
-      messages: 'Successfully inserted a product to your shopping wishlist',
-      data: wishlist,
+      message: 'Successfully inserted a product to your shopping wishlist',
+      results: wishlist,
     });
     next();
   } catch (error) {
-    next(error);
+    next(new ErrorHandler(400, error.message.toString()));
   }
 }
 
@@ -100,11 +84,11 @@ async function remove(req, res, next) {
 
     res.status(201).json({
       status: 'ok',
-      messages: 'Successfully removed a product in your shopping wishlist',
-      data: wishlist,
+      message: 'Successfully removed a product in your shopping wishlist',
+      results: wishlist,
     });
   } catch (error) {
-    next(error);
+    next(new ErrorHandler(400, error.message.toString()));
   }
 }
 
@@ -120,11 +104,11 @@ async function removeMany(req, res, next) {
 
     res.status(201).json({
       status: 'ok',
-      messages: 'Successfully removed products in your shopping wishlist',
-      data: wishlist,
+      message: 'Successfully removed products in your shopping wishlist',
+      results: wishlist,
     });
   } catch (error) {
-    next(error);
+    next(new ErrorHandler(400, error.message.toString()));
   }
 }
 

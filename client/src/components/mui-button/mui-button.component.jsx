@@ -4,13 +4,13 @@ import useStyles from './mui-button.styles';
 
 function MuiButton({...props}) {
   const classes = useStyles(props);
-  const {type, variant, color, disabled, onClick, children, icon} = props;
+  const {type, variant, color, elevation, disabled, onClick, children, icon} = props;
 
   return (
     <Button
       type={type}
       className={classes.root}
-      disableElevation
+      disableElevation={elevation}
       variant={variant}
       color={color}
       disabled={disabled}

@@ -32,9 +32,9 @@ async function insert(req, res, next) {
     });
 
     res.status(201).json({
-      'status': 'ok',
-      'messages': 'Successfully created your profile',
-      'data': profile,
+      status: 'ok',
+      message: 'Successfully created your profile',
+      results: profile,
     });
   } catch (error) {
     next(error);
@@ -52,9 +52,9 @@ async function select(req, res, next) {
     });
 
     res.status(201).json({
-      'status': 'ok',
-      'messages': '',
-      'data': profile,
+      status: 'ok',
+      message: '',
+      results: profile,
     });
   } catch (error) {
     next(error);

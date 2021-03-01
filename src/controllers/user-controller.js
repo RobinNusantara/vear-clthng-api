@@ -13,9 +13,9 @@ async function index(req, res, next) {
     });
 
     res.status(201).json({
-      'status': 'ok',
-      'messages': '',
-      'data': user,
+      status: 'ok',
+      message: '',
+      results: user,
     });
   } catch (error) {
     next(error);

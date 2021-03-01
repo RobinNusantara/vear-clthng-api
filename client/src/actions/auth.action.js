@@ -48,60 +48,49 @@ function signOut() {
   };
 }
 
-export function signInWithEmailAndPassword(values) {
-  return (dispatch) => {
-    const data = {
-      'email': values.email,
-      'password': values.password,
-    };
+const createToken = (token) => localStorage.setItem('token', token);
 
-    dispatch(signInStart());
-    API.post('/auth/signin', data)
-        .then((res) => {
-          const user = res.data;
-          const {data, accessToken} = user;
-          localStorage.setItem('token', accessToken);
-          dispatch(signInSuccess(data));
-        })
-        .then(() => dispatch(push('/shop')))
-        .catch((error) => {
-          const {response, message} = error;
-          if (!response) {
-            dispatch(signInFailed(message))
-          } else {
-            const {message} = response.data;
-            dispatch(signInFailed(message));
-          }
-        });
+export function signInWithEmailAndPassword(values) {
+  return async (dispatch) => {
+    try {
+      const data = {'email': values.email, 'password': values.password};
+      dispatch(signInStart());
+      const response = await API.post('auth/signin', data);
+      const {user, accessToken} = response.data;
+      createToken(accessToken)
+      dispatch(signInSuccess(user));
+      dispatch(push('/'));
+    } catch (error) {
+      const {response, message} = error;
+      if (!response) {
+        dispatch(signInFailed(message))
+      } else {
+        const {message} = response.data;
+        dispatch(signInFailed(message));
+      }
+    }
   };
 };
 
 export function signUpWithEmailAndPassword(values) {
-  return (dispatch) => {
-    const data = {
-      'username': values.username,
-      'email': values.email,
-      'password': values.password,
-    };
-
-    dispatch(signUpStart());
-    API.post('/auth/signup', data)
-        .then((res) => {
-          const user = res.data;
-          const {data, accessToken} = user;
-          localStorage.setItem('token', accessToken);
-          dispatch(signUpSuccess(data));
-        })
-        .then(() => dispatch(push('/shop')))
-        .catch((error) => {
-          const {response, message} = error;
-          if (!response) {
-            dispatch(signUpFailed(message))
-          } else {
-            const {message} = response.data;
-            dispatch(signUpFailed(message));
-          }
-        });
+  return async (dispatch) => {
+    try {
+      const data = {'username': values.username, 'email': values.email, 'password': values.password};
+      dispatch(signUpStart());
+      const response = await API.post('auth/signup', data);
+      const {user, accessToken} = response.data;
+      createToken(accessToken)
+      dispatch(signUpSuccess(user));
+      dispatch(push('/'));
+    } catch (error) {
+      const {response, message} = error;
+      if (!response) {
+        dispatch(signUpFailed(message))
+      } else {
+        const {message} = response.data;
+        dispatch(signUpFailed(message));
+      }
+    }
   };
 }
 

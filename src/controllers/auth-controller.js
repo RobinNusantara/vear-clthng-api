@@ -49,7 +49,7 @@ async function register(req, res, next) {
     res.status(201).json({
       status: 'ok',
       messages: 'Your account has been created',
-      data: {
+      user: {
         id: user.id,
         email: user.email,
         username: user.username,
@@ -59,7 +59,7 @@ async function register(req, res, next) {
     });
     next();
   } catch (error) {
-    next(error);
+    next(new ErrorHandler(400, error.message.toString()));
   }
 }
 
@@ -86,7 +86,7 @@ async function login(req, res, next) {
     res.status(201).json({
       status: 'ok',
       messages: 'Success login to your account',
-      data: {
+      user: {
         id: user.id,
         email: user.email,
         username: user.username,
@@ -96,7 +96,7 @@ async function login(req, res, next) {
     });
     next();
   } catch (error) {
-    next(error);
+    next(new ErrorHandler(400, error.message.toString()));
   }
 }
 

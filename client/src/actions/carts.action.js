@@ -55,80 +55,74 @@ function removeCartItemsSuccess() {
 }
 
 export function insertItemToCart(id) {
-  return (dispatch) => {
-    const token = localStorage.getItem('token');
-    const headers = {headers: {'Authorization': `Bearer ${token}`}};
-
-    dispatch(insertItemToCartStart());
-    API.post('carts/insert', {'collectionId': id}, headers)
-        .then((res) => {
-          const cart = res.data;
-          dispatch(insertItemToCartSuccess(cart.data.id));
-        })
-        .catch((error) => {
-          const {response, message} = error;
-          if (!response) {
-            console.log(message);
-            dispatch(insertItemToCartFailed(message));
-          } else {
-            const {message} = response.data;
-            dispatch(insertItemToCartFailed(message));
-          }
-        });
+  return async (dispatch) => {
+    try {
+      const token = localStorage.getItem('token');
+      const headers = {headers: {'Authorization': `Bearer ${token}`}};
+      dispatch(insertItemToCartStart());
+      const response = await API.post('carts/insert', {'collectionId': id}, headers);
+      const {results} = response.data;
+      dispatch(insertItemToCartSuccess(results.id));
+    } catch (error) {
+      const {response, message} = error;
+      if (!response) {
+        console.log(message);
+        dispatch(insertItemToCartFailed(message));
+      } else {
+        const {message} = response.data;
+        dispatch(insertItemToCartFailed(message));
+      }
+    }
   };
 }
 
 export function fetchCartsItems() {
-  return (dispatch) => {
-    const token = localStorage.getItem('token');
-    const headers = {headers: {'Authorization': `Bearer ${token}`}};
-
-    dispatch(fetchCartItemsStart());
-    API.get('carts/list', headers)
-        .then((res) => {
-          const carts = res.data;
-          dispatch(fetchCartItemsSuccess(carts.data));
-        })
-        .catch((error) => {
-          const {response, message} = error;
-          if (!response) {
-            dispatch(fetchCartItemsFailed(message));
-          } else {
-            const {message} = response.data;
-            dispatch(fetchCartItemsFailed(message));
-          }
-        });
+  return async (dispatch) => {
+    try {
+      const token = localStorage.getItem('token');
+      const headers = {headers: {'Authorization': `Bearer ${token}`}};
+      dispatch(fetchCartItemsStart());
+      const response = await API.get('carts/list', headers);
+      const {results} = response.data;
+      dispatch(fetchCartItemsSuccess(results));
+    } catch (error) {
+      const {response, message} = error;
+      if (!response) {
+        dispatch(fetchCartItemsFailed(message));
+      } else {
+        const {message} = response.data;
+        dispatch(fetchCartItemsFailed(message));
+      }
+    }
   };
 }
 
 export function removeItemFromCart(id) {
-  return (dispatch) => {
-    const token = localStorage.getItem('token');
-    const headers = {headers: {'Authorization': `Bearer ${token}`}};
-
-    API.delete(`carts/remove/${id}`, headers)
-        .then((res) => {
-          const cart = res.data;
-          dispatch(removeCartItemSuccess(cart.data.id));
-        })
-        .catch((error) => {
-          const {message} = error.response.data;
-          console.log(message);
-        });
+  return async (dispatch) => {
+    try {
+      const token = localStorage.getItem('token');
+      const headers = {headers: {'Authorization': `Bearer ${token}`}};
+      const response = await API.delete(`carts/remove/${id}`, headers);
+      const {results} = response.data;
+      dispatch(removeCartItemSuccess(results.id));
+    } catch (error) {
+      const {message} = error.response.data;
+      console.error(message);
+    }
   };
 }
 
 export function removeItemsFromCart() {
-  return (dispatch) => {
-    const token = localStorage.getItem('token');
-    const headers = {headers: {'Authorization': `Bearer ${token}`}};
-
-    API.delete('carts/delete/all', headers)
-        .then(() => dispatch(removeCartItemsSuccess()))
-        .catch((error) => {
-          const {message} = error.response.data;
-          console.log(message);
-        });
+  return async (dispatch) => {
+    try {
+      const token = localStorage.getItem('token');
+      const headers = {headers: {'Authorization': `Bearer ${token}`}};
+      await API.delete('carts/delete/all', headers)
+      dispatch(removeCartItemsSuccess());
+    } catch (error) {
+      const {message} = error.response.data;
+      console.error(message);
+    }
   };
 }
 

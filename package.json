@@ -7,6 +7,7 @@
   "repository": "https://github.com/RobinNusantara/vear-clthng",
   "dependencies": {
     "@prisma/client": "^2.12.1",
+    "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "cloudinary": "^1.23.0",
@@ -21,16 +22,14 @@
   },
   "scripts": {
     "migrate": "npx prisma migrate dev --preview-feature",
-    "generate": "npx prisma generate",
-    "client-install": "npm install --prefix client",
-    "start": "node src/index.js",
-    "server": "nodemon src/index.js",
-    "client": "npm start --prefix client",
-    "dev": "concurrently \"yarn run server\" \"cd client && yarn start\""
+    "reset": "npx prisma migrate reset --preview-feature",
+    "start:server": "nodemon src/index.js",
+    "watch:dev": "nodemon src/index.js",
+    "start:dev": "concurrently \"yarn watch:dev\" \"cd client && yarn start\""
   },
   "devDependencies": {
-    "eslint": "^6.6.0",
     "@prisma/cli": "^2.12.1",
+    "eslint": "^6.6.0",
     "eslint-config-google": "^0.14.0",
     "nodemon": "^2.0.6"
   }

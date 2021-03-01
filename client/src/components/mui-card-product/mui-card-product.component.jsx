@@ -20,9 +20,9 @@ import MuiSnackbar from '../mui-snackbar/mui-snackbar.component';
 import {Icon} from '@iconify/react';
 import outlineFavoriteBorder from '@iconify/icons-ic/baseline-favorite-border';
 import plusOutline from '@iconify/icons-eva/plus-outline';
-import useStyles from './mui-card.styles';
+import useStyles from './mui-card-product.styles';
 
-function MuiCard({...product}) {
+function MuiCardProduct({...product}) {
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -124,4 +124,4 @@ function MuiCard({...product}) {
   );
 };
 
-export default MuiCard;
+export default MuiCardProduct;

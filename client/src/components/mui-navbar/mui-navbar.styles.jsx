@@ -11,6 +11,10 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-between',
     textDecoration: 'none',
+    borderBottom: `2px solid ${theme.palette.secondary.main}`,
+    [theme.breakpoints.down('sm')]: {
+      borderBottom: 'none',
+    },
   },
   textButton: {
     color: theme.palette.primary.main,

@@ -11,7 +11,7 @@ function MuiChip({...props}) {
 }
 
 MuiChip.propTypes = {
-  label: Proptypes.string.isRequired,
+  label: Proptypes.any.isRequired,
   margin: Proptypes.number,
 };
 

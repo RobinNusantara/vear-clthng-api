@@ -63,22 +63,41 @@ model Product {
   productBrand    String
   productCategory String
   productType     String
-  productColor    String
-  productSize     String
+  productWeight   Int
   productPrice    Int
+  sizes           ProductSize[]
+  colors          ProductColor[]
   images          ProductImage[]
   createdAt       DateTime       @default(now())
   updatedAt       DateTime       @default(now())
   bags            Cart[]
-  favorites       Wishlist[]
+  favorites       Wishlist[]        
 }
 
 model ProductImage {
   id           Int      @id @default(autoincrement())
+  collectionId Int
   productImage String
   createdAt    DateTime @default(now())
   updatedAt    DateTime @default(now())
+  collection   Product  @relation(fields: [collectionId], references: [id])
+}
+
+model ProductSize {
+  id           Int      @id @default(autoincrement())
   collectionId Int
+  productSize  String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @default(now())
+  collection   Product  @relation(fields: [collectionId], references: [id])
+}
+
+model ProductColor {
+  id           Int      @id @default(autoincrement())
+  collectionId Int
+  productColor String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @default(now())
   collection   Product  @relation(fields: [collectionId], references: [id])
 }
 

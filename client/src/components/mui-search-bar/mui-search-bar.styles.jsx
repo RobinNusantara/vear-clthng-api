@@ -3,11 +3,6 @@ import {makeStyles} from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
   root: {
     height: 50,
-    display: 'none',
-    marginTop: theme.spacing(4),
-    [theme.breakpoints.down('xs')]: {
-      display: 'block',
-    },
   },
   searchContainer: {
     height: '100%',

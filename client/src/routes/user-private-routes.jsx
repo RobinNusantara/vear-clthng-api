@@ -3,7 +3,7 @@ import {Route, Redirect} from 'react-router-dom';
 import {useSelector} from 'react-redux';
 import {authUserSelector} from '../utils/auth-selectors';
 
-function PrivateRoute({children, ...rest}) {
+function UserPrivateRoute({children, ...rest}) {
   const user = useSelector(authUserSelector);
 
   const destination = (location) => {
@@ -17,4 +17,4 @@ function PrivateRoute({children, ...rest}) {
   );
 }
 
-export default PrivateRoute;
+export default UserPrivateRoute;

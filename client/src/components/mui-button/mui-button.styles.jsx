@@ -2,6 +2,7 @@ import {makeStyles} from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    height: (props) => props.height,
     width: (props) => props.width,
     fontSize: 14,
     textTransform: 'capitalize',

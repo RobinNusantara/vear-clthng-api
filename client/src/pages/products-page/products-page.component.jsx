@@ -2,7 +2,7 @@ import React, {Fragment, useEffect} from 'react';
 import {useLocation, useParams} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {
-  fetchProducts,
+  fetchProductsCategory,
   searchAnyProduct,
   filterMenCollections,
   filterWomenCollections,
@@ -18,11 +18,13 @@ import {
 } from '../../utils/products-selectors';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import PageWrapper from '../../components/container/container.component';
+import MuiTabPanel, {a11yProps} from '../../components/mui-tab-panel/mui-tab-panel.component';
 import MuiSpinner from '../../components/mui-spinner/mui-spinner.component';
-import MuiCard from '../../components/mui-card/mui-card.component';
+import MuiCardProduct from '../../components/mui-card-product/mui-card-product.component';
 import MuiSearchBar from '../../components/mui-search-bar/mui-search-bar.component';
 import useStyles from './products-page.styles';
 
@@ -38,11 +40,14 @@ function ProductsPage() {
   const {category} = useParams();
 
   useEffect(() => {
-    dispatch(fetchProducts(category));
+    dispatch(fetchProductsCategory(category));
     return () => dispatch(destroyProductsState());
   }, [dispatch, category]);
 
-  const handleChange = (event) => dispatch(searchAnyProduct(event.target.value));
+  const handleChange = (event) => {
+    const _query = event.target.value;
+    dispatch(searchAnyProduct(_query))
+  };
 
   const collection = (val) => val.productName.toLowerCase().includes(query.toLowerCase());
 
@@ -75,7 +80,7 @@ function ProductsPage() {
   };
 
   const Content = (data) => {
-    return data.filter(collection).map((product) => <MuiCard key={product.id} {...product}/>);
+    return data.filter(collection).map((product) => <MuiCardProduct key={product.id} {...product}/>);
   };
 
   return (
@@ -83,50 +88,30 @@ function ProductsPage() {
       <Container>
         <PageWrapper>
           <div className={classes.root}>
-            <MuiSearchBar handleChange={handleChange} disabled={isFetching}/>
+            <Box marginTop={4} display={{xs: 'block', sm: 'none'}}>
+              <MuiSearchBar handleChange={handleChange} disabled={isFetching}/>
+            </Box>
             {TabLayout()}
-            <TabPanel value={value} index={0}>
+            <MuiTabPanel value={value} index={0}>
               <Grid className={classes.grid} container spacing={2}>
                 {FetchingContent()}
               </Grid>
-            </TabPanel>
-            <TabPanel value={value} index={1}>
+            </MuiTabPanel>
+            <MuiTabPanel value={value} index={1}>
               <Grid className={classes.grid} container spacing={2}>
                 {Content(results)}
               </Grid>
-            </TabPanel>
-            <TabPanel value={value} index={2}>
+            </MuiTabPanel>
+            <MuiTabPanel value={value} index={2}>
               <Grid className={classes.grid} container spacing={2}>
                 {Content(results)}
               </Grid>
-            </TabPanel>
+            </MuiTabPanel>
           </div>
         </PageWrapper>
       </Container>
     </Fragment>
   );
 };
-
-function TabPanel(props) {
-  const {children, value, index, ...other} = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`product-tabpanel-${index}`}
-      aria-labelledby={`product-tab-${index}`}
-      {...other}>
-      {value === index && (<div>{children}</div>)}
-    </div>
-  );
-}
-
-function a11yProps(index) {
-  return {
-    'id': `product-tab-${index}`,
-    'aria-controls': `product-tabpanel-${index}`,
-  };
-}
 
 export default ProductsPage;

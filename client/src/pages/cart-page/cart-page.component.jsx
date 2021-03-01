@@ -40,7 +40,7 @@ function CartPage() {
       <Fragment>
         <CartHeader/>
         <DataTableCart/>
-        <CartContent/>
+        <CartTotalPrice/>
       </Fragment>
     );
   };
@@ -85,7 +85,7 @@ function CartHeader() {
   );
 }
 
-function CartContent() {
+function CartTotalPrice() {
   const classes = useStyles();
   const carts = useSelector(bagsFetchSelector);
 

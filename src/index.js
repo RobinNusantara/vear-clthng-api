@@ -9,7 +9,7 @@ const profileRoutes = require('./routes/profile-routes');
 const productRoutes = require('./routes/products-routes');
 const wishlistRoutes = require('./routes/favorites-routes');
 const cartRoutes = require('./routes/cart-routes');
-const {ErrorHandler, handleError} = require('./helpers/error');
+const {handleError} = require('./helpers/error');
 
 const app = express();
 dotenv.config();
@@ -28,8 +28,5 @@ app.use('/api/v1/wishlist', wishlistRoutes);
 app.use('/api/v1/carts', cartRoutes);
 
 app.use((err, req, res, next) => handleError(err, res));
-app.get('/error', (req, res) => {
-  throw new ErrorHandler(500, 'Internal server error');
-});
 
 app.listen(port, () => console.log(`Server listening on port ${port}`));

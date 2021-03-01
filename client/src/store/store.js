@@ -22,8 +22,8 @@ export default function configureStore(preLoadedState) {
     whitelist: ['auth'],
   };
   const store = createStore(
-      persistReducer(persistConfig, rootReducer(history)),
-      preLoadedState,
-      compose(applyMiddleware(...middlewares)));
+    persistReducer(persistConfig, rootReducer(history)),
+    preLoadedState,
+    compose(applyMiddleware(...middlewares)));
   return store;
 }

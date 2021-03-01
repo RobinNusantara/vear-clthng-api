@@ -7,41 +7,25 @@ async function index(req, res, next) {
   try {
     const {id} = req.user;
 
-    const cart = await prisma.cart.findMany({
-      where: {
-        ownerId: id,
-      },
-      include: {
-        collection: {
-          include: {
-            images: {
-              select: {
-                productImage: true,
-              },
-            },
-          },
-        },
-      },
-      orderBy: {
-        createdAt: 'asc',
-      },
-    });
+    const cart = await prisma.user
+        .findUnique({where: {id}})
+        .bags({include: {collection: {include: {images: true}}}});
 
     if (cart.length === 0) {
       return res.status(201).json({
         status: 'ok',
-        messages: 'Your shopping cart is empty',
-        data: [],
+        message: 'Your shopping cart is empty',
+        results: [],
       });
     } else {
       return res.status(201).json({
         status: 'ok',
-        messages: '',
-        data: cart,
+        message: '',
+        results: cart,
       });
     }
   } catch (error) {
-    next(error);
+    next(new ErrorHandler(400, error.message.toString()));
   }
 }
 
@@ -80,12 +64,12 @@ async function insert(req, res, next) {
 
     res.status(201).json({
       status: 'ok',
-      messages: 'Successfully inserted a product to your shopping cart',
-      data: cart,
+      message: 'Successfully inserted a product to your shopping cart',
+      results: cart,
     });
     next();
   } catch (error) {
-    next(error);
+    next(new ErrorHandler(400, error.message.toString()));
   }
 }
 
@@ -105,11 +89,11 @@ async function patch(req, res, next) {
 
     res.status(201).json({
       status: 'ok',
-      messages: 'Successfully updated a product in your shopping cart',
-      data: cart,
+      message: 'Successfully updated a product in your shopping cart',
+      results: cart,
     });
   } catch (error) {
-    next(error);
+    next(new ErrorHandler(400, error.message.toString()));
   }
 }
 
@@ -125,11 +109,11 @@ async function remove(req, res, next) {
 
     res.status(201).json({
       status: 'ok',
-      messages: 'Successfully removed a product in your shopping cart',
-      data: cart,
+      message: 'Successfully removed a product in your shopping cart',
+      results: cart,
     });
   } catch (error) {
-    next(error);
+    next(new ErrorHandler(400, error.message.toString()));
   }
 }
 
@@ -145,11 +129,11 @@ async function removeMany(req, res, next) {
 
     res.status(201).json({
       status: 'ok',
-      messages: 'Successfully removed products in your shopping cart',
-      data: cart,
+      message: 'Successfully removed products in your shopping cart',
+      results: cart,
     });
   } catch (error) {
-    next(error);
+    next(new ErrorHandler(400, error.message.toString()));
   }
 }
 
