@@ -6,6 +6,7 @@ import { config as dotenv } from 'dotenv';
 import errorMiddleware from './middlewares/error.middleware';
 import AuthRoutes from './routes/auth.routes';
 import ProductRoutes from './routes/product.routes';
+import ShippingRoutes from './routes/shipping.routes';
 
 class App {
   public app: Application;
@@ -31,6 +32,7 @@ class App {
   protected initializeRoutes(): void {
     this.app.use('/api/v2/auth', AuthRoutes);
     this.app.use('/api/v2/products', ProductRoutes);
+    this.app.use('/api/v2/shipping', ShippingRoutes);
     this.app.use((req: Request, res: Response) => {
       res.status(404).send('Page Not Found');
     });
