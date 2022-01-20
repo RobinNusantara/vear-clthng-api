@@ -1,0 +1,12 @@
+# Dependencies
+prisma
+src/@types
+
+# Output
+dist
+
+# Unit Test
+test
+
+# Webpack
+webpack.config.js
