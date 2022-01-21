@@ -9,3 +9,88 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id              String      @id @default(uuid())
+  email           String      @unique @db.VarChar(255)
+  username        String      @unique @db.VarChar(255)
+  password        String      @db.VarChar(255)
+  profile         Profile?
+  createdAt       DateTime    @default(now())           @map("created_at")
+  updatedAt       DateTime    @updatedAt                @map("updated_at")
+  deletedAt       DateTime    @default(now())           @map("deleted_at")
+  @@map("users")
+}
+
+model Profile {
+  id                  String          @id @default(uuid())
+  idUserFk            String                                  @map("id_user_fk")
+  idUrbanVillageFk    String                                  @map("id_urban_village_fk")
+  neighbourhood       Int       
+  hamlet              Int
+  address             String          @db.VarChar(255)
+  urbanVillage        UrbanVillage    @relation(fields: [idUrbanVillageFk], references: [id])
+  user                User            @relation(fields: [idUserFk], references: [id])
+  createdAt           DateTime        @default(now())         @map("created_at")
+  updatedAt           DateTime        @updatedAt              @map("updated_at")
+  deletedAt           DateTime        @default(now())         @map("deleted_at")
+  @@map("profiles")
+}
+
+model Country {
+  id            String        @id @default(uuid())
+  countryName   String        @unique @db.VarChar(60)   @map("country_name")
+  provinces     Provincy[]
+  createdAt     DateTime      @default(now())           @map("created_at")
+  updatedAt     DateTime      @updatedAt                @map("updated_at")
+  deletedAt     DateTime      @default(now())           @map("deleted_at")
+  @@map("countries")
+}
+
+model Provincy {
+  id              String      @id @default(uuid())
+  idCountryFk     String                                @map("id_country_fk")
+  provincyName    String      @unique @db.VarChar(60)   @map("provincy_name")
+  cities          City[]
+  country         Country     @relation(fields: [idCountryFk], references: [id])
+  createdAt       DateTime    @default(now())           @map("created_at")
+  updatedAt       DateTime    @updatedAt                @map("updated_at")
+  deletedAt       DateTime    @default(now())           @map("deleted_at")
+  @@map("provinces")
+}
+
+model City {
+  id              String        @id @default(uuid())
+  idProvincyFk    String                                  @map("id_provincy_fk")
+  cityName        String        @unique @db.VarChar(60)   @map("city_name")
+  provincy        Provincy      @relation(fields: [idProvincyFk], references: [id])
+  districts       District[]
+  createdAt       DateTime      @default(now())           @map("created_at")
+  updatedAt       DateTime      @updatedAt                @map("updated_at")
+  deletedAt       DateTime      @default(now())           @map("deleted_at")
+  @@map("cities")
+}
+
+model District {
+  id              String            @id @default(uuid())
+  idCityFk        String                                    @map("id_provincy_fk")
+  districtName    String            @db.VarChar(60)         @map("district_name")
+  city            City              @relation(fields: [idCityFk], references: [id])
+  urbanVillages   UrbanVillage[]
+  createdAt       DateTime          @default(now())         @map("created_at")
+  updatedAt       DateTime          @updatedAt              @map("updated_at")
+  deletedAt       DateTime          @default(now())         @map("deleted_at")
+  @@map("districts")
+}
+
+model UrbanVillage {
+  id                  String      @id @default(uuid())
+  idDistrictFk        String                              @map("id_district_fk")
+  urbanVillageName    String      @db.VarChar(60)         @map("urban_village_name")
+  district            District    @relation(fields: [idDistrictFk], references: [id])
+  profiles            Profile[]
+  createdAt           DateTime    @default(now())         @map("created_at")
+  updatedAt           DateTime    @updatedAt              @map("updated_at")
+  deletedAt           DateTime    @default(now())         @map("deleted_at")
+  @@map("urban_villages")
+}
