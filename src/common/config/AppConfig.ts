@@ -2,7 +2,7 @@ import { config } from "dotenv";
 
 config();
 
-export const applicationConfig = {
+export const appConfig = {
     server: {
         host: String(process.env.HOST) || "localhost",
         port: Number(process.env.PORT) || 5000,
