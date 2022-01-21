@@ -12,6 +12,7 @@ import { InversifyExpressServer } from "inversify-express-utils";
 import morgan from "morgan";
 
 // Controllers
+import "@apps/controllers/AuthController";
 import "@apps/controllers/UserController";
 
 // Modules
