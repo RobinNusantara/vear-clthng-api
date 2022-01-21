@@ -13,10 +13,12 @@ export class PasswordUtil {
         return hashed;
     }
 
-    public static async validatePassword(
-        requestPassword: string,
-        storePassword: string,
-    ): Promise<boolean> {
+    public static async validatePassword(params: {
+        requestPassword: string;
+        storePassword: string;
+    }): Promise<boolean> {
+        const { requestPassword, storePassword } = params;
+
         const password = await compare(requestPassword, storePassword);
 
         if (!password) {
