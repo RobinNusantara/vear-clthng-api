@@ -10,7 +10,6 @@ import { injectable } from "inversify";
 export class UserRepository extends Repository<User> {
     async insert(params: { body: SignUpDto }): Promise<User> {
         const { body } = params;
-        console.log("body", body.email);
 
         const password = await PasswordUtil.encryptPassword(10, body.password);
 
