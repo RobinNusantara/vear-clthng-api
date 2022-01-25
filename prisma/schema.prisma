@@ -15,6 +15,7 @@ model User {
   email           String      @unique @db.VarChar(255)
   username        String      @unique @db.VarChar(255)
   password        String      @db.VarChar(255)
+  role            Role        @default(User)
   profile         Profile?
   createdAt       DateTime    @default(now())           @map("created_at")
   updatedAt       DateTime    @updatedAt                @map("updated_at")
@@ -93,4 +94,9 @@ model UrbanVillage {
   updatedAt           DateTime    @updatedAt              @map("updated_at")
   deletedAt           DateTime    @default(now())         @map("deleted_at")
   @@map("urban_villages")
+}
+
+enum Role {
+  User
+  Admin
 }
