@@ -1,13 +1,17 @@
 import { PasswordUtil } from "@apps/common/utils/PasswordUtil";
 import { SignInDto, SignUpDto } from "@apps/dtos/AuthDto";
+import { REPOSITORY_TYPES } from "@apps/repositories/modules";
 import { UserRepository } from "@apps/repositories/UserRepository";
 import { User } from "@prisma/client";
 import { Unauthorized } from "http-errors";
-import { injectable } from "inversify";
+import { inject, injectable } from "inversify";
 
 @injectable()
 export class UserService {
-    constructor(private readonly _userRepository: UserRepository) {}
+    constructor(
+        @inject(REPOSITORY_TYPES.UserRepository)
+        private readonly _userRepository: UserRepository,
+    ) {}
 
     async signUp(body: SignUpDto): Promise<User> {
         const user = await this._userRepository.insert({ body });
