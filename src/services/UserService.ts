@@ -1,4 +1,5 @@
 import { PasswordUtil } from "@apps/common/utils/PasswordUtil";
+import { TokenUtil } from "@apps/common/utils/TokenUtil";
 import { SignInDto, SignUpDto } from "@apps/dtos/AuthDto";
 import { REPOSITORY_TYPES } from "@apps/repositories/modules";
 import { UserRepository } from "@apps/repositories/UserRepository";
@@ -13,13 +14,15 @@ export class UserService {
         private readonly _userRepository: UserRepository,
     ) {}
 
-    async signUp(body: SignUpDto): Promise<User> {
+    async signUp(body: SignUpDto): Promise<string> {
         const user = await this._userRepository.insert({ body });
 
-        return user;
+        const token = TokenUtil.generateToken(user);
+
+        return token;
     }
 
-    async signIn(body: SignInDto): Promise<User> {
+    async signIn(body: SignInDto): Promise<string> {
         const user = await this._userRepository.index({
             props: {
                 key: "email",
@@ -36,7 +39,9 @@ export class UserService {
             storePassword: user.password,
         });
 
-        return user;
+        const token = TokenUtil.generateToken(user);
+
+        return token;
     }
 
     async getUsers(): Promise<Array<User>> {
