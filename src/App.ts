@@ -12,7 +12,7 @@ import { InversifyExpressServer } from "inversify-express-utils";
 import morgan from "morgan";
 
 // Routes
-import "@apps/controllers/v1";
+import "@apps/controllers/v1/routes";
 
 // Modules
 import { repositories } from "@apps/repositories/modules";
