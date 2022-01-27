@@ -1,24 +1,65 @@
 // Import Dependencies
-import { User as UserModel } from "@prisma/client";
-import { sign } from "jsonwebtoken";
+import { User } from "@prisma/client";
+import { InternalServerError } from "http-errors";
+import { sign, SignOptions } from "jsonwebtoken";
 
 // Import Applications
-import { appConfig } from "@apps/common/config/AppConfig";
+import { config } from "@apps/common/config/AppConfig";
 import { IJwtPayload } from "@apps/common/interfaces/JwtPayloadInterface";
 
 export class TokenUtil {
-    public static generateToken(model: UserModel): string {
-        const payload: IJwtPayload = {
+    private static tokenPayload(model: User): IJwtPayload {
+        return {
             id: model.id,
             username: model.username,
             email: model.email,
             role: model.role,
         };
+    }
 
-        const { token } = appConfig;
+    private static tokenOptions(userId: string, expires: string): SignOptions {
+        const { server } = config;
 
-        return sign(payload, token.signature, {
-            expiresIn: "24h",
+        return {
+            expiresIn: expires,
+            audience: userId,
+            issuer: server.host,
+        };
+    }
+
+    public static async generateAccessToken(model: User): Promise<string> {
+        return new Promise((resolve, reject) => {
+            const { token: jwt } = config;
+
+            const payload = this.tokenPayload(model);
+
+            const options = this.tokenOptions(model.id, "15s");
+
+            sign(payload, jwt.signature.access, options, (err, token) => {
+                if (err) {
+                    reject(new InternalServerError());
+                }
+
+                resolve(String(token));
+            });
+        });
+    }
+
+    public static async generateRefreshToken(model: User): Promise<string> {
+        return new Promise((resolve, reject) => {
+            const { token: jwt } = config;
+
+            const payload = this.tokenPayload(model);
+
+            const options = this.tokenOptions(model.id, "24h");
+
+            sign(payload, jwt.signature.refresh, options, (err, token) => {
+                if (err) {
+                    reject(new InternalServerError());
+                }
+
+                resolve(String(token));
+            });
         });
     }
 }

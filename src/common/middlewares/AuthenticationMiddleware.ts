@@ -7,7 +7,7 @@ import { interfaces } from "inversify-express-utils";
 import { verify } from "jsonwebtoken";
 
 // Import Applications
-import { appConfig } from "@apps/common/config/AppConfig";
+import { config } from "@apps/common/config/AppConfig";
 import { IJwtPayload } from "@apps/common/interfaces/JwtPayloadInterface";
 
 export const access = {
@@ -17,13 +17,13 @@ export const access = {
 export class Authentication {
     public static verify(params: { roles: Array<Role> }) {
         return (req: Request, res: Response, next: NextFunction) => {
-            const signature = appConfig.token.signature;
+            const signature = config.token.signature;
             const authorization = req.headers["authorization"];
             const token = authorization && authorization.split(" ")[1];
 
             if (!token) throw new Unauthorized();
 
-            verify(token, signature, (err: any, user: any) => {
+            verify(token, signature.access, (err: any, user: any) => {
                 if (err) throw new Forbidden();
 
                 const payload = user as IJwtPayload;
