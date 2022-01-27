@@ -9,55 +9,30 @@ import { config } from "@apps/common/config/AppConfig";
 import { IJwtPayload } from "@apps/common/interfaces/JwtPayloadInterface";
 
 export class TokenUtil {
-    private static tokenPayload(model: User): IJwtPayload {
-        return {
-            id: model.id,
-            username: model.username,
-            email: model.email,
-            role: model.role,
-        };
-    }
-
-    private static tokenOptions(userId: string, expires: string): SignOptions {
-        const { server } = config;
-
-        return {
-            expiresIn: expires,
-            audience: userId,
-            issuer: server.host,
-        };
-    }
-
-    public static async generateAccessToken(model: User): Promise<string> {
+    public static async generateToken(params: {
+        model: User;
+        signature: string;
+        expiresIn: string;
+    }): Promise<string> {
         return new Promise((resolve, reject) => {
-            const { token: jwt } = config;
+            const { model, signature, expiresIn } = params;
+            const { server } = config;
 
-            const payload = this.tokenPayload(model);
+            const payload: IJwtPayload = {
+                id: model.id,
+                username: model.username,
+                email: model.email,
+                role: model.role,
+            };
 
-            const options = this.tokenOptions(model.id, "15s");
+            const options: SignOptions = {
+                expiresIn,
+                audience: model.id,
+                issuer: server.host,
+            };
 
-            sign(payload, jwt.signature.access, options, (err, token) => {
-                if (err) {
-                    reject(new InternalServerError());
-                }
-
-                resolve(String(token));
-            });
-        });
-    }
-
-    public static async generateRefreshToken(model: User): Promise<string> {
-        return new Promise((resolve, reject) => {
-            const { token: jwt } = config;
-
-            const payload = this.tokenPayload(model);
-
-            const options = this.tokenOptions(model.id, "24h");
-
-            sign(payload, jwt.signature.refresh, options, (err, token) => {
-                if (err) {
-                    reject(new InternalServerError());
-                }
+            sign(payload, signature, options, (err, token) => {
+                if (err) reject(new InternalServerError());
 
                 resolve(String(token));
             });

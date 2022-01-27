@@ -1,3 +1,4 @@
+import { config } from "@apps/common/config/AppConfig";
 import { IToken } from "@apps/common/interfaces/TokenInterface";
 import { PasswordUtil } from "@apps/common/utils/PasswordUtil";
 import { TokenUtil } from "@apps/common/utils/TokenUtil";
@@ -16,9 +17,20 @@ export class AuthService {
     ) {}
 
     private async getToken(user: User): Promise<IToken> {
+        const { token } = config;
+        const { signature } = token;
+
         const [accessToken, refreshToken] = await Promise.all([
-            await TokenUtil.generateAccessToken(user),
-            await TokenUtil.generateRefreshToken(user),
+            await TokenUtil.generateToken({
+                model: user,
+                signature: signature.access,
+                expiresIn: "15s",
+            }),
+            await TokenUtil.generateToken({
+                model: user,
+                signature: signature.access,
+                expiresIn: "24h",
+            }),
         ]);
 
         return {
