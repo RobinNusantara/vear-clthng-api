@@ -1,7 +1,8 @@
 // Import Dependencies
 import { User } from "@prisma/client";
 import { InternalServerError } from "http-errors";
-import { sign, SignOptions } from "jsonwebtoken";
+import { sign, SignOptions, verify } from "jsonwebtoken";
+import { Unauthorized } from "http-errors";
 
 // Import Applications
 import { config } from "@apps/common/config/AppConfig";
@@ -59,6 +60,18 @@ export class TokenUtil {
                 }
 
                 resolve(String(token));
+            });
+        });
+    }
+
+    public static async verifyRefreshToken(token: string): Promise<any> {
+        return new Promise((resolve, reject) => {
+            const { token: jwt } = config;
+
+            verify(token, jwt.signature.refresh, (err: any, payload: any) => {
+                if (err) reject(new Unauthorized());
+
+                resolve(payload);
             });
         });
     }

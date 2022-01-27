@@ -1,11 +1,11 @@
 import { IToken } from "@apps/common/interfaces/TokenInterface";
 import { PasswordUtil } from "@apps/common/utils/PasswordUtil";
 import { TokenUtil } from "@apps/common/utils/TokenUtil";
-import { SignUpDto, SignInDto } from "@apps/dtos/AuthDto";
+import { SignUpDto, SignInDto, RefreshTokenDto } from "@apps/dtos/AuthDto";
 import { REPOSITORY_TYPES } from "@apps/repositories/modules";
 import { UserRepository } from "@apps/repositories/UserRepository";
 import { User } from "@prisma/client";
-import { Unauthorized } from "http-errors";
+import { BadRequest, Unauthorized } from "http-errors";
 import { inject, injectable } from "inversify";
 
 @injectable()
@@ -30,12 +30,10 @@ export class AuthService {
     async signUp(body: SignUpDto): Promise<IToken> {
         const user = await this._userRepository.insert({ body });
 
-        const token = await this.getToken(user);
-
-        return token;
+        return await this.getToken(user);
     }
 
-    async signIn(body: SignInDto): Promise<any> {
+    async signIn(body: SignInDto): Promise<IToken> {
         const user = await this._userRepository.index({
             props: {
                 key: "email",
@@ -52,8 +50,16 @@ export class AuthService {
             storePassword: user.password,
         });
 
-        const token = await this.getToken(user);
+        return await this.getToken(user);
+    }
 
-        return token;
+    async refreshToken(body: RefreshTokenDto): Promise<IToken> {
+        const token = body.refreshToken;
+
+        if (!token) throw new BadRequest();
+
+        const payload = await TokenUtil.verifyRefreshToken(token);
+
+        return await this.getToken(payload);
     }
 }

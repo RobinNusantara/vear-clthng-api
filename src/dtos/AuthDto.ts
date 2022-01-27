@@ -39,3 +39,7 @@ export class SignInDto implements Omit<IAuthDto, "username"> {
     @IsString()
     password: string;
 }
+
+export class RefreshTokenDto {
+    refreshToken: string;
+}

@@ -2,7 +2,7 @@ import { Controller } from "@apps/common/base/Controller";
 import { HttpStatus } from "@apps/common/enums/HttpStatusEnum";
 import { ResponseFactory } from "@apps/common/factories/ResponseFactory";
 import { ValidateData } from "@apps/common/middlewares/ValidateDataMiddleware";
-import { SignInDto, SignUpDto } from "@apps/dtos/AuthDto";
+import { RefreshTokenDto, SignInDto, SignUpDto } from "@apps/dtos/AuthDto";
 import { AuthService } from "@apps/services/AuthService";
 import { SERVICE_TYPES } from "@apps/services/modules";
 import { inject } from "inversify";
@@ -31,6 +31,18 @@ export class AuthController extends Controller {
     @httpPost("/sign-in", ValidateData.requestBody(SignInDto))
     async signIn(@requestBody() body: SignInDto): Promise<JsonResult> {
         const data = await this._authService.signIn(body);
+
+        const status = HttpStatus.Ok;
+        const response = ResponseFactory.successResponse(status, data);
+
+        return this.json(response, status);
+    }
+
+    @httpPost("/refresh-token")
+    async refreshToken(
+        @requestBody() body: RefreshTokenDto,
+    ): Promise<JsonResult> {
+        const data = await this._authService.refreshToken(body);
 
         const status = HttpStatus.Ok;
         const response = ResponseFactory.successResponse(status, data);
