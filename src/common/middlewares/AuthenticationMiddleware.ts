@@ -12,6 +12,8 @@ import { IJwtPayload } from "@apps/common/interfaces/JwtPayloadInterface";
 
 export const access = {
     "*": [Role.User, Role.Admin],
+    Admin: [Role.Admin],
+    User: [Role.User],
 };
 
 export class Authentication {
