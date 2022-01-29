@@ -33,6 +33,7 @@
     "http-errors": "^1.8.1",
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
+    "swagger-ui-dist": "^4.4.0",
     "uuidv4": "^6.2.12"
   },
   "devDependencies": {
@@ -61,6 +62,7 @@
     "prisma": "^3.5.0",
     "reflect-metadata": "^0.1.13",
     "supertest": "^6.1.6",
+    "swagger-express-ts": "^1.1.0",
     "ts-jest": "^27.1.2",
     "ts-loader": "^9.2.6",
     "ts-node": "^10.3.0",
