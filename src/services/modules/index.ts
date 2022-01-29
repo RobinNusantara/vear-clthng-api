@@ -2,10 +2,14 @@ import { interfaces } from "inversify";
 import { IContainerInterface } from "@apps/common/interfaces/ContainerInterface";
 import { UserService } from "@apps/services/UserService";
 import { AuthService } from "@apps/services/AuthService";
+import { CountryService } from "@apps/services/CountryService";
+import { ProvincyService } from "@apps/services/ProvincyService";
 
 export const SERVICE_TYPES = {
     AuthService: Symbol.for("AuthService"),
     UserService: Symbol.for("UserService"),
+    CountryService: Symbol.for("CountryService"),
+    ProvincyService: Symbol.for("ProvincyService"),
 };
 
 const containers: Array<IContainerInterface> = [
@@ -16,6 +20,14 @@ const containers: Array<IContainerInterface> = [
     {
         type: SERVICE_TYPES.UserService,
         class: UserService,
+    },
+    {
+        type: SERVICE_TYPES.CountryService,
+        class: CountryService,
+    },
+    {
+        type: SERVICE_TYPES.ProvincyService,
+        class: ProvincyService,
     },
 ];
 

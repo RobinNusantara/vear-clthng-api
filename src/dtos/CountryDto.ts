@@ -8,6 +8,8 @@ export class CreateCountryDto {
     countryName: string;
 }
 
+export class UpdateCountryDto extends CreateCountryDto {}
+
 export class CountryDto {
     id: string;
 

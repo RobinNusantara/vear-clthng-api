@@ -24,7 +24,7 @@ export class AuthService {
             await TokenUtil.generateToken({
                 model: user,
                 signature: signature.access,
-                expiresIn: "15s",
+                expiresIn: "24h",
             }),
             await TokenUtil.generateToken({
                 model: user,

@@ -17,6 +17,7 @@ import "@apps/controllers/v1/routes";
 // Modules
 import { repositories } from "@apps/repositories/modules";
 import { services } from "@apps/services/modules";
+import { validations } from "@apps/validations/modules";
 
 // Middlewares
 import { CreateError } from "@apps/common/middlewares/CreateErrorMiddleware";
@@ -51,6 +52,7 @@ export class App {
             bind<PrismaClient>("PrismaClient").toConstantValue(prisma);
 
             repositories(bind);
+            validations(bind);
             services(bind);
         });
 
