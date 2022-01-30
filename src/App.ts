@@ -5,6 +5,7 @@
 import "reflect-metadata";
 import { PrismaClient } from "@prisma/client";
 import cors from "cors";
+import * as express from "express";
 import { Application, json, urlencoded } from "express";
 import { Server } from "http";
 import { Container, ContainerModule } from "inversify";
@@ -20,6 +21,7 @@ import { services } from "@apps/services/modules";
 import { validations } from "@apps/validations/modules";
 
 // Middlewares
+import { ApiDocs } from "@apps/common/middlewares/ApiDocsMiddleware";
 import { CreateError } from "@apps/common/middlewares/CreateErrorMiddleware";
 
 export class App {
@@ -60,10 +62,15 @@ export class App {
     }
 
     private middlewares(app: Application): void {
+        const dist = "node_modules/swagger-ui-dist";
+
         app.use(json());
         app.use(urlencoded({ extended: false }));
         app.use(morgan("dev"));
         app.use(cors());
+        app.use("/api-docs/swagger", express.static("swagger"));
+        app.use("/api-docs/swagger/assets", express.static(dist));
+        app.use(ApiDocs.config());
     }
 
     private errors(app: Application): void {
