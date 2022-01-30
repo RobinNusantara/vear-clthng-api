@@ -14,10 +14,19 @@ export class ApiDocs {
                     version: "1.0.0",
                 },
                 host,
-                schemes: ["http", "https"],
+                schemes: [
+                    SwaggerDefinitionConstant.Scheme.HTTP,
+                    SwaggerDefinitionConstant.Scheme.HTTPS,
+                ],
                 basePath: "/api",
-                consumes: ["application/json", "application/xml"],
-                produces: ["application/json", "application/xml"],
+                consumes: [
+                    SwaggerDefinitionConstant.Consume.JSON,
+                    SwaggerDefinitionConstant.Consume.XML,
+                ],
+                produces: [
+                    SwaggerDefinitionConstant.Produce.JSON,
+                    SwaggerDefinitionConstant.Produce.XML,
+                ],
                 securityDefinitions: {
                     "Bearer-Token": {
                         type: SwaggerDefinitionConstant.Security.Type.API_KEY,
