@@ -9,7 +9,7 @@ import { inject } from "inversify";
 import { controller, httpGet } from "inversify-express-utils";
 import { JsonResult } from "inversify-express-utils/lib/results";
 
-@controller("/v1/users", Authentication.verify({ roles: access["*"] }))
+@controller("/v1/users", Authentication.verify({ roles: access["Admin"] }))
 export class UserController extends Controller {
     constructor(
         @inject(SERVICE_TYPES.UserService)
