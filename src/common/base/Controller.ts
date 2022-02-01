@@ -14,18 +14,10 @@ export class Controller extends BaseHttpController {
 
         let status: HttpStatus;
 
-        switch (method) {
-            case HttpMethod.Post:
-                status = HttpStatus.Created;
-                break;
-            case HttpMethod.Get:
-            case HttpMethod.Patch:
-            case HttpMethod.Put:
-                status = HttpStatus.Ok;
-                break;
-            default:
-                status = HttpStatus.NoContent;
-                break;
+        if (method === HttpMethod.Post) {
+            status = HttpStatus.Created;
+        } else {
+            status = HttpStatus.Ok;
         }
 
         const response = ResponseFactory.successResponse(status, data);
