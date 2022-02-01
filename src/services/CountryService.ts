@@ -5,9 +5,10 @@ import {
 } from "@apps/dtos/CountryDto";
 import { CountryRepository } from "@apps/repositories/CountryRepository";
 import { REPOSITORY_TYPES } from "@apps/repositories/modules";
+import { ProvincyRepository } from "@apps/repositories/ProvincyRepository";
 import { CountryValidation } from "@apps/validations/CountryValidation";
 import { VALIDATION_TYPES } from "@apps/validations/modules";
-import { NotFound } from "http-errors";
+import { NotFound, UnprocessableEntity } from "http-errors";
 import { inject, injectable } from "inversify";
 
 @injectable()
@@ -15,6 +16,8 @@ export class CountryService {
     constructor(
         @inject(REPOSITORY_TYPES.CountryRepository)
         private readonly _countryRepository: CountryRepository,
+        @inject(REPOSITORY_TYPES.ProvincyRepository)
+        private readonly _provincyRepository: ProvincyRepository,
         @inject(VALIDATION_TYPES.CountryValidation)
         private readonly _countryValidation: CountryValidation,
     ) {}
@@ -44,24 +47,35 @@ export class CountryService {
 
         if (!country) throw new NotFound("Country not found!");
 
-        return {
-            id: country.id,
-            countryName: country.countryName,
-            provinces: country.provinces.map((provincy) => ({
-                id: provincy.id,
-                provincyName: provincy.provincyName,
-            })),
-        };
+        return CountryDto.fromCountryProvincesModel(country);
     }
 
-    async updateCountry(body: UpdateCountryDto): Promise<CountryDto> {
-        const country = await this._countryRepository.update({ body });
+    async updateCountry(
+        countryId: string,
+        body: UpdateCountryDto,
+    ): Promise<CountryDto> {
+        await this._countryValidation.isCountryExists(countryId);
+
+        const country = await this._countryRepository.update({
+            countryId,
+            body,
+        });
 
         return CountryDto.fromCountryModel(country);
     }
 
     async removeCountry(countryId: string): Promise<boolean> {
         await this._countryValidation.isCountryExists(countryId);
+
+        const totalProvincies = await this._provincyRepository.countProvincies({
+            countryId,
+        });
+
+        if (totalProvincies > 1) {
+            throw new UnprocessableEntity(
+                "Cannot delete country because the record is associated with other data that cannot be deleted",
+            );
+        }
 
         return await this._countryRepository.delete({ countryId });
     }
