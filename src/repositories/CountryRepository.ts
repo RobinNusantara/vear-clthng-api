@@ -4,8 +4,6 @@ import { Country, Prisma, Provincy } from "@prisma/client";
 import { CreateCountryDto, UpdateCountryDto } from "@apps/dtos/CountryDto";
 import { IFilterCountry } from "@apps/common/interfaces/FilterCountryInterface";
 
-type CountryHasManyProvinces = Country & { provinces: Array<Provincy> };
-
 @injectable()
 export class CountryRepository extends Repository<Country> {
     async insert(params: { body: CreateCountryDto }): Promise<Country> {
@@ -49,13 +47,16 @@ export class CountryRepository extends Repository<Country> {
         return country;
     }
 
-    async update(params: { body: UpdateCountryDto }): Promise<Country> {
-        const { body } = params;
+    async update(params: {
+        countryId: string;
+        body: UpdateCountryDto;
+    }): Promise<Country> {
+        const { countryId, body } = params;
         const { countryName } = body;
 
         const country = await this._prisma.country.upsert({
             where: {
-                countryName,
+                id: countryId,
             },
             update: {
                 countryName,
@@ -100,7 +101,7 @@ export class CountryRepository extends Repository<Country> {
     // Query Country by id associate with provinces
     async findByIdCountryProvinces(params: {
         countryId: string;
-    }): Promise<CountryHasManyProvinces | null> {
+    }): Promise<(Country & { provinces: Array<Provincy> }) | null> {
         const { countryId } = params;
 
         const country = await this._prisma.country.findUnique({
