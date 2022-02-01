@@ -1,6 +1,6 @@
-import { Country } from "@prisma/client";
+import { Country, Provincy } from "@prisma/client";
 import { IsNotEmpty, IsString } from "class-validator";
-import { ProvincyDto } from "./ProvincesDto";
+import { ProvincyDto } from "./ProvincyDto";
 
 export class CreateCountryDto {
     @IsNotEmpty()
@@ -11,7 +11,7 @@ export class CreateCountryDto {
 export class UpdateCountryDto extends CreateCountryDto {}
 
 export class CountryDto {
-    id: string;
+    countryId: string;
 
     countryName: string;
 
@@ -19,8 +19,23 @@ export class CountryDto {
 
     public static fromCountryModel(model: Country): CountryDto {
         return {
-            id: model.id,
+            countryId: model.id,
             countryName: model.countryName,
+        };
+    }
+
+    public static fromCountryProvincesModel(
+        model: Country & { provinces: Array<Provincy> },
+    ): CountryDto {
+        const provinces = model.provinces.map((provincy) => ({
+            provincyId: provincy.id,
+            provincyName: provincy.provincyName,
+        }));
+
+        return {
+            countryId: model.id,
+            countryName: model.countryName,
+            provinces,
         };
     }
 }
