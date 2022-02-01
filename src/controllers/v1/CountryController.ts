@@ -1,4 +1,5 @@
 import { Controller } from "@apps/common/base/Controller";
+import { HttpStatus } from "@apps/common/enums/HttpStatusEnum";
 import {
     access,
     Authentication,
@@ -18,7 +19,10 @@ import {
     requestBody,
     requestParam,
 } from "inversify-express-utils";
-import { JsonResult } from "inversify-express-utils/lib/results";
+import {
+    JsonResult,
+    StatusCodeResult,
+} from "inversify-express-utils/lib/results";
 
 @controller("/v1/countries")
 export class CountryController extends Controller {
@@ -29,22 +33,9 @@ export class CountryController extends Controller {
         super();
     }
 
-    @httpPost(
-        "/",
-        Authentication.verify({ roles: access["Admin"] }),
-        ValidateData.requestBody(CreateCountryDto),
-    )
-    async insertCountry(
-        @requestBody() body: CreateCountryDto,
-    ): Promise<JsonResult> {
-        const data = await this._countryService.insertCountry(body);
-
-        return this.response(data);
-    }
-
     @httpGet("/")
     async getCountries(
-        @queryParam("countryName") countryName: string,
+        @queryParam("country-name") countryName: string,
     ): Promise<JsonResult> {
         const data = await this._countryService.getCountries(countryName);
 
@@ -60,15 +51,33 @@ export class CountryController extends Controller {
         return this.response(data);
     }
 
-    @httpPut(
+    /**
+     * These routes only access by admin
+     */
+
+    @httpPost(
         "/",
         Authentication.verify({ roles: access["Admin"] }),
         ValidateData.requestBody(CreateCountryDto),
     )
+    async insertCountry(
+        @requestBody() body: CreateCountryDto,
+    ): Promise<JsonResult> {
+        const data = await this._countryService.insertCountry(body);
+
+        return this.response(data);
+    }
+
+    @httpPut(
+        "/:countryId",
+        Authentication.verify({ roles: access["Admin"] }),
+        ValidateData.requestBody(CreateCountryDto),
+    )
     async updateCountry(
+        @requestParam("countryId") countryId: string,
         @requestBody() body: UpdateCountryDto,
     ): Promise<JsonResult> {
-        const data = await this._countryService.updateCountry(body);
+        const data = await this._countryService.updateCountry(countryId, body);
 
         return this.response(data);
     }
@@ -76,13 +85,12 @@ export class CountryController extends Controller {
     @httpDelete(
         "/:countryId",
         Authentication.verify({ roles: access["Admin"] }),
-        ValidateData.requestBody(CreateCountryDto),
     )
     async removeCountry(
         @requestParam("countryId") countryId: string,
-    ): Promise<JsonResult> {
-        const data = await this._countryService.removeCountry(countryId);
+    ): Promise<StatusCodeResult> {
+        await this._countryService.removeCountry(countryId);
 
-        return this.response(data);
+        return this.statusCode(HttpStatus.NoContent);
     }
 }
