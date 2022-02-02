@@ -69,7 +69,7 @@ export class ProvincyRepository extends Repository<Provincy> {
         return true;
     }
 
-    async countProvincies(params: { countryId: string }): Promise<number> {
+    async countProvinces(params: { countryId: string }): Promise<number> {
         const { countryId } = params;
 
         const total = await this._prisma.provincy.count({
