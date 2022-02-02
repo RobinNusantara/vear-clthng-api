@@ -67,11 +67,11 @@ export class CountryService {
     async removeCountry(countryId: string): Promise<boolean> {
         await this._countryValidation.isCountryExists(countryId);
 
-        const totalProvincies = await this._provincyRepository.countProvincies({
+        const totalProvinces = await this._provincyRepository.countProvinces({
             countryId,
         });
 
-        if (totalProvincies > 1) {
+        if (totalProvinces > 1) {
             throw new UnprocessableEntity(
                 "Cannot delete country because the record is associated with other data that cannot be deleted",
             );
