@@ -23,12 +23,13 @@ import { validations } from "@apps/validations/modules";
 import { CreateError } from "@apps/common/middlewares/CreateErrorMiddleware";
 
 export class App {
+    private readonly _container: Container;
     private readonly _host: string = process.env.HOST || "localhost";
+    private readonly _port: number;
 
-    constructor(
-        private readonly _container: Container,
-        private readonly _port: number,
-    ) {
+    constructor(container: Container, port: number) {
+        this._container = container;
+        this._port = port;
         this.modules();
     }
 
