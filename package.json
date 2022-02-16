@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "set NODE_ENV=production && webpack",
+    "build": "webpack",
     "start": "node dist/bundle.js",
     "watch:dev": "set NODE_ENV=development && webpack -w",
     "start:dev": "concurrently \"npm run watch:dev\" \"nodemon dist/bundle.js\"",
@@ -64,6 +64,7 @@
     "prisma": "^3.5.0",
     "reflect-metadata": "^0.1.13",
     "supertest": "^6.1.6",
+    "terser-webpack-plugin": "^5.3.1",
     "ts-jest": "^27.1.2",
     "ts-loader": "^9.2.6",
     "ts-node": "^10.3.0",
