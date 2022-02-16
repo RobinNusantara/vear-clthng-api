@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack",
+    "build": "set NODE_ENV=production && webpack",
     "start": "node dist/bundle.js",
     "watch:dev": "set NODE_ENV=development && webpack -w",
     "start:dev": "concurrently \"npm run watch:dev\" \"nodemon dist/bundle.js\"",
