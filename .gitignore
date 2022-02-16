@@ -1,3 +1,6 @@
+# Cache
+.eslintcache
+
 # Dependencies
 node_modules
 
