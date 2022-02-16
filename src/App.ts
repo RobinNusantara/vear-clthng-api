@@ -65,6 +65,7 @@ export class App {
         app.use(urlencoded({ extended: false }));
         app.use(morgan("dev"));
         app.use(cors());
+        console.log("Test Without Semi Colon");
     }
 
     private errors(app: Application): void {
