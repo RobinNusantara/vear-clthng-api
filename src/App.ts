@@ -24,7 +24,6 @@ import { CreateError } from "@apps/common/middlewares/CreateErrorMiddleware";
 
 export class App {
     private readonly _container: Container;
-    private readonly _host: string = process.env.HOST || "localhost";
     private readonly _port: number;
 
     constructor(container: Container, port: number) {
@@ -42,8 +41,8 @@ export class App {
             .setConfig((app) => this.middlewares(app))
             .setErrorConfig((app) => this.errors(app))
             .build()
-            .listen(this._port, this._host, () => {
-                console.log(`Server running on port ${this._port}`);
+            .listen(this._port, () => {
+                console.log(`Server running on ${this._port}`);
             });
     }
 
