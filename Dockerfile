@@ -1,25 +1,23 @@
 FROM node:14-alpine
 
-# Create app directory
-RUN mkdir /app
-
-# Copy all files to app directory
-ADD . /app
-
-# Use app directory
 WORKDIR /app
 
-# Install Dependencies
-RUN npm install
+COPY package*.json ./
+COPY prisma.sh ./
+COPY webpack.config.js ./
 
-# Build application
+RUN npm ci
+
+COPY . .
+
+ENV NODE_ENV=production
+ENV PORT=5000
+
+RUN chmod +x prisma.sh
+RUN ./prisma.sh
+
 RUN npm run build
 
-# Migrate database
-RUN npx prisma db push
+EXPOSE 5000
 
-# Generate prisma client
-RUN npx prisma generate
-
-# Start application
-RUN npm start
+CMD [ "npm", "start" ]
