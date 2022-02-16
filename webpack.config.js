@@ -4,6 +4,7 @@ const nodeExternals = require("webpack-node-externals");
 
 // Plugins
 const CopyPlugin = require("copy-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 
 config();
@@ -23,6 +24,17 @@ module.exports = {
                 use: 'ts-loader',
                 include: [path.resolve(__dirname, "./src")],
             }
+        ],
+    },
+    optimization: {
+        minimize: false,
+        minimizer: [
+            new TerserPlugin({
+                terserOptions: {
+                    keep_classnames: true,
+                },
+                parallel: true,
+            })
         ],
     },
     output: {
