@@ -6,6 +6,7 @@ src/@types
 dist
 
 # Unit Test
+jest.config.ts
 test
 
 # Webpack
