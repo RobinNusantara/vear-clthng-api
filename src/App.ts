@@ -65,7 +65,7 @@ export class App {
         app.use(urlencoded({ extended: false }));
         app.use(morgan("dev"));
         app.use(cors());
-        console.log("Test Without Semi Colon");
+        console.log("Test Lint Staged Again");
     }
 
     private errors(app: Application): void {
