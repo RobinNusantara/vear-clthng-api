@@ -38,8 +38,7 @@ export class CountryController extends Controller {
         @queryParam("country-name") countryName: string,
     ): Promise<JsonResult> {
         const data = await this._countryService.getCountries(countryName);
-        console.log("Test Get Countries Routes");
-        console.log("Test Get Countries Routes Again");
+
         return this.response(data);
     }
 
