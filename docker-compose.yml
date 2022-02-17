@@ -1,6 +1,6 @@
 version: '3'
 services:
-    vear-clthng-database:
+    database-postgres:
         image: postgres:14-alpine
         ports:
             - "5432:5432"
@@ -10,9 +10,7 @@ services:
             - POSTGRES_USER=${POSTGRES_USERNAME}
             - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
             - POSTGRES_DB=${POSTGRES_DB_NAME}
-        networks:
-            - vear-clthng-network
-    vear-clthng-backend:
+    apps-backend:
         image: ${DOCKER_USERNAME}/${DOCKER_REPOSITORY}:latest
         env_file:
             - .env
@@ -25,8 +23,4 @@ services:
             - JWT_REFRESH_SIGNATURE=${JWT_REFRESH_SIGNATURE}
             - DATABASE_URL=${DATABASE_URL}
         depends_on:
-            - vear-clthng-database
-        networks:
-            - vear-clthng-network
-networks:
-    vear-clthng-network:
+            - database-postgres
