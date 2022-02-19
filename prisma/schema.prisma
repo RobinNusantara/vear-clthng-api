@@ -96,6 +96,95 @@ model UrbanVillage {
   @@map("urban_villages")
 }
 
+model Product {
+  id                    Int                       @id @default(autoincrement())
+  productName           String                    @unique                         @map("product_name")
+  productDescription    String?                   @db.Text                        @map("product_description")
+  productPrice          Int                                                       @map("product_price")
+  productStock          Int                       @default(0)                     @map("product_stock")
+  pictures              Picture[]
+  categories            CategoriesOnProducts[]
+  colors                ColorsOnProducts[]
+  sizes                 SizesOnProducts[]
+  createdAt             DateTime                  @default(now())                 @map("created_at")
+  updatedAt             DateTime                  @updatedAt                      @map("updated_at")
+  deletedAt             DateTime                  @default(now())                 @map("deleted_at")
+  @@map("products")
+}
+
+model Picture {
+  id            Int         @id @default(autoincrement())
+  idProductFk   Int                                         @map("id_product_fk")
+  product       Product     @relation(fields: [idProductFk], references: [id])
+  imageUrl      String                                      @map("image_url")
+  createdAt     DateTime    @default(now())                 @map("created_at")
+  updatedAt     DateTime    @updatedAt                      @map("updated_at")
+  deletedAt     DateTime    @default(now())                 @map("deleted_at")
+  @@map("pictures")
+}
+
+// Many to many Relation between Product & Category
+model Category {
+  id              Int                       @id @default(autoincrement())
+  categoryName    String                    @unique                         @map("category_name")
+  categoryLabel   String                    @unique                         @map("category_label")
+  products        CategoriesOnProducts[]
+  createdAt       DateTime                  @default(now())                 @map("created_at")
+  updatedAt       DateTime                  @updatedAt                      @map("updated_at")
+  deletedAt       DateTime                  @default(now())                 @map("deleted_at")
+  @@map("categories")
+}
+
+model CategoriesOnProducts {
+  IdProductFk     Int                                                               @map("id_product_fk")
+  product         Product     @relation(fields: [IdProductFk], references: [id])
+  idCategoryFk    Int                                                               @map("id_category_fk")
+  category        Category    @relation(fields: [idCategoryFk], references: [id])
+  @@id([IdProductFk, idCategoryFk])
+  @@map("categories_on_products")
+}
+
+// Many to many Relation between Product & Color
+model Color {
+  id            Int                   @id @default(autoincrement())
+  colorName     String                @unique                         @map("color_name")
+  colorValue    String                @unique                         @map("color_value")
+  products      ColorsOnProducts[]
+  createdAt     DateTime              @default(now())                 @map("created_at")
+  updatedAt     DateTime              @updatedAt                      @map("updated_at")
+  deletedAt     DateTime              @default(now())                 @map("deleted_at")
+  @@map("colors")
+}
+
+model ColorsOnProducts {
+  idProductFk   Int                                                               @map("id_product_fk")
+  product       Product     @relation(fields: [idProductFk], references: [id])
+  idColorFk     Int                                                               @map("id_color_fk")
+  color         Color       @relation(fields: [idColorFk], references: [id])      
+  @@id([idProductFk, idColorFk])
+  @@map("colors_on_products")
+}
+
+// Many to many Relation between Product & Size
+model Size {
+  id            Int                 @id @default(autoincrement())
+  sizeValue     String              @unique                         @map("size_value")
+  products      SizesOnProducts[]
+  createdAt     DateTime            @default(now())                 @map("created_at")
+  updatedAt     DateTime            @updatedAt                      @map("updated_at")
+  deletedAt     DateTime            @default(now())                 @map("deleted_at")
+  @@map("sizes")
+}
+
+model SizesOnProducts {
+  idProductFk   Int                                                               @map("id_product_fk")
+  product       Product     @relation(fields: [idProductFk], references: [id])
+  idSizeFk      Int                                                               @map("id_size_fk")
+  size          Size        @relation(fields: [idSizeFk], references: [id])
+  @@id([idProductFk, idSizeFk])
+  @@map("sizes_on_products")
+}
+
 enum Role {
   User
   Admin
