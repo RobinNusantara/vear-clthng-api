@@ -21,12 +21,12 @@ export class AuthService {
         const { signature } = token;
 
         const [accessToken, refreshToken] = await Promise.all([
-            await TokenUtil.generateToken({
+            TokenUtil.generateToken({
                 model: user,
                 signature: signature.access,
                 expiresIn: "24h",
             }),
-            await TokenUtil.generateToken({
+            TokenUtil.generateToken({
                 model: user,
                 signature: signature.access,
                 expiresIn: "24h",
