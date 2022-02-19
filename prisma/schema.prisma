@@ -106,6 +106,8 @@ model Product {
   categories            CategoriesOnProducts[]
   colors                ColorsOnProducts[]
   sizes                 SizesOnProducts[]
+  materials             MaterialsOnProducts[]
+  brands                BrandsOnProducts[]
   createdAt             DateTime                  @default(now())                 @map("created_at")
   updatedAt             DateTime                  @updatedAt                      @map("updated_at")
   deletedAt             DateTime                  @default(now())                 @map("deleted_at")
@@ -183,6 +185,46 @@ model SizesOnProducts {
   size          Size        @relation(fields: [idSizeFk], references: [id])
   @@id([idProductFk, idSizeFk])
   @@map("sizes_on_products")
+}
+
+// Many to many Relation between Product & Material
+model Material {
+  id              Int                     @id @default(autoincrement())
+  materialName    String                  @unique                         @map("material_name")
+  products        MaterialsOnProducts[]
+  createdAt       DateTime                @default(now())                 @map("created_at")
+  updatedAt       DateTime                @updatedAt                      @map("updated_at")
+  deletedAt       DateTime                @default(now())                 @map("deleted_at")
+  @@map("materials")
+}
+
+model MaterialsOnProducts {
+  idProductFk     Int                                                               @map("id_product_fk")
+  product         Product     @relation(fields: [idProductFk], references: [id])
+  idMaterialFk    Int                                                               @map("id_material_fk")
+  material        Material    @relation(fields: [idMaterialFk], references: [id])
+  @@id([idProductFk, idMaterialFk])
+  @@map("materials_on_products")
+}
+
+// Many to many Relation between Product & Brand
+model Brand {
+  id              Int                     @id @default(autoincrement())
+  brandName       String                  @unique                         @map("brand_name")
+  products        BrandsOnProducts[]
+  createdAt       DateTime                @default(now())                 @map("created_at")
+  updatedAt       DateTime                @updatedAt                      @map("updated_at")
+  deletedAt       DateTime                @default(now())                 @map("deleted_at")
+  @@map("brands")
+}
+
+model BrandsOnProducts {
+  idProductFk     Int                                                               @map("id_product_fk")
+  product         Product     @relation(fields: [idProductFk], references: [id])
+  idBrandFk       Int                                                               @map("id_brand_fk")
+  brand           Brand       @relation(fields: [idBrandFk], references: [id])
+  @@id([idProductFk, idBrandFk])
+  @@map("brands_on_products")
 }
 
 enum Role {
