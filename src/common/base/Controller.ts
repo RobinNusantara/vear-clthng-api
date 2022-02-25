@@ -19,7 +19,7 @@ export class Controller extends BaseHttpController {
         return `${protocol}://${host}${uri}?page=${page}&limit=${limit}`;
     }
 
-    public formatPage(
+    protected formatPage(
         page: number,
         limit: number,
         totalItems: number,
