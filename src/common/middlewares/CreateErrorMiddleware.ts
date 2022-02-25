@@ -30,6 +30,10 @@ export class CreateError {
             statusCode = status;
             messages = message;
         } else {
+            console.log("============Error============");
+            console.log(err);
+            console.log("<<=========================>>");
+
             statusCode = HttpStatus.InternalServerError;
             messages = "Internal Server Error";
         }

@@ -6,7 +6,7 @@ import {
 import { SERVICE_TYPES } from "@apps/services/modules";
 import { UserService } from "@apps/services/UserService";
 import { inject } from "inversify";
-import { controller, httpGet } from "inversify-express-utils";
+import { controller, httpGet, queryParam } from "inversify-express-utils";
 import { JsonResult } from "inversify-express-utils/lib/results";
 
 @controller("/v1/users", Authentication.verify({ roles: access["Admin"] }))
@@ -19,9 +19,21 @@ export class UserController extends Controller {
     }
 
     @httpGet("/")
-    async getUsers(): Promise<JsonResult> {
-        const data = await this._userService.getUsers();
+    async getUsers(
+        @queryParam("page") page: string,
+        @queryParam("limit") limit: string,
+        @queryParam("username") username: string,
+        @queryParam("role") role: string,
+    ): Promise<JsonResult> {
+        const data = await this._userService.getUsers({
+            page,
+            limit,
+            username,
+            role,
+        });
 
-        return this.response(data);
+        const results = this.paginate(data.count, data.rows);
+
+        return this.response(results);
     }
 }
