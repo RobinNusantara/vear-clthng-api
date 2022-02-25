@@ -3,7 +3,7 @@ import { IUniqueProps } from "@apps/common/interfaces/UniquePropsInterface";
 import { UserUniqueProp } from "@apps/common/types/UserUniquePropType";
 import { PasswordUtil } from "@apps/common/utils/PasswordUtil";
 import { SignUpDto } from "@apps/dtos/AuthDto";
-import { User } from "@prisma/client";
+import { User, Role as UserRole } from "@prisma/client";
 import { injectable } from "inversify";
 
 @injectable()
@@ -24,8 +24,47 @@ export class UserRepository extends Repository<User> {
         return user;
     }
 
-    async indexes(): Promise<Array<User>> {
-        return await this._prisma.user.findMany();
+    async indexes(params: {
+        page: number;
+        limit: number;
+        username: string;
+        role: UserRole;
+    }): Promise<{ count: number; rows: Array<User> }> {
+        const { page, limit, username, role } = params;
+
+        const offset = (page - 1) * limit;
+
+        const count = await this._prisma.user.count({
+            where: {
+                username,
+                role,
+            },
+        });
+
+        const users = await this._prisma.user.findMany({
+            skip: offset,
+            take: limit,
+            where: {
+                username,
+                role,
+            },
+            select: {
+                id: true,
+                email: true,
+                username: true,
+                role: true,
+            },
+            orderBy: {
+                createdAt: "asc",
+            },
+        });
+
+        const results = {
+            count,
+            rows: users as Array<User>,
+        };
+
+        return results;
     }
 
     async index(params: {
