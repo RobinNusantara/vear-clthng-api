@@ -10,7 +10,9 @@ export abstract class Repository<T> implements IRepository<T> {
 
     abstract insert(params: object): Promise<T>;
 
-    abstract indexes(params?: object): Promise<Array<T>>;
+    abstract indexes(
+        params?: object,
+    ): Promise<{ count: number; rows: Array<T> }> | Promise<Array<T>>;
 
     abstract index(params: object): Promise<T | null>;
 
