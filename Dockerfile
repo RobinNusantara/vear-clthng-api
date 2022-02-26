@@ -1,9 +1,9 @@
 FROM node:14-alpine
 
+WORKDIR /app
+
 ENV NODE_ENV=production
 ENV PORT=5000
-
-WORKDIR /app
 
 COPY package*.json ./
 COPY prisma.sh ./
