@@ -1,7 +1,9 @@
 version: '3'
 services:
-    database-postgres:
+    # Database
+    vear-clthng-postgres:
         image: postgres:14-alpine
+        container_name: vear-clthng-postgres
         ports:
             - "5432:5432"
         env_file:
@@ -10,8 +12,10 @@ services:
             - POSTGRES_USER=${POSTGRES_USERNAME}
             - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
             - POSTGRES_DB=${POSTGRES_DB_NAME}
-    apps-backend:
+    # Backend Application
+    vear:
         image: ${DOCKER_USERNAME}/${DOCKER_REPOSITORY}:latest
+        container_name: vear
         env_file:
             - .env
         ports:
@@ -23,4 +27,14 @@ services:
             - JWT_REFRESH_SIGNATURE=${JWT_REFRESH_SIGNATURE}
             - DATABASE_URL=${DATABASE_URL}
         depends_on:
-            - database-postgres
+            - vear-clthng-postgres
+    # Web Server
+    vear-clthng-nginx:
+        image: nginx:alpine
+        container_name: vear-clthng-nginx
+        ports:
+            - "80:80"
+        volumes:
+            - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+        depends_on:
+            - vear

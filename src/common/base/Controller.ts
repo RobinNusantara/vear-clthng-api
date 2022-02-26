@@ -16,7 +16,7 @@ export class Controller extends BaseHttpController {
         const host = this.httpContext.request.hostname;
         const uri = this.httpContext.request.path;
 
-        return `${protocol}://${host}${uri}?page=${page}&limit=${limit}`;
+        return `${protocol}://${host}/api${uri}?page=${page}&limit=${limit}`;
     }
 
     protected formatPage(
