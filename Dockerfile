@@ -1,5 +1,8 @@
 FROM node:14-alpine
 
+ENV NODE_ENV=production
+ENV PORT=5000
+
 WORKDIR /app
 
 COPY package*.json ./
@@ -9,9 +12,6 @@ COPY webpack.config.js ./
 RUN npm ci
 
 COPY . .
-
-ENV NODE_ENV=production
-ENV PORT=5000
 
 RUN chmod +x prisma.sh
 RUN ./prisma.sh
