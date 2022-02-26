@@ -42,7 +42,7 @@ export class App {
             .setErrorConfig((app) => this.errors(app))
             .build()
             .listen(this._port, () => {
-                console.log(`Server running on ${this._port}`);
+                console.log(`Server running on port ${this._port}`);
             });
     }
 
