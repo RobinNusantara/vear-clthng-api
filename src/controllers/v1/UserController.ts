@@ -32,8 +32,6 @@ export class UserController extends Controller {
             role,
         });
 
-        const results = this.paginate(data.count, data.rows);
-
-        return this.response(results);
+        return this.response(this.paginate(data.count, data.rows));
     }
 }
