@@ -3,8 +3,8 @@ import { HttpStatus } from "@apps/common/enums/HttpStatusEnum";
 import {
     access,
     Authentication,
-} from "@apps/common/middlewares/AuthenticationMiddleware";
-import { ValidateData } from "@apps/common/middlewares/ValidateDataMiddleware";
+} from "@apps/middlewares/AuthenticationMiddleware";
+import { ValidateData } from "@apps/middlewares/ValidateDataMiddleware";
 import { CreateCityDto, UpdateCityDto } from "@apps/dtos/CityDto";
 import { CityService } from "@apps/services/CityService";
 import { SERVICE_TYPES } from "@apps/services/modules";

@@ -2,7 +2,7 @@ import { Controller } from "@apps/common/base/Controller";
 import {
     access,
     Authentication,
-} from "@apps/common/middlewares/AuthenticationMiddleware";
+} from "@apps/middlewares/AuthenticationMiddleware";
 import { SERVICE_TYPES } from "@apps/services/modules";
 import { UserService } from "@apps/services/UserService";
 import { inject } from "inversify";
