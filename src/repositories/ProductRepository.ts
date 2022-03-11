@@ -21,6 +21,7 @@ export class ProductRepository extends Repository<ProductModel> {
             },
             include: {
                 brand: true,
+                category: true,
                 variants: {
                     include: {
                         color: true,

@@ -1,5 +1,6 @@
 import { Product } from "@prisma/client";
 import { BrandModel } from "@apps/models/BrandModel";
+import { CategoryModel } from "@apps/models/CategoryModel";
 import { VariantModel } from "@apps/models/VariantModel";
 
 export class ProductModel implements Product {
@@ -16,6 +17,8 @@ export class ProductModel implements Product {
     productPrice: number;
 
     brand: BrandModel;
+
+    category: CategoryModel;
 
     variants: Array<VariantModel>;
 

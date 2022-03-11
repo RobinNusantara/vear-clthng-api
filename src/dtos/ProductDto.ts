@@ -9,6 +9,8 @@ export class ProductDto {
 
     brand: string;
 
+    category: string;
+
     description: string | null;
 
     price: string;
@@ -20,6 +22,7 @@ export class ProductDto {
             id: product.id,
             name: product.productName,
             brand: product.brand.brandName,
+            category: product.category.categoryLabel,
             description: product.productDescription,
             price: RupiahFormatter.formatCurrency(product.productPrice),
             variants: product.variants.map((variant) => ({
