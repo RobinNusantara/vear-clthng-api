@@ -1,7 +1,7 @@
 import { Controller } from "@apps/common/base/Controller";
 import { HttpStatus } from "@apps/common/enums/HttpStatusEnum";
 import { ResponseFactory } from "@apps/common/factories/ResponseFactory";
-import { ValidateData } from "@apps/common/middlewares/ValidateDataMiddleware";
+import { ValidateData } from "@apps/middlewares/ValidateDataMiddleware";
 import { RefreshTokenDto, SignInDto, SignUpDto } from "@apps/dtos/AuthDto";
 import { AuthService } from "@apps/services/AuthService";
 import { SERVICE_TYPES } from "@apps/services/modules";

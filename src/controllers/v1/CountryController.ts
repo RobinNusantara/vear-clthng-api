@@ -3,8 +3,8 @@ import { HttpStatus } from "@apps/common/enums/HttpStatusEnum";
 import {
     access,
     Authentication,
-} from "@apps/common/middlewares/AuthenticationMiddleware";
-import { ValidateData } from "@apps/common/middlewares/ValidateDataMiddleware";
+} from "@apps/middlewares/AuthenticationMiddleware";
+import { ValidateData } from "@apps/middlewares/ValidateDataMiddleware";
 import { CreateCountryDto, UpdateCountryDto } from "@apps/dtos/CountryDto";
 import { CountryService } from "@apps/services/CountryService";
 import { SERVICE_TYPES } from "@apps/services/modules";

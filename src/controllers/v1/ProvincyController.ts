@@ -2,8 +2,8 @@ import { Controller } from "@apps/common/base/Controller";
 import {
     access,
     Authentication,
-} from "@apps/common/middlewares/AuthenticationMiddleware";
-import { ValidateData } from "@apps/common/middlewares/ValidateDataMiddleware";
+} from "@apps/middlewares/AuthenticationMiddleware";
+import { ValidateData } from "@apps/middlewares/ValidateDataMiddleware";
 import { CreateProvincyDto, UpdateProvincyDto } from "@apps/dtos/ProvincyDto";
 import { SERVICE_TYPES } from "@apps/services/modules";
 import { ProvincyService } from "@apps/services/ProvincyService";

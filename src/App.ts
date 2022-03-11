@@ -20,7 +20,7 @@ import { services } from "@apps/services/modules";
 import { validations } from "@apps/validations/modules";
 
 // Middlewares
-import { CreateError } from "@apps/common/middlewares/CreateErrorMiddleware";
+import { CreateError } from "@apps/middlewares/CreateErrorMiddleware";
 
 export class App {
     private readonly _container: Container;
