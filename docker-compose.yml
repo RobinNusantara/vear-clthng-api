@@ -1,9 +1,9 @@
 version: '3'
 services:
     # Database
-    vearclthng-postgres:
+    database-postgres:
         image: postgres:14.2-alpine
-        container_name: vearclthng-postgres
+        container_name: database-postgres
         ports:
             - "5432:5432"
         env_file:
@@ -12,20 +12,10 @@ services:
             - POSTGRES_USER=${POSTGRES_USERNAME}
             - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
             - POSTGRES_DB=${POSTGRES_DB_NAME}
-    # Web Server
-    vearclthng-nginx:
-        image: nginx:1.21-alpine
-        container_name: vearclthng-nginx
-        ports:
-            - "80:80"
-        volumes:
-            - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-        depends_on:
-            - vearclthng
     # Backend Application
-    vearclthng:
+    backend-application:
         image: ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}
-        container_name: vearclthng
+        container_name: backend-application
         env_file:
             - .env
         ports:
@@ -36,4 +26,4 @@ services:
             - JWT_REFRESH_SIGNATURE=${JWT_REFRESH_SIGNATURE}
             - DATABASE_URL=${DATABASE_URL}
         depends_on:
-            - vearclthng-postgres
+            - database-postgres
