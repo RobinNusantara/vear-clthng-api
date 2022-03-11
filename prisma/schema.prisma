@@ -19,8 +19,13 @@ model User {
   profile         Profile?
   createdAt       DateTime    @default(now())           @map("created_at")
   updatedAt       DateTime    @updatedAt                @map("updated_at")
-  deletedAt       DateTime    @default(now())           @map("deleted_at")
+  deletedAt       DateTime?                             @map("deleted_at")
   @@map("users")
+}
+
+enum Role {
+  User
+  Admin
 }
 
 model Profile {
@@ -34,7 +39,7 @@ model Profile {
   user                User            @relation(fields: [idUserFk], references: [id])
   createdAt           DateTime        @default(now())         @map("created_at")
   updatedAt           DateTime        @updatedAt              @map("updated_at")
-  deletedAt           DateTime        @default(now())         @map("deleted_at")
+  deletedAt           DateTime?                               @map("deleted_at")
   @@map("profiles")
 }
 
@@ -44,7 +49,7 @@ model Country {
   provinces     Provincy[]
   createdAt     DateTime      @default(now())           @map("created_at")
   updatedAt     DateTime      @updatedAt                @map("updated_at")
-  deletedAt     DateTime      @default(now())           @map("deleted_at")
+  deletedAt     DateTime?                               @map("deleted_at")
   @@map("countries")
 }
 
@@ -56,7 +61,7 @@ model Provincy {
   country         Country     @relation(fields: [idCountryFk], references: [id])
   createdAt       DateTime    @default(now())           @map("created_at")
   updatedAt       DateTime    @updatedAt                @map("updated_at")
-  deletedAt       DateTime    @default(now())           @map("deleted_at")
+  deletedAt       DateTime?                             @map("deleted_at")
   @@map("provinces")
 }
 
@@ -68,7 +73,7 @@ model City {
   districts       District[]
   createdAt       DateTime      @default(now())           @map("created_at")
   updatedAt       DateTime      @updatedAt                @map("updated_at")
-  deletedAt       DateTime      @default(now())           @map("deleted_at")
+  deletedAt       DateTime?                               @map("deleted_at")
   @@map("cities")
 }
 
@@ -80,7 +85,7 @@ model District {
   urbanVillages   UrbanVillage[]
   createdAt       DateTime          @default(now())         @map("created_at")
   updatedAt       DateTime          @updatedAt              @map("updated_at")
-  deletedAt       DateTime          @default(now())         @map("deleted_at")
+  deletedAt       DateTime?                                 @map("deleted_at")
   @@map("districts")
 }
 
@@ -92,99 +97,114 @@ model UrbanVillage {
   profiles            Profile[]
   createdAt           DateTime    @default(now())         @map("created_at")
   updatedAt           DateTime    @updatedAt              @map("updated_at")
-  deletedAt           DateTime    @default(now())         @map("deleted_at")
+  deletedAt           DateTime?                           @map("deleted_at")
   @@map("urban_villages")
 }
 
 model Product {
   id                    Int                       @id @default(autoincrement())
+  idBrandFk             Int                                                       @map("id_brand_fk")
+  brand                 Brand                     @relation(fields: [idBrandFk], references: [id])
+  idCategoryFk          Int                                                       @map("id_category_fk")
+  category              Category                  @relation(fields: [idCategoryFk], references: [id])
   productName           String                    @unique                         @map("product_name")
   productDescription    String?                   @db.Text                        @map("product_description")
   productPrice          Int                                                       @map("product_price")
-  productStock          Int                       @default(0)                     @map("product_stock")
-  pictures              Picture[]
-  categories            CategoriesOnProducts[]
-  colors                ColorsOnProducts[]
-  sizes                 SizesOnProducts[]
+  variants              Variant[]
   materials             MaterialsOnProducts[]
-  brands                BrandsOnProducts[]
   createdAt             DateTime                  @default(now())                 @map("created_at")
   updatedAt             DateTime                  @updatedAt                      @map("updated_at")
-  deletedAt             DateTime                  @default(now())                 @map("deleted_at")
+  deletedAt             DateTime?                                                 @map("deleted_at")
   @@map("products")
 }
 
-model Picture {
-  id            Int         @id @default(autoincrement())
-  idProductFk   Int                                         @map("id_product_fk")
-  product       Product     @relation(fields: [idProductFk], references: [id])
-  imageUrl      String                                      @map("image_url")
-  createdAt     DateTime    @default(now())                 @map("created_at")
-  updatedAt     DateTime    @updatedAt                      @map("updated_at")
-  deletedAt     DateTime    @default(now())                 @map("deleted_at")
-  @@map("pictures")
+model Brand {
+  id              Int                     @id @default(autoincrement())
+  products        Product[]
+  brandName       String                  @unique                         @map("brand_name")
+  createdAt       DateTime                @default(now())                 @map("created_at")
+  updatedAt       DateTime                @updatedAt                      @map("updated_at")
+  deletedAt       DateTime?                                               @map("deleted_at")
+  @@map("brands")
 }
 
-// Many to many Relation between Product & Category
 model Category {
-  id              Int                       @id @default(autoincrement())
-  categoryName    String                    @unique                         @map("category_name")
-  categoryLabel   String                    @unique                         @map("category_label")
-  products        CategoriesOnProducts[]
-  createdAt       DateTime                  @default(now())                 @map("created_at")
-  updatedAt       DateTime                  @updatedAt                      @map("updated_at")
-  deletedAt       DateTime                  @default(now())                 @map("deleted_at")
+  id              Int         @id @default(autoincrement())
+  categoryName    String      @unique                         @map("category_name")
+  categoryLabel   String      @unique                         @map("category_label")
+  products        Product[]
+  createdAt       DateTime    @default(now())                 @map("created_at")
+  updatedAt       DateTime    @updatedAt                      @map("updated_at")
+  deletedAt       DateTime?                                   @map("deleted_at")
   @@map("categories")
 }
 
-model CategoriesOnProducts {
-  IdProductFk     Int                                                               @map("id_product_fk")
-  product         Product     @relation(fields: [IdProductFk], references: [id])
-  idCategoryFk    Int                                                               @map("id_category_fk")
-  category        Category    @relation(fields: [idCategoryFk], references: [id])
-  @@id([IdProductFk, idCategoryFk])
-  @@map("categories_on_products")
+model Variant {
+  id            Int                 @id @default(autoincrement())
+  idProductFk   Int                                                                       @map("id_product_fk")
+  product       Product             @relation(fields: [idProductFk], references: [id])
+  idColorFk     Int                                                                       @map("id_color_fk")
+  color         Color               @relation(fields: [idColorFk], references: [id])
+  pictures      Picture[]
+  units         Unit[]
+  createdAt     DateTime            @default(now())                                       @map("created_at")
+  updatedAt     DateTime            @updatedAt                                            @map("updated_at")
+  deletedAt     DateTime?                                                                 @map("deleted_at")
+  @@map("variants")
 }
 
-// Many to many Relation between Product & Color
 model Color {
   id            Int                   @id @default(autoincrement())
   colorName     String                @unique                         @map("color_name")
   colorValue    String                @unique                         @map("color_value")
-  products      ColorsOnProducts[]
+  variants      Variant[]
   createdAt     DateTime              @default(now())                 @map("created_at")
   updatedAt     DateTime              @updatedAt                      @map("updated_at")
-  deletedAt     DateTime              @default(now())                 @map("deleted_at")
+  deletedAt     DateTime?                                             @map("deleted_at")
   @@map("colors")
 }
 
-model ColorsOnProducts {
-  idProductFk   Int                                                               @map("id_product_fk")
-  product       Product     @relation(fields: [idProductFk], references: [id])
-  idColorFk     Int                                                               @map("id_color_fk")
-  color         Color       @relation(fields: [idColorFk], references: [id])      
-  @@id([idProductFk, idColorFk])
-  @@map("colors_on_products")
+model Picture {
+  id            Int         @id @default(autoincrement())
+  idVariantFk   Int                                         @map("id_variant_fk")
+  variant       Variant     @relation(fields: [idVariantFk], references: [id])
+  imageUrl      String                                      @map("image_url")
+  createdAt     DateTime    @default(now())                 @map("created_at")
+  updatedAt     DateTime    @updatedAt                      @map("updated_at")
+  deletedAt     DateTime?                                   @map("deleted_at")
+  @@map("pictures")
 }
 
-// Many to many Relation between Product & Size
-model Size {
+// Many to many Relation between Unit & Variant
+model Unit {
+  id              Int         @id @default(autoincrement())
+  idVariantFk     Int                                                               @map("id_variant_fk")
+  variant         Variant     @relation(fields: [idVariantFk], references: [id])
+  sku             String      @unique
+  quantity        Int
+  @@map("units")
+}
+
+model SizeType {
   id            Int                 @id @default(autoincrement())
-  sizeValue     String              @unique                         @map("size_value")
-  products      SizesOnProducts[]
+  type          String              @unique
+  sizes         Size[]
   createdAt     DateTime            @default(now())                 @map("created_at")
   updatedAt     DateTime            @updatedAt                      @map("updated_at")
-  deletedAt     DateTime            @default(now())                 @map("deleted_at")
-  @@map("sizes")
+  deletedAt     DateTime?                                           @map("deleted_at")
+  @@map("size_types")
 }
 
-model SizesOnProducts {
-  idProductFk   Int                                                               @map("id_product_fk")
-  product       Product     @relation(fields: [idProductFk], references: [id])
-  idSizeFk      Int                                                               @map("id_size_fk")
-  size          Size        @relation(fields: [idSizeFk], references: [id])
-  @@id([idProductFk, idSizeFk])
-  @@map("sizes_on_products")
+model Size {
+  id              Int         @id @default(autoincrement())
+  idSizeTypeFk    Int                                         @map("id_size_type_fk")
+  sizeType        SizeType    @relation(fields: [idSizeTypeFk], references: [id])
+  name            String
+  value           String
+  createdAt       DateTime    @default(now())                 @map("created_at")
+  updatedAt       DateTime    @updatedAt                      @map("updated_at")
+  deletedAt       DateTime?                                   @map("deleted_at")
+  @@map("sizes")
 }
 
 // Many to many Relation between Product & Material
@@ -194,7 +214,7 @@ model Material {
   products        MaterialsOnProducts[]
   createdAt       DateTime                @default(now())                 @map("created_at")
   updatedAt       DateTime                @updatedAt                      @map("updated_at")
-  deletedAt       DateTime                @default(now())                 @map("deleted_at")
+  deletedAt       DateTime?                                               @map("deleted_at")
   @@map("materials")
 }
 
@@ -205,29 +225,4 @@ model MaterialsOnProducts {
   material        Material    @relation(fields: [idMaterialFk], references: [id])
   @@id([idProductFk, idMaterialFk])
   @@map("materials_on_products")
-}
-
-// Many to many Relation between Product & Brand
-model Brand {
-  id              Int                     @id @default(autoincrement())
-  brandName       String                  @unique                         @map("brand_name")
-  products        BrandsOnProducts[]
-  createdAt       DateTime                @default(now())                 @map("created_at")
-  updatedAt       DateTime                @updatedAt                      @map("updated_at")
-  deletedAt       DateTime                @default(now())                 @map("deleted_at")
-  @@map("brands")
-}
-
-model BrandsOnProducts {
-  idProductFk     Int                                                               @map("id_product_fk")
-  product         Product     @relation(fields: [idProductFk], references: [id])
-  idBrandFk       Int                                                               @map("id_brand_fk")
-  brand           Brand       @relation(fields: [idBrandFk], references: [id])
-  @@id([idProductFk, idBrandFk])
-  @@map("brands_on_products")
-}
-
-enum Role {
-  User
-  Admin
 }
