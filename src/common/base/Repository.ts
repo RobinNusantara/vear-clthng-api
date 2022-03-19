@@ -1,4 +1,5 @@
 import { IRepository } from "@apps/common/interfaces/RepositoryInterface";
+import { IPaginate } from "@apps/common/interfaces/PaginateInterface";
 import { PrismaClient } from "@prisma/client";
 import { inject, injectable } from "inversify";
 
@@ -10,9 +11,7 @@ export abstract class Repository<T> implements IRepository<T> {
 
     abstract insert(params: object): Promise<T>;
 
-    abstract indexes(
-        params?: object,
-    ): Promise<{ count: number; rows: Array<T> }> | Promise<Array<T>>;
+    abstract indexes(params: object): Promise<IPaginate<T>> | Promise<Array<T>>;
 
     abstract index(params: object): Promise<T | null>;
 
