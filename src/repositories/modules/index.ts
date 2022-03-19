@@ -8,6 +8,7 @@ import { ProvincyRepository } from "@apps/repositories/ProvincyRepository";
 import { CityRepository } from "@apps/repositories/CityRepository";
 // Products
 import { ProductRepository } from "@apps/repositories/ProductRepository";
+import { MaterialRepository } from "@apps/repositories/MaterialRepository";
 
 export const REPOSITORY_TYPES = {
     // Users
@@ -18,6 +19,7 @@ export const REPOSITORY_TYPES = {
     CityRepository: Symbol.for("CityRepository"),
     // Products
     ProductRepository: Symbol.for("ProductRepository"),
+    MaterialRepository: Symbol.for("MaterialRepository"),
 };
 
 const containers: Array<IContainerInterface> = [
@@ -43,6 +45,10 @@ const containers: Array<IContainerInterface> = [
     {
         type: REPOSITORY_TYPES.ProductRepository,
         class: ProductRepository,
+    },
+    {
+        type: REPOSITORY_TYPES.MaterialRepository,
+        class: MaterialRepository,
     },
 ];
 
