@@ -2,6 +2,7 @@ import { Product } from "@prisma/client";
 import { BrandModel } from "@apps/models/BrandModel";
 import { CategoryModel } from "@apps/models/CategoryModel";
 import { VariantModel } from "@apps/models/VariantModel";
+import { ProductsMaterialsModel } from "./ProductsMaterialsModel";
 
 export class ProductModel implements Product {
     id: number;
@@ -21,6 +22,8 @@ export class ProductModel implements Product {
     category: CategoryModel;
 
     variants: Array<VariantModel>;
+
+    materials: Array<ProductsMaterialsModel>;
 
     createdAt: Date;
 
