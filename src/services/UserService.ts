@@ -15,7 +15,10 @@ export class UserService {
         limit: string;
         username: string;
         role: string;
-    }): Promise<{ count: number; rows: Array<User> }> {
+    }): Promise<{
+        count: number;
+        rows: Array<User>;
+    }> {
         const page = parseInt(params.page) || 1;
         const limit = parseInt(params.limit) || 10;
 
@@ -26,12 +29,10 @@ export class UserService {
             role: this.getUserRole(params.role),
         });
 
-        const results = {
+        return {
             count: users.count,
             rows: users.rows,
         };
-
-        return results;
     }
 
     private getUserRole(role: string): UserRole {
