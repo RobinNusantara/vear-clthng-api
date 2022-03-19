@@ -44,8 +44,8 @@ export class Controller extends BaseHttpController {
         const limit = this.httpContext.request.query["limit"] as string;
 
         const paginationInfo = this.formatPage(
-            parseInt(page),
-            parseInt(limit),
+            parseInt(page) || 1,
+            parseInt(limit) || 10,
             count,
         );
 
