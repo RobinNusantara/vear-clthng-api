@@ -1,21 +1,24 @@
+import { IPaginate } from "@apps/common/interfaces/PaginateInterface";
+import { ArrayUtil } from "@apps/common/utils/ArrayUtil";
 import {
+    CreateProductDto,
     CreateProductMaterialDto,
     CreateProductVariantDto,
     ProductDto,
 } from "@apps/dtos/ProductDto";
 import { REPOSITORY_TYPES } from "@apps/repositories/modules";
 import { ProductRepository } from "@apps/repositories/ProductRepository";
-import { CreateProductDto } from "@apps/dtos/ProductDto";
+import { MaterialRepository } from "@apps/repositories/MaterialRepository";
 import { Conflict, NotFound } from "http-errors";
 import { inject, injectable } from "inversify";
-import { IPaginate } from "@apps/common/interfaces/PaginateInterface";
-import { ArrayUtil } from "@apps/common/utils/ArrayUtil";
 
 @injectable()
 export class ProductService {
     constructor(
         @inject(REPOSITORY_TYPES.ProductRepository)
         private readonly _productRepository: ProductRepository,
+        @inject(REPOSITORY_TYPES.MaterialRepository)
+        private readonly _materialRepository: MaterialRepository,
     ) {}
 
     async insertProduct(body: CreateProductDto): Promise<ProductDto> {
@@ -29,7 +32,7 @@ export class ProductService {
 
         // Validate Materials
         if (body.materials.length !== 0) {
-            this.isProductMaterialsDuplicate(body.materials);
+            await this.isProductMaterialsDuplicate(body.materials);
         }
 
         const { id } = await this._productRepository.insert({
@@ -125,17 +128,29 @@ export class ProductService {
     /**
      * @param materials
      */
-    private isProductMaterialsDuplicate(
+    private async isProductMaterialsDuplicate(
         materials: Array<CreateProductMaterialDto>,
-    ): boolean {
-        const materialIds = materials.map((variant) => variant.materialId);
+    ): Promise<boolean> {
+        const materialIds = materials.map((material) => material.materialId);
 
-        const results = ArrayUtil.isArrayOfObjectHasDuplicateValue({
+        ArrayUtil.isArrayOfObjectHasDuplicateValue({
             arrayLength: materials.length,
             mappedData: materialIds,
             errorMessage: "Product can't have same material!",
         });
 
-        return results;
+        const types = await this._materialRepository.getMaterialTypes({
+            materialIds,
+        });
+
+        const materialTypes = types.map((type) => type.materialType);
+
+        ArrayUtil.isArrayOfObjectHasDuplicateValue({
+            arrayLength: types.length,
+            mappedData: materialTypes,
+            errorMessage: "Product can't have same material type!",
+        });
+
+        return false;
     }
 }
