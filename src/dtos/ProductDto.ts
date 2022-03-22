@@ -1,8 +1,8 @@
 import { CurrencyFormatter } from "@apps/common/formatter/CurrencyFormatter";
-import { ProductModel } from "@apps/models/ProductModel";
 import { VariantDto } from "@apps/dtos/VariantDto";
+import { MaterialDto } from "@apps/dtos/MaterialDto";
+import { ProductModel } from "@apps/models/ProductModel";
 import { IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
-import { MaterialDto } from "./MaterialDto";
 
 export class CreateProductDto {
     @IsNotEmpty()
