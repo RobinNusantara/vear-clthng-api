@@ -1,3 +1,5 @@
+import { Role } from "@apps/common/enums/RoleEnum";
+import { Status } from "@apps/common/enums/StatusEnum";
 import {
     Model,
     Table,
@@ -13,9 +15,11 @@ interface IUserModel {
     username: string;
     email: string;
     password: string;
-    createdAt: Date;
-    updatedAt: Date;
-    deletedAt: Date;
+    role: Role;
+    status: Status;
+    createdAt?: Date;
+    updatedAt?: Date;
+    deletedAt?: Date;
 }
 
 @Table({ tableName: "users" })
@@ -24,7 +28,8 @@ export class UserModel
     implements IUserModel
 {
     @Column({
-        type: DataType.UUIDV4,
+        type: DataType.UUID,
+        defaultValue: DataType.UUIDV4,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false,
@@ -52,12 +57,27 @@ export class UserModel
     password: string;
 
     @Column({
+        type: DataType.ENUM,
+        defaultValue: Role.User,
+        values: [Role.Admin, Role.User],
+        allowNull: false,
+    })
+    role: Role;
+
+    @Column({
+        type: DataType.TINYINT,
+        defaultValue: Status.WaitingApproval,
+        allowNull: false,
+    })
+    status: Status;
+
+    @Column({
         field: "created_at",
         type: DataType.DATE,
         allowNull: false,
     })
     @CreatedAt
-    createdAt: Date;
+    createdAt?: Date;
 
     @Column({
         field: "updated_at",
@@ -65,7 +85,7 @@ export class UserModel
         allowNull: false,
     })
     @UpdatedAt
-    updatedAt: Date;
+    updatedAt?: Date;
 
     @Column({
         field: "deleted_at",
@@ -73,5 +93,5 @@ export class UserModel
         allowNull: true,
     })
     @DeletedAt
-    deletedAt: Date;
+    deletedAt?: Date;
 }
