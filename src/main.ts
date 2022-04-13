@@ -13,9 +13,6 @@ import { Database } from "@apps/infrastructures/database/Database";
     const app = new App(container, server.port);
 
     Database.authenticate()
-        .then(() => {
-            console.log("Connected to Database");
-            app.start();
-        })
+        .then(() => app.start())
         .catch((error) => console.log(`Connection Error : ${error}`));
 })();

@@ -4,12 +4,9 @@ import { models } from "@apps/models";
 
 const { database } = config;
 
-const environment = process.env.NODE_ENV;
-const mode = environment === "production" ? "production" : "development";
-
 export const Database = new Sequelize({
     dialect: "mysql",
-    ...database[mode],
+    ...database,
     logging: false,
     models,
 });
