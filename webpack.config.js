@@ -3,7 +3,6 @@ const { config } = require("dotenv");
 const nodeExternals = require("webpack-node-externals");
 
 // Plugins
-const CopyPlugin = require("copy-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
 
@@ -42,11 +41,6 @@ module.exports = {
         path: path.resolve(__dirname, "./dist"),
         publicPath: "dist",
     },
-    plugins: [
-        new CopyPlugin({
-            patterns: [path.resolve(__dirname, "./prisma/schema.prisma")],
-        }),
-    ],
     resolve: {
         extensions: [".ts", ".js"],
         plugins: [

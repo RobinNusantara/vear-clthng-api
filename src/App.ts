@@ -3,7 +3,6 @@
 
 // Dependencies
 import "reflect-metadata";
-import { PrismaClient } from "@prisma/client";
 import cors from "cors";
 import { Application, json, urlencoded } from "express";
 import { Server } from "http";
@@ -17,7 +16,6 @@ import "@apps/controllers/v1/routes";
 // Modules
 import { repositories } from "@apps/repositories/modules";
 import { services } from "@apps/services/modules";
-import { validations } from "@apps/validations/modules";
 
 // Middlewares
 import { CreateError } from "@apps/middlewares/CreateErrorMiddleware";
@@ -48,11 +46,7 @@ export class App {
 
     private modules(): void {
         const containers = new ContainerModule((bind) => {
-            const prisma = new PrismaClient();
-            bind<PrismaClient>("PrismaClient").toConstantValue(prisma);
-
             repositories(bind);
-            validations(bind);
             services(bind);
         });
 

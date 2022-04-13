@@ -23,7 +23,6 @@
   },
   "homepage": "https://github.com/RobinNusantara/vear-clthng#readme",
   "dependencies": {
-    "@prisma/client": "^3.5.0",
     "axios": "^0.24.0",
     "bcryptjs": "^2.4.3",
     "class-transformer": "^0.4.0",
@@ -61,7 +60,6 @@
     "lint-staged": "^12.3.4",
     "nodemon": "^2.0.13",
     "prettier": "^2.4.1",
-    "prisma": "^3.5.0",
     "reflect-metadata": "^0.1.13",
     "supertest": "^6.1.6",
     "terser-webpack-plugin": "^5.3.1",

@@ -1,14 +1,9 @@
-import { IRepository } from "@apps/common/interfaces/RepositoryInterface";
 import { IPaginate } from "@apps/common/interfaces/PaginateInterface";
-import { PrismaClient } from "@prisma/client";
-import { inject, injectable } from "inversify";
+
+import { injectable } from "inversify";
 
 @injectable()
-export abstract class Repository<T> implements IRepository<T> {
-    constructor(
-        @inject("PrismaClient") protected readonly _prisma: PrismaClient,
-    ) {}
-
+export abstract class Repository<T> {
     abstract insert(params: object): Promise<T>;
 
     abstract indexes(params: object): Promise<IPaginate<T>> | Promise<Array<T>>;
