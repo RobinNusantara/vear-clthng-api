@@ -7,6 +7,9 @@ node_modules
 # Environment
 .env
 
+# Sequelize
+sequelize/models
+
 # Output
 dist
 

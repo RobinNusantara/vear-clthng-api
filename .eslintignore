@@ -1,6 +1,9 @@
 # Dependencies
 src/@types
 
+# Sequelize
+sequelize
+
 # Output
 dist
 
