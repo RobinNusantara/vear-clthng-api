@@ -1,7 +1,9 @@
 import { TokenUtil } from "@apps/common/utils/TokenUtil";
 import { SignUpDto } from "@apps/dtos/AuthDto";
+import { Database } from "@apps/infrastructures/database/Database";
 import { REPOSITORY_TYPES } from "@apps/repositories/modules";
 import { UserRepository } from "@apps/repositories/UserRepository";
+import { UserTokenRepository } from "@apps/repositories/UserTokenRepository";
 import { Conflict } from "http-errors";
 import { inject, injectable } from "inversify";
 
@@ -10,6 +12,8 @@ export class AuthService {
     constructor(
         @inject(REPOSITORY_TYPES.UserRepository)
         private readonly _userRepository: UserRepository,
+        @inject(REPOSITORY_TYPES.UserTokenRepository)
+        private readonly _userTokenRepository: UserTokenRepository,
     ) {}
 
     async signUp(body: SignUpDto): Promise<string> {
@@ -18,18 +22,40 @@ export class AuthService {
             this.isUsernameExists(body.username),
         ]);
 
-        const user = await this._userRepository.insert({ body });
+        let token = "";
+        const transaction = await Database.transaction();
 
-        const token = await TokenUtil.generateToken({
-            payload: {
-                id: user.getDataValue("id"),
-                email: user.getDataValue("email"),
-                username: user.getDataValue("username"),
-                role: user.getDataValue("role"),
-                status: user.getDataValue("status"),
-            },
-            expiresIn: "1d",
-        });
+        try {
+            const user = await this._userRepository.insert({
+                body,
+                transaction,
+            });
+
+            token = await TokenUtil.generateToken({
+                payload: {
+                    id: user.getDataValue("id"),
+                    email: user.getDataValue("email"),
+                    username: user.getDataValue("username"),
+                    role: user.getDataValue("role"),
+                    status: user.getDataValue("status"),
+                },
+                expiresIn: "1d",
+            });
+
+            await this._userTokenRepository.insert({
+                data: {
+                    idUserFk: String(user.getDataValue("id")),
+                    value: token,
+                },
+                transaction,
+            });
+
+            await transaction.commit();
+        } catch (error) {
+            if (transaction) {
+                await transaction.rollback();
+            }
+        }
 
         return token;
     }

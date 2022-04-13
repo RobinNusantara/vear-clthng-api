@@ -8,7 +8,9 @@ import {
     CreatedAt,
     UpdatedAt,
     DeletedAt,
+    HasMany,
 } from "sequelize-typescript";
+import { UserTokenModel } from "./UserTokenModel";
 
 interface IUserModel {
     id?: string;
@@ -70,6 +72,9 @@ export class UserModel
         allowNull: false,
     })
     status: Status;
+
+    @HasMany(() => UserTokenModel)
+    tokens: Array<UserTokenModel>;
 
     @Column({
         field: "created_at",

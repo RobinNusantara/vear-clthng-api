@@ -6,22 +6,28 @@ import { PasswordUtil } from "@apps/common/utils/PasswordUtil";
 import { SignUpDto } from "@apps/dtos/AuthDto";
 import { UserModel } from "@apps/models/UserModel";
 import { injectable } from "inversify";
-import { Op } from "sequelize";
+import { Op, Transaction } from "sequelize";
 
 @injectable()
 export class UserRepository extends Repository<UserModel> {
-    async insert(params: { body: SignUpDto }): Promise<UserModel> {
-        const { body } = params;
+    async insert(params: {
+        body: SignUpDto;
+        transaction: Transaction;
+    }): Promise<UserModel> {
+        const { body, transaction } = params;
 
         const password = await PasswordUtil.encryptPassword(10, body.password);
 
-        const user = await UserModel.create({
-            email: body.email,
-            username: body.username,
-            password,
-            role: Role.User,
-            status: Status.WaitingApproval,
-        });
+        const user = await UserModel.create(
+            {
+                email: body.email,
+                username: body.username,
+                password,
+                role: Role.User,
+                status: Status.WaitingApproval,
+            },
+            { transaction },
+        );
 
         return user;
     }
