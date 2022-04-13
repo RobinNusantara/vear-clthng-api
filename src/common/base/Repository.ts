@@ -2,13 +2,15 @@ import { injectable } from "inversify";
 
 @injectable()
 export abstract class Repository<TModel> {
-    abstract insert(): Promise<number | string>;
+    abstract insert(
+        params: Record<string, any>,
+    ): Promise<TModel | number | string | undefined>;
 
-    abstract indexes(): Promise<Array<TModel>>;
+    abstract indexes(params: Record<string, any>): Promise<Array<TModel>>;
 
-    abstract index(): Promise<TModel>;
+    abstract index(params: Record<string, any>): Promise<TModel | null>;
 
-    abstract update(): Promise<number | string>;
+    abstract update(params: Record<string, any>): Promise<number | string>;
 
-    abstract delete(): Promise<boolean>;
+    abstract delete(params: Record<string, any>): Promise<boolean>;
 }
