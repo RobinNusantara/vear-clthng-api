@@ -1,0 +1,1 @@
+npx sequelize db:migrate
