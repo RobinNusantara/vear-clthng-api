@@ -35,6 +35,7 @@
     "morgan": "^1.10.0",
     "mysql2": "^2.3.3",
     "sequelize": "^6.19.0",
+    "sequelize-cli": "^6.4.1",
     "uuidv4": "^6.2.12"
   },
   "devDependencies": {
