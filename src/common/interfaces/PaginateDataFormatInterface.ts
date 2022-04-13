@@ -1,6 +1,6 @@
 import { IPageFormat } from "@apps/common/interfaces/PageFormatInterface";
 
-export interface IDataPaginateFormat {
+export interface IPaginateDataFormat {
     pagination: IPageFormat;
     rows: Array<any>;
 }

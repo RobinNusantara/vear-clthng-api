@@ -7,7 +7,7 @@ import { JsonResult } from "inversify-express-utils/lib/results";
 import { HttpMethod } from "@apps/common/enums/HttpMethodEnum";
 import { HttpStatus } from "@apps/common/enums/HttpStatusEnum";
 import { ResponseFactory } from "@apps/common/factories/ResponseFactory";
-import { IDataPaginateFormat } from "@apps/common/interfaces/DataPaginateFormatInterface";
+import { IPaginateDataFormat } from "@apps/common/interfaces/PaginateDataFormatInterface";
 import { IPageFormat } from "@apps/common/interfaces/PageFormatInterface";
 
 export class Controller extends BaseHttpController {
@@ -39,7 +39,7 @@ export class Controller extends BaseHttpController {
         };
     }
 
-    protected paginate(count: number, rows: any): IDataPaginateFormat {
+    protected paginate(count: number, rows: any): IPaginateDataFormat {
         const page = this.httpContext.request.query["page"] as string;
         const limit = this.httpContext.request.query["limit"] as string;
 
@@ -49,7 +49,7 @@ export class Controller extends BaseHttpController {
             count,
         );
 
-        const results: IDataPaginateFormat = {
+        const results: IPaginateDataFormat = {
             pagination: paginationInfo,
             rows,
         };
