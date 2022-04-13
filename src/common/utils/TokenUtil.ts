@@ -9,27 +9,20 @@ import { IJwtPayload } from "@apps/common/interfaces/JwtPayloadInterface";
 
 export class TokenUtil {
     public static async generateToken(params: {
-        signature: string;
+        payload: IJwtPayload;
         expiresIn: string;
     }): Promise<string> {
         return new Promise((resolve, reject) => {
-            const { signature, expiresIn } = params;
-            const { server } = config;
-
-            const payload: IJwtPayload = {
-                id: "",
-                username: "",
-                email: "",
-                role: "",
-            };
+            const { payload, expiresIn } = params;
+            const { server, token } = config;
 
             const options: SignOptions = {
                 expiresIn,
-                audience: "",
+                audience: payload.id,
                 issuer: server.host,
             };
 
-            sign(payload, signature, options, (err, token) => {
+            sign(payload, token.signature.access, options, (err, token) => {
                 if (err) reject(new InternalServerError());
 
                 resolve(String(token));
