@@ -1,5 +1,7 @@
 'use strict';
 const { DataTypes } = require("sequelize");
+const { Timestamp } = require("../base/TimestampFactory");
+const { ReferenceKey } = require("../enums/ReferenceKeyEnum");
 
 /**
  * @typedef {import("sequelize").QueryInterface} QueryInterface
@@ -12,7 +14,7 @@ module.exports = {
      * @param {Sequelize} Sequelize 
      */
     async up (queryInterface, Sequelize) {
-        await queryInterface.createTable("user_tokens", {
+        return await queryInterface.createTable("user_tokens", {
             id: {
                 type: DataTypes.BIGINT,
                 primaryKey: true,
@@ -27,34 +29,19 @@ module.exports = {
                     model: "users",
                     key: "id",
                 },
+                onDelete: ReferenceKey.CASCADE,
+                onUpdate: ReferenceKey.CASCADE,
             },
             value: {
                 type: DataTypes.TEXT,
                 allowNull: false,
             },
-            createdAt: {
-                field: "created_at",
-                type: DataTypes.DATE,
-                defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
-                allowNull: false,
-            },
-            updatedAt: {
-                field: "updated_at",
-                type: DataTypes.DATE,
-                defaultValue: Sequelize.literal("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"),
-                allowNull: false,
-            },
-            deletedAt: {
-                field: "deleted_at",
-                type: DataTypes.DATE,
-                allowNull: true,
-            },
+            ...Timestamp,
         });
     },
     /**
      * @param {QueryInterface} queryInterface 
      * @param {Sequelize} Sequelize 
      */
-    async down (queryInterface, Sequelize) {
-    }
+    async down (queryInterface, Sequelize) {}
 };
