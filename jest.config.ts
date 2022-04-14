@@ -1,6 +1,6 @@
 export default {
-  clearMocks: true,
-  roots: ["./test"],
-  testEnvironment: "node",
-  preset: "ts-jest",
+    clearMocks: true,
+    roots: ["./test"],
+    testEnvironment: "node",
+    preset: "ts-jest",
 };
