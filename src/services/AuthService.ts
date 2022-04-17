@@ -1,12 +1,13 @@
 import { config } from "@apps/common/config/AppConfig";
 import { IJwtPayload } from "@apps/common/interfaces/JwtPayloadInterface";
 import { IToken } from "@apps/common/interfaces/TokenInterface";
+import { PasswordUtil } from "@apps/common/utils/PasswordUtil";
 import { TokenUtil } from "@apps/common/utils/TokenUtil";
-import { SignUpDto } from "@apps/dtos/AuthDto";
+import { SignInDto, SignUpDto } from "@apps/dtos/AuthDto";
 import { Database } from "@apps/infrastructures/database/Database";
 import { REPOSITORY_TYPES } from "@apps/repositories/modules";
 import { UserRepository } from "@apps/repositories/UserRepository";
-import { Conflict } from "http-errors";
+import { Conflict, Unauthorized } from "http-errors";
 import { inject, injectable } from "inversify";
 
 @injectable()
@@ -50,16 +51,39 @@ export class AuthService {
 
             await transaction.commit();
         } catch (error) {
-            if (transaction) {
-                await transaction.rollback();
-            }
+            if (transaction) await transaction.rollback();
         }
 
         return token;
     }
 
-    async signIn(): Promise<string> {
-        return "Sign In";
+    async signIn(body: SignInDto): Promise<IToken> {
+        const user = await this._userRepository.index({
+            props: {
+                key: "email",
+                value: body.email,
+            },
+        });
+
+        if (!user) throw new Unauthorized("Email or password is incorrect!");
+
+        await PasswordUtil.validatePassword({
+            requestPassword: body.password,
+            storedPassword: user.password,
+        });
+
+        const [accessToken, refreshToken] = await this.generateToken({
+            id: user.getDataValue("id"),
+            email: user.getDataValue("email"),
+            username: user.getDataValue("username"),
+            role: user.getDataValue("role"),
+            status: user.getDataValue("status"),
+        });
+
+        return {
+            accessToken,
+            refreshToken,
+        };
     }
 
     private async generateToken(payload: IJwtPayload) {

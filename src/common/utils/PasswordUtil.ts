@@ -15,14 +15,14 @@ export class PasswordUtil {
 
     public static async validatePassword(params: {
         requestPassword: string;
-        storePassword: string;
+        storedPassword: string;
     }): Promise<boolean> {
-        const { requestPassword, storePassword } = params;
+        const { requestPassword, storedPassword } = params;
 
-        const password = await compare(requestPassword, storePassword);
+        const password = await compare(requestPassword, storedPassword);
 
         if (!password) {
-            throw new Unauthorized("Username or password is incorrect");
+            throw new Unauthorized("Email or password is incorrect");
         }
 
         return true;
