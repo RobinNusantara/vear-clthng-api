@@ -1,9 +1,11 @@
+import { config } from "@apps/common/config/AppConfig";
+import { IJwtPayload } from "@apps/common/interfaces/JwtPayloadInterface";
+import { IToken } from "@apps/common/interfaces/TokenInterface";
 import { TokenUtil } from "@apps/common/utils/TokenUtil";
 import { SignUpDto } from "@apps/dtos/AuthDto";
 import { Database } from "@apps/infrastructures/database/Database";
 import { REPOSITORY_TYPES } from "@apps/repositories/modules";
 import { UserRepository } from "@apps/repositories/UserRepository";
-import { UserTokenRepository } from "@apps/repositories/UserTokenRepository";
 import { Conflict } from "http-errors";
 import { inject, injectable } from "inversify";
 
@@ -12,17 +14,19 @@ export class AuthService {
     constructor(
         @inject(REPOSITORY_TYPES.UserRepository)
         private readonly _userRepository: UserRepository,
-        @inject(REPOSITORY_TYPES.UserTokenRepository)
-        private readonly _userTokenRepository: UserTokenRepository,
     ) {}
 
-    async signUp(body: SignUpDto): Promise<string> {
+    async signUp(body: SignUpDto): Promise<IToken> {
         await Promise.all([
             this.isEmailExists(body.email),
             this.isUsernameExists(body.username),
         ]);
 
-        let token = "";
+        let token: IToken = {
+            accessToken: "",
+            refreshToken: "",
+        };
+
         const transaction = await Database.transaction();
 
         try {
@@ -31,24 +35,18 @@ export class AuthService {
                 transaction,
             });
 
-            token = await TokenUtil.generateToken({
-                payload: {
-                    id: user.getDataValue("id"),
-                    email: user.getDataValue("email"),
-                    username: user.getDataValue("username"),
-                    role: user.getDataValue("role"),
-                    status: user.getDataValue("status"),
-                },
-                expiresIn: "1d",
+            const [accessToken, refreshToken] = await this.generateToken({
+                id: user.getDataValue("id"),
+                email: user.getDataValue("email"),
+                username: user.getDataValue("username"),
+                role: user.getDataValue("role"),
+                status: user.getDataValue("status"),
             });
 
-            await this._userTokenRepository.insert({
-                data: {
-                    idUserFk: String(user.getDataValue("id")),
-                    value: token,
-                },
-                transaction,
-            });
+            token = {
+                accessToken,
+                refreshToken,
+            };
 
             await transaction.commit();
         } catch (error) {
@@ -62,6 +60,21 @@ export class AuthService {
 
     async signIn(): Promise<string> {
         return "Sign In";
+    }
+
+    private async generateToken(payload: IJwtPayload) {
+        return await Promise.all([
+            TokenUtil.generateToken({
+                payload,
+                signature: config.token.signature.access,
+                expiresIn: "15s",
+            }),
+            TokenUtil.generateToken({
+                payload,
+                signature: config.token.signature.refresh,
+                expiresIn: "1d",
+            }),
+        ]);
     }
 
     /** Validation */
