@@ -4,6 +4,7 @@
 // Dependencies
 import "reflect-metadata";
 import cors from "cors";
+import cookie from "cookie-parser";
 import { Application, json, urlencoded } from "express";
 import { Server } from "http";
 import { Container, ContainerModule } from "inversify";
@@ -37,7 +38,7 @@ export class App {
 
         return server
             .setConfig((app) => this.middlewares(app))
-            .setErrorConfig((app) => this.errors(app))
+            .setErrorConfig((app) => app.use(CreateError.defineErrors))
             .build()
             .listen(this._port, () => {
                 console.log(`Server running on port ${this._port}`);
@@ -58,9 +59,6 @@ export class App {
         app.use(urlencoded({ extended: false }));
         app.use(morgan("dev"));
         app.use(cors());
-    }
-
-    private errors(app: Application): void {
-        app.use(CreateError.defineErrors);
+        app.use(cookie());
     }
 }

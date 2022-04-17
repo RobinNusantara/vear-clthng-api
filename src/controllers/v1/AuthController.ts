@@ -5,8 +5,16 @@ import { SignUpDto } from "@apps/dtos/AuthDto";
 import { AuthService } from "@apps/services/AuthService";
 import { SERVICE_TYPES } from "@apps/services/modules";
 import { inject } from "inversify";
-import { controller, httpPost, requestBody } from "inversify-express-utils";
-import { JsonResult } from "inversify-express-utils/lib/results";
+import {
+    controller,
+    httpDelete,
+    httpPost,
+    requestBody,
+} from "inversify-express-utils";
+import {
+    JsonResult,
+    StatusCodeResult,
+} from "inversify-express-utils/lib/results";
 
 @controller("/v1/auth")
 export class AuthController extends Controller {
@@ -35,5 +43,10 @@ export class AuthController extends Controller {
         const response = ResponseFactory.successResponse(status, data);
 
         return this.json(response, status);
+    }
+
+    @httpDelete("/sign-out")
+    async signOut(): Promise<StatusCodeResult> {
+        return this.statusCode(HttpStatus.NoContent);
     }
 }
