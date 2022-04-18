@@ -8,9 +8,10 @@ import { verify } from "jsonwebtoken";
 // Import Applications
 import { config } from "@apps/common/config/AppConfig";
 import { IJwtPayload } from "@apps/common/interfaces/JwtPayloadInterface";
+import { Role } from "@apps/common/enums/RoleEnum";
 
 export class Authentication {
-    public static verify(params: { roles: Array<string> }) {
+    public static verify(params: { roles: Array<Role> }) {
         return (req: Request, res: Response, next: NextFunction) => {
             const signature = config.token.signature;
             const authorization = req.headers["authorization"];

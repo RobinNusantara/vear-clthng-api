@@ -33,3 +33,9 @@ export class SignInDto {
     @IsNotEmpty()
     password: string;
 }
+
+export class RefreshTokenDto {
+    @IsString()
+    @IsNotEmpty()
+    refreshToken: string;
+}

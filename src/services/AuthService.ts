@@ -3,7 +3,7 @@ import { IJwtPayload } from "@apps/common/interfaces/JwtPayloadInterface";
 import { IToken } from "@apps/common/interfaces/TokenInterface";
 import { PasswordUtil } from "@apps/common/utils/PasswordUtil";
 import { TokenUtil } from "@apps/common/utils/TokenUtil";
-import { SignInDto, SignUpDto } from "@apps/dtos/AuthDto";
+import { RefreshTokenDto, SignInDto, SignUpDto } from "@apps/dtos/AuthDto";
 import { Database } from "@apps/infrastructures/database/Database";
 import { REPOSITORY_TYPES } from "@apps/repositories/modules";
 import { UserRepository } from "@apps/repositories/UserRepository";
@@ -86,12 +86,31 @@ export class AuthService {
         };
     }
 
+    async refreshToken(body: RefreshTokenDto): Promise<IToken> {
+        const payload: IJwtPayload = await TokenUtil.verifyRefreshToken(
+            body.refreshToken,
+        );
+
+        const [accessToken, refreshToken] = await this.generateToken({
+            id: payload.id,
+            email: payload.email,
+            username: payload.username,
+            role: payload.role,
+            status: payload.status,
+        });
+
+        return {
+            accessToken,
+            refreshToken,
+        };
+    }
+
     private async generateToken(payload: IJwtPayload) {
         return await Promise.all([
             TokenUtil.generateToken({
                 payload,
                 signature: config.token.signature.access,
-                expiresIn: "15s",
+                expiresIn: "5m",
             }),
             TokenUtil.generateToken({
                 payload,
