@@ -12,11 +12,9 @@ import { IPageFormat } from "@apps/common/interfaces/PageFormatInterface";
 
 export class Controller extends BaseHttpController {
     private formatLink(page: number, limit: number): string {
-        const protocol = this.httpContext.request.protocol;
-        const host = this.httpContext.request.hostname;
-        const uri = this.httpContext.request.path;
+        const { protocol, hostname, path } = this.httpContext.request;
 
-        return `${protocol}://${host}/api${uri}?page=${page}&limit=${limit}`;
+        return `${protocol}://${hostname}/api${path}?page=${page}&limit=${limit}`;
     }
 
     protected formatPage(
@@ -39,7 +37,10 @@ export class Controller extends BaseHttpController {
         };
     }
 
-    protected paginate(count: number, rows: any): IPaginateDataFormat {
+    protected paginate(
+        count: number,
+        rows: Array<Record<string, any>>,
+    ): IPaginateDataFormat {
         const page = this.httpContext.request.query["page"] as string;
         const limit = this.httpContext.request.query["limit"] as string;
 
@@ -57,7 +58,7 @@ export class Controller extends BaseHttpController {
         return results;
     }
 
-    protected response(data: any): JsonResult {
+    protected response(data: Record<string, any>): JsonResult {
         const method = this.httpContext.request.method;
 
         let status: HttpStatus;

@@ -2,9 +2,7 @@ import { injectable } from "inversify";
 
 @injectable()
 export abstract class Repository<TModel> {
-    abstract insert(
-        params: Record<string, any>,
-    ): Promise<TModel | number | string | undefined>;
+    abstract insert(params: Record<string, any>): Promise<TModel>;
 
     abstract indexes(params: Record<string, any>): Promise<Array<TModel>>;
 
