@@ -10,7 +10,6 @@ import { HttpStatus } from "@apps/common/enums/HttpStatusEnum";
 import { ResponseFactory } from "@apps/common/factories/ResponseFactory";
 import { IPaginateDataFormat } from "@apps/common/interfaces/PaginateDataFormatInterface";
 import { IPageFormat } from "@apps/common/interfaces/PageFormatInterface";
-import { PayloadModel } from "@apps/common/models/PayloadModel";
 
 export class Controller extends BaseHttpController {
     private formatLink(page: number, limit: number): string {
@@ -60,20 +59,12 @@ export class Controller extends BaseHttpController {
         return results;
     }
 
-    protected getUser(): PayloadModel {
+    protected identifier(): string {
         const user = this.httpContext.request.user;
 
         if (!user) throw new Unauthorized();
 
-        const payload = new PayloadModel();
-
-        payload.setId = user.id;
-        payload.setEmail = user.email;
-        payload.setUsername = user.username;
-        payload.setRole = user.role;
-        payload.setStatus = user.status;
-
-        return payload;
+        return user.id;
     }
 
     protected response(data: Record<string, any>): JsonResult {
