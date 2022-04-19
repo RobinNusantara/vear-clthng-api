@@ -1,20 +1,19 @@
 version: '3'
 services:
     # Database
-    database-postgres:
-        image: postgres:14.2-alpine
-        container_name: database-postgres
+    database-mysql:
+        image: mysql:8.0
+        container_name: database-mysql
         ports:
-            - "5432:5432"
+            - "3308:3306"
         env_file:
             - .env
         environment:
-            - POSTGRES_USER=${POSTGRES_USERNAME}
-            - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-            - POSTGRES_DB=${POSTGRES_DB_NAME}
+            - MYSQL_DATABASE=${DB_NAME}
+            - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
     # Backend Application
     backend-application:
-        image: ${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}
+        build: .
         container_name: backend-application
         env_file:
             - .env
@@ -22,8 +21,11 @@ services:
             - "5000:5000"
         environment:
             - PORT=5000
+            - DB_HOST=${DB_HOST}
+            - DB_NAME=${DB_NAME}
+            - DB_USERNAME=${DB_USERNAME}
+            - DB_PASSWORD=${DB_PASSWORD}
             - JWT_ACCESS_SIGNATURE=${JWT_ACCESS_SIGNATURE}
             - JWT_REFRESH_SIGNATURE=${JWT_REFRESH_SIGNATURE}
-            - DATABASE_URL=${DATABASE_URL}
         depends_on:
-            - database-postgres
+            - database-mysql

@@ -14,7 +14,7 @@ ENV NODE_ENV=production
 ENV PORT=5000
 
 RUN npm run build
-RUN sequelize.sh
+RUN ./sequelize.sh
 
 EXPOSE 5000
 
