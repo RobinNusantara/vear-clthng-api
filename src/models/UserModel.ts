@@ -13,14 +13,14 @@ import {
 import { UserTokenModel } from "./UserTokenModel";
 
 interface IUserModel {
-    id?: string;
+    id: string;
     username: string;
     email: string;
     password: string;
     role: Role;
     status: Status;
-    createdAt?: Date;
-    updatedAt?: Date;
+    createdAt: Date;
+    updatedAt: Date;
     deletedAt?: Date;
 }
 
@@ -36,7 +36,7 @@ export class UserModel
         autoIncrement: true,
         allowNull: false,
     })
-    id?: string;
+    id: string;
 
     @Column({
         type: DataType.STRING(255),
@@ -82,7 +82,7 @@ export class UserModel
         allowNull: false,
     })
     @CreatedAt
-    createdAt?: Date;
+    createdAt: Date;
 
     @Column({
         field: "updated_at",
@@ -90,7 +90,7 @@ export class UserModel
         allowNull: false,
     })
     @UpdatedAt
-    updatedAt?: Date;
+    updatedAt: Date;
 
     @Column({
         field: "deleted_at",

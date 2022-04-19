@@ -18,16 +18,15 @@ export class UserRepository extends Repository<UserModel> {
 
         const password = await PasswordUtil.encryptPassword(10, body.password);
 
-        const user = await UserModel.create(
-            {
-                email: body.email,
-                username: body.username,
-                password,
-                role: Role.User,
-                status: Status.WaitingApproval,
-            },
-            { transaction },
-        );
+        const user = new UserModel();
+
+        user.setDataValue("email", body.email);
+        user.setDataValue("username", body.username);
+        user.setDataValue("password", password);
+        user.setDataValue("role", Role.User);
+        user.setDataValue("status", Status.WaitingApproval);
+
+        await user.save({ transaction });
 
         return user;
     }

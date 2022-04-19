@@ -12,13 +12,11 @@ export class UserTokenRepository extends Repository<UserTokenModel> {
     }): Promise<UserTokenModel> {
         const { data, transaction } = params;
 
-        const token = await UserTokenModel.create(
-            {
-                idUserFk: data.idUserFk,
-                value: data.value,
-            },
-            { transaction },
-        );
+        const token = new UserTokenModel();
+
+        token.setDataValue("value", data.value);
+
+        await token.save({ transaction });
 
         return token;
     }
