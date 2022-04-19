@@ -1,10 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable unused-imports/no-unused-vars */
-
 // Dependencies
 import "reflect-metadata";
 import cors from "cors";
-import cookie from "cookie-parser";
 import { Application, json, urlencoded } from "express";
 import { Server } from "http";
 import { Container, ContainerModule } from "inversify";
@@ -59,6 +55,5 @@ export class App {
         app.use(urlencoded({ extended: false }));
         app.use(morgan("dev"));
         app.use(cors());
-        app.use(cookie());
     }
 }
