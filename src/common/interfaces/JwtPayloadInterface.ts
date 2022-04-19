@@ -6,4 +6,6 @@ export interface IJwtPayload {
     email: string;
     role: Role;
     status: number;
+    iat?: number;
+    exp?: number;
 }

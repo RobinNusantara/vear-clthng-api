@@ -2,6 +2,7 @@
 // Import Dependencies
 import { BaseHttpController } from "inversify-express-utils";
 import { JsonResult } from "inversify-express-utils/lib/results";
+import { Unauthorized } from "http-errors";
 
 // Import Applications
 import { HttpMethod } from "@apps/common/enums/HttpMethodEnum";
@@ -9,6 +10,7 @@ import { HttpStatus } from "@apps/common/enums/HttpStatusEnum";
 import { ResponseFactory } from "@apps/common/factories/ResponseFactory";
 import { IPaginateDataFormat } from "@apps/common/interfaces/PaginateDataFormatInterface";
 import { IPageFormat } from "@apps/common/interfaces/PageFormatInterface";
+import { PayloadModel } from "@apps/common/models/PayloadModel";
 
 export class Controller extends BaseHttpController {
     private formatLink(page: number, limit: number): string {
@@ -56,6 +58,22 @@ export class Controller extends BaseHttpController {
         };
 
         return results;
+    }
+
+    protected getUser(): PayloadModel {
+        const user = this.httpContext.request.user;
+
+        if (!user) throw new Unauthorized();
+
+        const payload = new PayloadModel();
+
+        payload.setId = user.id;
+        payload.setEmail = user.email;
+        payload.setUsername = user.username;
+        payload.setRole = user.role;
+        payload.setStatus = user.status;
+
+        return payload;
     }
 
     protected response(data: Record<string, any>): JsonResult {
