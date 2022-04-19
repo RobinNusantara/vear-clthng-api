@@ -15,7 +15,7 @@ ENV PORT=5000
 
 RUN npm run build
 
-RUN chmod +x the_file_name
+RUN chmod +x sequelize.sh
 
 RUN ./sequelize.sh
 
