@@ -4,7 +4,7 @@ import { IToken } from "@apps/common/interfaces/TokenInterface";
 import { PasswordUtil } from "@apps/common/utils/PasswordUtil";
 import { TokenUtil } from "@apps/common/utils/TokenUtil";
 import { RefreshTokenDto, SignInDto, SignUpDto } from "@apps/dtos/AuthDto";
-import { Database } from "@apps/infrastructures/database/Database";
+import { PrimeDatabase } from "@apps/infrastructures/database/PrimeDatabase";
 import { REPOSITORY_TYPES } from "@apps/repositories/modules";
 import { UserRepository } from "@apps/repositories/UserRepository";
 import { Conflict, Unauthorized } from "http-errors";
@@ -28,7 +28,7 @@ export class AuthService {
             refreshToken: "",
         };
 
-        const transaction = await Database.transaction();
+        const transaction = await PrimeDatabase.transaction();
 
         try {
             const user = await this._userRepository.insert({

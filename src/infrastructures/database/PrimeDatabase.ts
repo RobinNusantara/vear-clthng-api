@@ -2,8 +2,8 @@ import { Sequelize } from "sequelize-typescript";
 import { config } from "@apps/common/config/AppConfig";
 import { models } from "@apps/models";
 
-class PrimeDatabase extends Sequelize {
-    private static _instance: PrimeDatabase;
+class Database extends Sequelize {
+    private static _instance: Database;
 
     constructor() {
         super({
@@ -18,13 +18,13 @@ class PrimeDatabase extends Sequelize {
         });
     }
 
-    public static getInstance(): PrimeDatabase {
+    public static getInstance(): Database {
         if (!this._instance) {
-            this._instance = new PrimeDatabase();
+            this._instance = new Database();
         }
 
         return this._instance;
     }
 }
 
-export const Database = PrimeDatabase.getInstance();
+export const PrimeDatabase = Database.getInstance();

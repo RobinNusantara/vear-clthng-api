@@ -4,7 +4,7 @@ import { Container } from "inversify";
 // Import Applications
 import { config } from "@apps/common/config/AppConfig";
 import { App } from "App";
-import { Database } from "@apps/infrastructures/database/Database";
+import { PrimeDatabase } from "@apps/infrastructures/database/PrimeDatabase";
 
 (function main() {
     const { server } = config;
@@ -12,7 +12,7 @@ import { Database } from "@apps/infrastructures/database/Database";
     const container = new Container();
     const app = new App(container, server.port);
 
-    Database.authenticate()
+    PrimeDatabase.authenticate()
         .then(() => app.start())
         .catch((error) => console.log(`Connection Error : ${error}`));
 })();
