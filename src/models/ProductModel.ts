@@ -9,12 +9,12 @@ import {
 import { BrandModel } from "./BrandModel";
 
 interface IProductModel {
-    id: number;
+    id: string;
     name: string;
     idBrandFk: number;
     brand: BrandModel;
     price: number;
-    description: number;
+    description: string;
 }
 
 @Table({ tableName: "products" })
@@ -28,7 +28,7 @@ export class ProductModel
         allowNull: false,
         defaultValue: DataType.UUIDV4,
     })
-    id: number;
+    id: string;
 
     @Column({
         type: DataType.STRING(255),
@@ -60,5 +60,5 @@ export class ProductModel
         type: DataType.TEXT,
         allowNull: true,
     })
-    description: number;
+    description: string;
 }
