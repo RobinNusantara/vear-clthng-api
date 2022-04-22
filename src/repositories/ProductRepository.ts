@@ -1,4 +1,5 @@
 import { Repository } from "@apps/common/base/Repository";
+import { IDataPagination } from "@apps/common/interfaces/DataPaginationInterface";
 import { BrandModel } from "@apps/models/BrandModel";
 import { ProductModel } from "@apps/models/ProductModel";
 import { injectable } from "inversify";
@@ -9,8 +10,15 @@ export class ProductRepository extends Repository<ProductModel> {
         throw new Error("Method not implemented.");
     }
 
-    async indexes(): Promise<Array<ProductModel>> {
-        const products = await ProductModel.findAll({
+    async indexes(params: {
+        offset: number;
+        limit: number;
+    }): Promise<IDataPagination<ProductModel>> {
+        const { offset, limit } = params;
+
+        const { count, rows } = await ProductModel.findAndCountAll({
+            offset,
+            limit,
             include: [
                 {
                     model: BrandModel,
@@ -18,7 +26,10 @@ export class ProductRepository extends Repository<ProductModel> {
             ],
         });
 
-        return products;
+        return {
+            count,
+            rows,
+        };
     }
 
     index(params: Record<string, any>): Promise<ProductModel | null> {
