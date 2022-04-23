@@ -5,16 +5,20 @@ import {
     DataType,
     ForeignKey,
     BelongsTo,
+    HasMany,
 } from "sequelize-typescript";
 import { BrandModel } from "./BrandModel";
+import { VariantModel } from "./VariantModel";
 
 interface IProductModel {
     id: string;
     name: string;
     idBrandFk: number;
-    brand: BrandModel;
     price: number;
     description: string;
+    // Association
+    brand: BrandModel;
+    variants: Array<VariantModel>;
 }
 
 @Table({ tableName: "products" })
@@ -41,14 +45,11 @@ export class ProductModel
         field: "id_brand_fk",
         type: DataType.INTEGER,
         allowNull: true,
-        onDelete: "SET NULL",
         onUpdate: "CASCADE",
+        onDelete: "SET NULL",
     })
     @ForeignKey(() => BrandModel)
     idBrandFk: number;
-
-    @BelongsTo(() => BrandModel)
-    brand: BrandModel;
 
     @Column({
         type: DataType.DECIMAL(10),
@@ -61,4 +62,10 @@ export class ProductModel
         allowNull: true,
     })
     description: string;
+
+    @BelongsTo(() => BrandModel)
+    brand: BrandModel;
+
+    @HasMany(() => VariantModel)
+    variants: Array<VariantModel>;
 }
