@@ -1,5 +1,6 @@
 import { CurrencyFormatter } from "@apps/common/formatter/CurrencyFormatter";
 import { ProductModel } from "@apps/models/ProductModel";
+import { VariantDto } from "./VariantDto";
 
 export class ProductDto {
     id: string;
@@ -12,15 +13,19 @@ export class ProductDto {
 
     description: string;
 
+    variants: Array<VariantDto>;
+
     public static fromProductModel(model: ProductModel): ProductDto {
         return {
             id: model.getDataValue("id"),
             name: model.getDataValue("name"),
             brand: model.brand.getDataValue("name"),
-            price: CurrencyFormatter.formatToRupiah(
-                model.getDataValue("price"),
-            ),
+            // eslint-disable-next-line prettier/prettier
+            price: CurrencyFormatter.formatToRupiah(model.getDataValue("price")),
             description: model.getDataValue("description"),
+            variants: model.variants.map((variant) => {
+                return VariantDto.fromVariantModel(variant);
+            }),
         };
     }
 }
