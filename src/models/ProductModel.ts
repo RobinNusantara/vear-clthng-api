@@ -1,4 +1,5 @@
 import { Model } from "@apps/common/base/Model";
+import { ProductStatus as Status } from "@apps/common/enums/ProductStatusEnum";
 import {
     Table,
     Column,
@@ -6,7 +7,9 @@ import {
     ForeignKey,
     BelongsTo,
     HasMany,
+    Scopes,
 } from "sequelize-typescript";
+import { Op } from "sequelize";
 import { BrandModel } from "./BrandModel";
 import { VariantModel } from "./VariantModel";
 
@@ -16,12 +19,22 @@ interface IProductModel {
     idBrandFk: number;
     price: number;
     description: string;
+    status: Status;
     // Association
     brand: BrandModel;
     variants: Array<VariantModel>;
 }
 
 @Table({ tableName: "products" })
+@Scopes(() => ({
+    isActive: {
+        where: {
+            status: {
+                [Op.ne]: Status.Inactive,
+            },
+        },
+    },
+}))
 export class ProductModel
     extends Model<IProductModel, IProductModel>
     implements IProductModel
@@ -62,6 +75,14 @@ export class ProductModel
         allowNull: true,
     })
     description: string;
+
+    @Column({
+        type: DataType.ENUM,
+        values: [Status.Active, Status.Inactive],
+        allowNull: false,
+        defaultValue: Status.Active,
+    })
+    status: Status;
 
     @BelongsTo(() => BrandModel)
     brand: BrandModel;

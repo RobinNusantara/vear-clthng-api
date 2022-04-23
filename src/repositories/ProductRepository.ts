@@ -18,7 +18,7 @@ export class ProductRepository extends Repository<ProductModel> {
     }): Promise<IDataPagination<ProductModel>> {
         const { offset, limit } = params;
 
-        const { count, rows } = await ProductModel.findAndCountAll({
+        const data = await ProductModel.scope("isActive").findAndCountAll({
             offset,
             limit,
             distinct: true,
@@ -38,8 +38,8 @@ export class ProductRepository extends Repository<ProductModel> {
         });
 
         return {
-            count,
-            rows,
+            count: data.count,
+            rows: data.rows,
         };
     }
 
