@@ -32,6 +32,17 @@ module.exports = {
                 onUpdate: ReferenceKey.CASCADE,
                 onDelete: ReferenceKey.RESTRICT,
             },
+            idColorFk: {
+                field: "id_color_fk",
+                type: DataTypes.INTEGER,
+                allowNull: true,
+                references: {
+                    model: "colors",
+                    key: "id",
+                },
+                onUpdate: ReferenceKey.CASCADE,
+                onDelete: ReferenceKey.SET_NULL,
+            },
             ...Timestamp,
         });
     },
