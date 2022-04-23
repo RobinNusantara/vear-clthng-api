@@ -1,7 +1,9 @@
 import { Repository } from "@apps/common/base/Repository";
 import { IDataPagination } from "@apps/common/interfaces/DataPaginationInterface";
 import { BrandModel } from "@apps/models/BrandModel";
+import { ColorModel } from "@apps/models/ColorModel";
 import { ProductModel } from "@apps/models/ProductModel";
+import { VariantModel } from "@apps/models/VariantModel";
 import { injectable } from "inversify";
 
 @injectable()
@@ -19,9 +21,18 @@ export class ProductRepository extends Repository<ProductModel> {
         const { count, rows } = await ProductModel.findAndCountAll({
             offset,
             limit,
+            distinct: true,
             include: [
                 {
                     model: BrandModel,
+                },
+                {
+                    model: VariantModel,
+                    include: [
+                        {
+                            model: ColorModel,
+                        },
+                    ],
                 },
             ],
         });
@@ -32,15 +43,15 @@ export class ProductRepository extends Repository<ProductModel> {
         };
     }
 
-    index(params: Record<string, any>): Promise<ProductModel | null> {
+    index(): Promise<ProductModel | null> {
         throw new Error("Method not implemented.");
     }
 
-    update(params: Record<string, any>): Promise<string | number> {
+    update(): Promise<string | number> {
         throw new Error("Method not implemented.");
     }
 
-    delete(params: Record<string, any>): Promise<boolean> {
+    delete(): Promise<boolean> {
         throw new Error("Method not implemented.");
     }
 }
