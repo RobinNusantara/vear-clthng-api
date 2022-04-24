@@ -10,7 +10,7 @@ import { Op, Transaction } from "sequelize";
 
 @injectable()
 export class UserRepository extends Repository<UserModel> {
-    async insert(params: {
+    public async insert(params: {
         body: SignUpDto;
         transaction: Transaction;
     }): Promise<UserModel> {
@@ -31,15 +31,13 @@ export class UserRepository extends Repository<UserModel> {
         return user;
     }
 
-    async indexes(): Promise<Array<UserModel>> {
+    public async insertMany(): Promise<Array<UserModel>> {
         throw new Error("Method not implemented.");
     }
 
-    async index(params: {
-        props: IUniqueProps<"id" | "email" | "username">;
-    }): Promise<UserModel | null> {
-        const { props } = params;
-
+    public async get(
+        props: IUniqueProps<"id" | "email" | "username">,
+    ): Promise<UserModel> {
         const user = await UserModel.findOne({
             where: {
                 [props.key]: {
@@ -48,14 +46,22 @@ export class UserRepository extends Repository<UserModel> {
             },
         });
 
-        return user;
+        return user as UserModel;
     }
 
-    update(): Promise<any> {
+    public async getMany(): Promise<Array<UserModel>> {
         throw new Error("Method not implemented.");
     }
 
-    delete(): Promise<any> {
+    public async getAndCountAll(): Promise<any> {
+        throw new Error("Method not implemented.");
+    }
+
+    public async update(): Promise<any> {
+        throw new Error("Method not implemented.");
+    }
+
+    public async delete(): Promise<any> {
         throw new Error("Method not implemented.");
     }
 }
