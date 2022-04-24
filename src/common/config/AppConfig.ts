@@ -14,6 +14,11 @@ export const config = Object.freeze({
         host: String(process.env.DB_HOST),
         port: Number(process.env.DB_PORT) || 3306,
     },
+    storage: {
+        cloudName: String(process.env.CLOUDINARY_CLOUD_NAME),
+        apiKey: String(process.env.CLOUDINARY_API_KEY),
+        apiSecret: String(process.env.CLOUDINARY_API_SECRET),
+    },
     token: {
         signature: {
             access: String(process.env.JWT_ACCESS_SIGNATURE),
