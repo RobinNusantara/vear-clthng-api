@@ -10,12 +10,10 @@ import { Op, Transaction } from "sequelize";
 
 @injectable()
 export class UserRepository extends Repository<UserModel> {
-    public async insert(params: {
-        body: SignUpDto;
-        transaction: Transaction;
-    }): Promise<UserModel> {
-        const { body, transaction } = params;
-
+    public async insert(
+        body: SignUpDto,
+        transaction: Transaction,
+    ): Promise<UserModel> {
         const password = await PasswordUtil.encryptPassword(10, body.password);
 
         const user = new UserModel();

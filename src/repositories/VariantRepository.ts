@@ -34,6 +34,7 @@ export class VariantRepository extends Repository<VariantModel> {
     public get(): Promise<VariantModel> {
         throw new Error("Method not implemented.");
     }
+
     public getMany(): Promise<Array<VariantModel>> {
         throw new Error("Method not implemented.");
     }

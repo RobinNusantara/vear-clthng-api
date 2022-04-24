@@ -3,18 +3,16 @@ import { UserTokenModel } from "@apps/models/UserTokenModel";
 import { Transaction } from "sequelize";
 
 export class UserTokenRepository extends Repository<UserTokenModel> {
-    public async insert(params: {
-        data: {
+    public async insert(
+        body: {
             idUserFk: string;
             value: string;
-        };
-        transaction: Transaction;
-    }): Promise<UserTokenModel> {
-        const { data, transaction } = params;
-
+        },
+        transaction: Transaction,
+    ): Promise<UserTokenModel> {
         const token = new UserTokenModel();
 
-        token.setDataValue("value", data.value);
+        token.setDataValue("value", body.value);
 
         await token.save({ transaction });
 

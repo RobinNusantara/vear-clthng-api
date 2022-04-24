@@ -1,6 +1,7 @@
 import { config } from "@apps/common/config/AppConfig";
 import { IJwtPayload } from "@apps/common/interfaces/JwtPayloadInterface";
 import { IToken } from "@apps/common/interfaces/TokenInterface";
+import { IUniqueProps } from "@apps/common/interfaces/UniquePropsInterface";
 import { PasswordUtil } from "@apps/common/utils/PasswordUtil";
 import { TokenUtil } from "@apps/common/utils/TokenUtil";
 import { RefreshTokenDto, SignInDto, SignUpDto } from "@apps/dtos/AuthDto";
@@ -17,47 +18,39 @@ export class AuthService {
         private readonly _userRepository: UserRepository,
     ) {}
 
-    async signUp(body: SignUpDto): Promise<IToken> {
+    public async signUp(body: SignUpDto): Promise<IToken> {
         await Promise.all([
-            this.isEmailExists(body.email),
-            this.isUsernameExists(body.username),
+            this.isUserExists(
+                { key: "email", value: body.email },
+                "Email already taken!",
+            ),
+            this.isUserExists(
+                { key: "username", value: body.username },
+                "Username already taken!",
+            ),
         ]);
 
-        let token: IToken = {
-            accessToken: "",
-            refreshToken: "",
+        const data = await PrimeDatabase.transaction(async (transaction) => {
+            const user = await this._userRepository.insert(body, transaction);
+
+            return user;
+        });
+
+        const [accessToken, refreshToken] = await this.generateToken({
+            id: data.getDataValue("id"),
+            email: data.getDataValue("email"),
+            username: data.getDataValue("username"),
+            role: data.getDataValue("role"),
+            status: data.getDataValue("status"),
+        });
+
+        return {
+            accessToken,
+            refreshToken,
         };
-
-        const transaction = await PrimeDatabase.transaction();
-
-        try {
-            const user = await this._userRepository.insert({
-                body,
-                transaction,
-            });
-
-            const [accessToken, refreshToken] = await this.generateToken({
-                id: user.getDataValue("id"),
-                email: user.getDataValue("email"),
-                username: user.getDataValue("username"),
-                role: user.getDataValue("role"),
-                status: user.getDataValue("status"),
-            });
-
-            token = {
-                accessToken,
-                refreshToken,
-            };
-
-            await transaction.commit();
-        } catch (error) {
-            if (transaction) await transaction.rollback();
-        }
-
-        return token;
     }
 
-    async signIn(body: SignInDto): Promise<IToken> {
+    public async signIn(body: SignInDto): Promise<IToken> {
         const user = await this._userRepository.get({
             key: "email",
             value: body.email,
@@ -84,7 +77,7 @@ export class AuthService {
         };
     }
 
-    async refreshToken(body: RefreshTokenDto): Promise<IToken> {
+    public async refreshToken(body: RefreshTokenDto): Promise<IToken> {
         const payload: IJwtPayload = await TokenUtil.verifyRefreshToken(
             body.refreshToken,
         );
@@ -119,24 +112,16 @@ export class AuthService {
     }
 
     /** Validation */
-    private async isUsernameExists(username: string): Promise<boolean> {
+    private async isUserExists(
+        props: IUniqueProps<"email" | "username">,
+        errorMessage: string,
+    ): Promise<boolean> {
         const user = await this._userRepository.get({
-            key: "username",
-            value: username,
+            key: props.key,
+            value: props.value,
         });
 
-        if (user) throw new Conflict("Username already exists!");
-
-        return false;
-    }
-
-    private async isEmailExists(email: string): Promise<boolean> {
-        const user = await this._userRepository.get({
-            key: "email",
-            value: email,
-        });
-
-        if (user) throw new Conflict("Email already exists!");
+        if (user) throw new Conflict(errorMessage);
 
         return false;
     }

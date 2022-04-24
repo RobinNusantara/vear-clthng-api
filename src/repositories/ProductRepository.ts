@@ -48,7 +48,7 @@ export class ProductRepository extends Repository<ProductModel> {
         return product as ProductModel;
     }
 
-    async getMany(): Promise<Array<ProductModel>> {
+    public async getMany(): Promise<Array<ProductModel>> {
         throw new Error("Method not implemented.");
     }
 
