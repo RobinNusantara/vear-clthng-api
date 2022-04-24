@@ -1,19 +1,22 @@
 import { interfaces } from "inversify";
 import { IContainerInterface } from "@apps/common/interfaces/ContainerInterface";
-// User
+import { ProductRepository } from "@apps/repositories/ProductRepository";
 import { UserRepository } from "@apps/repositories/UserRepository";
 import { UserTokenRepository } from "@apps/repositories/UserTokenRepository";
-import { ProductRepository } from "@apps/repositories/ProductRepository";
+import { VariantRepository } from "@apps/repositories/VariantRepository";
 
 export const REPOSITORY_TYPES = {
-    // Users
+    ProductRepository: Symbol.for("ProductRepository"),
     UserRepository: Symbol.for("UserRepository"),
     UserTokenRepository: Symbol.for("UserTokenRepository"),
-    ProductRepository: Symbol.for("ProductRepository"),
+    VariantRepository: Symbol.for("VariantRepository"),
 };
 
 const containers: Array<IContainerInterface> = [
-    // Users
+    {
+        type: REPOSITORY_TYPES.ProductRepository,
+        class: ProductRepository,
+    },
     {
         type: REPOSITORY_TYPES.UserRepository,
         class: UserRepository,
@@ -23,8 +26,8 @@ const containers: Array<IContainerInterface> = [
         class: UserTokenRepository,
     },
     {
-        type: REPOSITORY_TYPES.ProductRepository,
-        class: ProductRepository,
+        type: REPOSITORY_TYPES.VariantRepository,
+        class: VariantRepository,
     },
 ];
 

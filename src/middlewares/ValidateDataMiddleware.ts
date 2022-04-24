@@ -21,18 +21,22 @@ export class ValidateData {
     private static errorMessages(
         errors: Array<ValidationError>,
     ): Array<IErrorMessage> {
-        return errors.map((error: ValidationError) => {
-            const field = error.property;
+        const response: Array<IErrorMessage> = [];
 
-            const constraints = error.constraints as IErrorConstraint;
+        for (const error of errors) {
+            if (error.children && error.children.length !== 0) {
+                return this.errorMessages(error.children);
+            } else {
+                const constraints = error.constraints as IErrorConstraint;
 
-            const message = Object.values(constraints).pop() as string;
+                response.push({
+                    field: error.property,
+                    message: Object.values(constraints).pop() as string,
+                });
+            }
+        }
 
-            return {
-                field,
-                message,
-            };
-        });
+        return response;
     }
 
     public static requestBody(dto: ClassConstructor<any>): RequestHandler {
@@ -41,7 +45,7 @@ export class ValidateData {
 
             validate(body).then((errors) => {
                 if (errors.length > 0) {
-                    const messages = ValidateData.errorMessages(errors);
+                    const messages = this.errorMessages(errors);
 
                     const statusCode = HttpStatus.UnprocessableEntity;
                     const response = ResponseFactory.errorResponse(statusCode, messages);

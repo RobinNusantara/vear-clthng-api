@@ -1,23 +1,40 @@
 import { Model } from "@apps/common/base/Model";
+import { ProductStatus as Status } from "@apps/common/enums/ProductStatusEnum";
 import {
     Table,
     Column,
     DataType,
     ForeignKey,
     BelongsTo,
+    HasMany,
+    Scopes,
 } from "sequelize-typescript";
+import { Op } from "sequelize";
 import { BrandModel } from "./BrandModel";
+import { VariantModel } from "./VariantModel";
 
 interface IProductModel {
     id: string;
     name: string;
     idBrandFk: number;
-    brand: BrandModel;
     price: number;
     description: string;
+    status: Status;
+    // Association
+    brand: BrandModel;
+    variants: Array<VariantModel>;
 }
 
 @Table({ tableName: "products" })
+@Scopes(() => ({
+    isActive: {
+        where: {
+            status: {
+                [Op.ne]: Status.Inactive,
+            },
+        },
+    },
+}))
 export class ProductModel
     extends Model<IProductModel, IProductModel>
     implements IProductModel
@@ -41,14 +58,11 @@ export class ProductModel
         field: "id_brand_fk",
         type: DataType.INTEGER,
         allowNull: true,
-        onDelete: "SET NULL",
         onUpdate: "CASCADE",
+        onDelete: "SET NULL",
     })
     @ForeignKey(() => BrandModel)
     idBrandFk: number;
-
-    @BelongsTo(() => BrandModel)
-    brand: BrandModel;
 
     @Column({
         type: DataType.DECIMAL(10),
@@ -61,4 +75,18 @@ export class ProductModel
         allowNull: true,
     })
     description: string;
+
+    @Column({
+        type: DataType.ENUM,
+        values: [Status.Active, Status.Inactive],
+        allowNull: false,
+        defaultValue: Status.Active,
+    })
+    status: Status;
+
+    @BelongsTo(() => BrandModel)
+    brand: BrandModel;
+
+    @HasMany(() => VariantModel)
+    variants: Array<VariantModel>;
 }

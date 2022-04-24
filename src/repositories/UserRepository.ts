@@ -1,6 +1,7 @@
 import { Repository } from "@apps/common/base/Repository";
 import { Role } from "@apps/common/enums/RoleEnum";
 import { Status } from "@apps/common/enums/StatusEnum";
+import { IDataPagination } from "@apps/common/interfaces/DataPaginationInterface";
 import { IUniqueProps } from "@apps/common/interfaces/UniquePropsInterface";
 import { PasswordUtil } from "@apps/common/utils/PasswordUtil";
 import { SignUpDto } from "@apps/dtos/AuthDto";
@@ -10,12 +11,10 @@ import { Op, Transaction } from "sequelize";
 
 @injectable()
 export class UserRepository extends Repository<UserModel> {
-    async insert(params: {
-        body: SignUpDto;
-        transaction: Transaction;
-    }): Promise<UserModel> {
-        const { body, transaction } = params;
-
+    public async insert(
+        body: SignUpDto,
+        transaction: Transaction,
+    ): Promise<UserModel> {
         const password = await PasswordUtil.encryptPassword(10, body.password);
 
         const user = new UserModel();
@@ -31,15 +30,13 @@ export class UserRepository extends Repository<UserModel> {
         return user;
     }
 
-    async indexes(): Promise<Array<UserModel>> {
+    public async insertMany(): Promise<Array<UserModel>> {
         throw new Error("Method not implemented.");
     }
 
-    async index(params: {
-        props: IUniqueProps<"id" | "email" | "username">;
-    }): Promise<UserModel | null> {
-        const { props } = params;
-
+    public async get(
+        props: IUniqueProps<"id" | "email" | "username">,
+    ): Promise<UserModel> {
         const user = await UserModel.findOne({
             where: {
                 [props.key]: {
@@ -48,14 +45,22 @@ export class UserRepository extends Repository<UserModel> {
             },
         });
 
-        return user;
+        return user as UserModel;
     }
 
-    update(): Promise<any> {
+    public async getMany(): Promise<Array<UserModel>> {
         throw new Error("Method not implemented.");
     }
 
-    delete(): Promise<any> {
+    public async getAndCountAll(): Promise<IDataPagination<UserModel>> {
+        throw new Error("Method not implemented.");
+    }
+
+    public async update(): Promise<string> {
+        throw new Error("Method not implemented.");
+    }
+
+    public async delete(): Promise<boolean> {
         throw new Error("Method not implemented.");
     }
 }
