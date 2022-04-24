@@ -1,5 +1,11 @@
 import { VariantModel } from "@apps/models/VariantModel";
 
+export class CreateVariantDto {
+    productId: string;
+
+    colorId: number;
+}
+
 export class VariantDto {
     color: string;
 
