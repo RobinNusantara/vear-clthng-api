@@ -58,11 +58,9 @@ export class AuthService {
     }
 
     async signIn(body: SignInDto): Promise<IToken> {
-        const user = await this._userRepository.index({
-            props: {
-                key: "email",
-                value: body.email,
-            },
+        const user = await this._userRepository.get({
+            key: "email",
+            value: body.email,
         });
 
         if (!user) throw new Unauthorized("Email or password is incorrect!");
@@ -122,11 +120,9 @@ export class AuthService {
 
     /** Validation */
     private async isUsernameExists(username: string): Promise<boolean> {
-        const user = await this._userRepository.index({
-            props: {
-                key: "username",
-                value: username,
-            },
+        const user = await this._userRepository.get({
+            key: "username",
+            value: username,
         });
 
         if (user) throw new Conflict("Username already exists!");
@@ -135,11 +131,9 @@ export class AuthService {
     }
 
     private async isEmailExists(email: string): Promise<boolean> {
-        const user = await this._userRepository.index({
-            props: {
-                key: "email",
-                value: email,
-            },
+        const user = await this._userRepository.get({
+            key: "email",
+            value: email,
         });
 
         if (user) throw new Conflict("Email already exists!");
