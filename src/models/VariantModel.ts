@@ -5,8 +5,11 @@ import {
     DataType,
     ForeignKey,
     BelongsTo,
+    BelongsToMany,
 } from "sequelize-typescript";
 import { ColorModel } from "./ColorModel";
+import { PictureModel } from "./PictureModel";
+import { PictureOnVariantModel } from "./PictureOnVariantModel";
 import { ProductModel } from "./ProductModel";
 
 interface IVariantModel {
@@ -16,6 +19,7 @@ interface IVariantModel {
     // Association
     product: ProductModel;
     color: ColorModel;
+    pictures: Array<PictureModel>;
 }
 
 @Table({ tableName: "variants" })
@@ -55,4 +59,7 @@ export class VariantModel
 
     @BelongsTo(() => ColorModel)
     color: ColorModel;
+
+    @BelongsToMany(() => PictureModel, () => PictureOnVariantModel)
+    pictures: Array<PictureModel>;
 }

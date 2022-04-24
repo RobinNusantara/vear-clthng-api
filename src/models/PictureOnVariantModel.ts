@@ -1,5 +1,5 @@
 import { Model } from "@apps/common/base/Model";
-import { Column, DataType, ForeignKey, Table } from "sequelize-typescript";
+import { Table, Column, DataType, ForeignKey } from "sequelize-typescript";
 import { PictureModel } from "./PictureModel";
 import { VariantModel } from "./VariantModel";
 
