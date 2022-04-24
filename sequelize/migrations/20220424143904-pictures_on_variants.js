@@ -14,13 +14,13 @@ module.exports = {
      * @param {Sequelize} Sequelize 
      */
     async up (queryInterface, Sequelize) {
-        return await queryInterface.createTable("pictures_on_products", {
-            idProductFk: {
-                field: "id_product_fk",
+        return await queryInterface.createTable("pictures_on_variants", {
+            idVariantFk: {
+                field: "id_variant_fk",
                 type: DataTypes.UUID,
                 allowNull: false,
                 references: {
-                    model: "products",
+                    model: "variants",
                     key: "id"
                 },
                 onUpdate: ReferenceKey.CASCADE,
