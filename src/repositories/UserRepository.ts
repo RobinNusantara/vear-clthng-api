@@ -1,6 +1,7 @@
 import { Repository } from "@apps/common/base/Repository";
 import { Role } from "@apps/common/enums/RoleEnum";
 import { Status } from "@apps/common/enums/StatusEnum";
+import { IDataPagination } from "@apps/common/interfaces/DataPaginationInterface";
 import { IUniqueProps } from "@apps/common/interfaces/UniquePropsInterface";
 import { PasswordUtil } from "@apps/common/utils/PasswordUtil";
 import { SignUpDto } from "@apps/dtos/AuthDto";
@@ -51,15 +52,15 @@ export class UserRepository extends Repository<UserModel> {
         throw new Error("Method not implemented.");
     }
 
-    public async getAndCountAll(): Promise<any> {
+    public async getAndCountAll(): Promise<IDataPagination<UserModel>> {
         throw new Error("Method not implemented.");
     }
 
-    public async update(): Promise<any> {
+    public async update(): Promise<string> {
         throw new Error("Method not implemented.");
     }
 
-    public async delete(): Promise<any> {
+    public async delete(): Promise<boolean> {
         throw new Error("Method not implemented.");
     }
 }
