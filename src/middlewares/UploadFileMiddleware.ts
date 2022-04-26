@@ -1,11 +1,8 @@
-import multer, { memoryStorage } from "multer";
+import multer, { memoryStorage, Multer } from "multer";
 import { UnsupportedMediaType } from "http-errors";
 import path from "path";
 
-export const UploadFile = (
-    fileTypes: RegExp,
-    maxFileSize: number,
-): multer.Multer =>
+export const UploadFile = (fileTypes: RegExp, fileSize: number): Multer =>
     multer({
         storage: memoryStorage(),
         fileFilter: (req, file, callback) => {
@@ -23,6 +20,6 @@ export const UploadFile = (
             }
         },
         limits: {
-            fileSize: maxFileSize,
+            fileSize,
         },
     });
