@@ -4,7 +4,7 @@ import {
     UploadApiOptions,
     UploadApiResponse,
 } from "cloudinary";
-import { InternalServerError } from "http-errors";
+import { BadRequest } from "http-errors";
 
 cloudinary.config({
     cloud_name: config.storage.cloudName,
@@ -13,7 +13,7 @@ cloudinary.config({
     secure: true,
 });
 
-export async function uploadSingleImage(args: {
+export async function upload(args: {
     file: string;
     folder: string;
 }): Promise<UploadApiResponse> {
@@ -21,14 +21,15 @@ export async function uploadSingleImage(args: {
         const { file, folder } = args;
 
         const options: UploadApiOptions = {
-            folder,
+            folder: `vear-clthng-storage/${folder}`,
+            public_id: `${Date.now()}`,
         };
 
         cloudinary.uploader.upload(file, options, (error, response) => {
             if (response) {
                 resolve(response);
             } else {
-                reject(new InternalServerError());
+                reject(new BadRequest(error?.message));
             }
         });
     });
