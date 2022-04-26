@@ -25,13 +25,10 @@ export async function uploadSingleImage(args: {
         };
 
         cloudinary.uploader.upload(file, options, (error, response) => {
-            if (error) {
-                console.error(error.message);
-                reject(new InternalServerError());
-            }
-
             if (response) {
                 resolve(response);
+            } else {
+                reject(new InternalServerError());
             }
         });
     });
