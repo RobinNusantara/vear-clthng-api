@@ -1,5 +1,9 @@
 import { Controller } from "@apps/common/base/Controller";
 import { CreateProductDto } from "@apps/dtos/ProductDto";
+import {
+    Access,
+    Authentication,
+} from "@apps/middlewares/AuthenticationMiddleware";
 import { ValidateData } from "@apps/middlewares/ValidateDataMiddleware";
 import { SERVICE_TYPES } from "@apps/services/modules";
 import { ProductService } from "@apps/services/ProductService";
@@ -22,7 +26,11 @@ export class ProductController extends Controller {
         super();
     }
 
-    @httpPost("/", ValidateData.requestBody(CreateProductDto))
+    @httpPost(
+        "/",
+        Authentication.verify({ roles: Access["Admin"] }),
+        ValidateData.requestBody(CreateProductDto),
+    )
     async insertProduct(
         @requestBody() body: CreateProductDto,
     ): Promise<JsonResult> {
