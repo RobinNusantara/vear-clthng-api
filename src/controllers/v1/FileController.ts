@@ -2,8 +2,10 @@ import { Controller } from "@apps/common/base/Controller";
 import { UploadFile } from "@apps/middlewares/UploadFileMiddleware";
 import { SERVICE_TYPES } from "@apps/services/modules";
 import { FileService } from "@apps/services/FileService";
-import { Authentication } from "@apps/middlewares/AuthenticationMiddleware";
-import { Role } from "@apps/common/enums/RoleEnum";
+import {
+    Access,
+    Authentication,
+} from "@apps/middlewares/AuthenticationMiddleware";
 import { Request } from "express";
 import { inject } from "inversify";
 import { controller, httpPost, request } from "inversify-express-utils";
@@ -20,13 +22,12 @@ export class FileController extends Controller {
 
     @httpPost(
         "/product-pictures",
-        Authentication.verify({ roles: [Role.Admin] }),
+        Authentication.verify({ roles: Access["Admin"] }),
         UploadFile(/jpeg|jpg|png/, 1024 * 1024).array("product"),
     )
     async insertProductPictures(@request() req: Request): Promise<JsonResult> {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        const data = await this._fileService.insertProductPictures(req.files);
+        const files = req.files as Array<Express.Multer.File>;
+        const data = await this._fileService.insertProductPictures(files);
 
         return this.response(data);
     }
