@@ -4,8 +4,8 @@ import { PictureModel } from "./PictureModel";
 import { VariantModel } from "./VariantModel";
 
 interface IPictureOnVariantModel {
-    idVariantFk: number;
-    idPictureFk: number;
+    idVariantFk: string;
+    idPictureFk: string;
 }
 
 @Table({ tableName: "pictures_on_variants" })
@@ -21,7 +21,7 @@ export class PictureOnVariantModel
         onDelete: "CASCADE",
     })
     @ForeignKey(() => VariantModel)
-    idVariantFk: number;
+    idVariantFk: string;
 
     @Column({
         field: "id_picture_fk",
@@ -31,5 +31,5 @@ export class PictureOnVariantModel
         onDelete: "CASCADE",
     })
     @ForeignKey(() => PictureModel)
-    idPictureFk: number;
+    idPictureFk: string;
 }
