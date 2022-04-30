@@ -5,6 +5,7 @@ import {
     UploadApiResponse,
 } from "cloudinary";
 import { BadRequest } from "http-errors";
+import { v4 as uuid } from "uuid";
 
 cloudinary.config({
     cloud_name: config.storage.cloudName,
@@ -14,15 +15,16 @@ cloudinary.config({
 });
 
 export async function upload(args: {
-    file: string;
     folder: string;
+    prefix: string;
+    file: string;
 }): Promise<UploadApiResponse> {
     return new Promise((resolve, reject) => {
-        const { file, folder } = args;
+        const { folder, prefix, file } = args;
 
         const options: UploadApiOptions = {
             folder: `vear-clthng-storage/${folder}`,
-            public_id: `${Date.now()}`,
+            public_id: `${prefix}-${uuid()}`,
         };
 
         cloudinary.uploader.upload(file, options, (error, response) => {
