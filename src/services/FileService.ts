@@ -12,11 +12,12 @@ export class FileService {
 
         for await (const file of files) {
             const image = await upload({
+                folder: "products",
+                prefix: "product",
                 file: DataUriUtil.convertBufferToString(
                     file.mimetype,
                     file.buffer,
                 ),
-                folder: "products",
             });
 
             images.push({
