@@ -13,7 +13,7 @@ import { PictureOnVariantModel } from "./PictureOnVariantModel";
 import { ProductModel } from "./ProductModel";
 
 interface IVariantModel {
-    id: number;
+    id: string;
     idProductFk: string;
     idColorFk: number;
     // Association
@@ -33,7 +33,7 @@ export class VariantModel
         allowNull: false,
         defaultValue: DataType.UUIDV4,
     })
-    id: number;
+    id: string;
 
     @Column({
         field: "id_product_fk",
