@@ -4,8 +4,10 @@ import { ProductRepository } from "@apps/repositories/ProductRepository";
 import { UserRepository } from "@apps/repositories/UserRepository";
 import { UserTokenRepository } from "@apps/repositories/UserTokenRepository";
 import { VariantRepository } from "@apps/repositories/VariantRepository";
+import { PictureRepository } from "@apps/repositories/PictureRepository";
 
 export const REPOSITORY_TYPES = {
+    PictureRepository: Symbol.for("PictureRepository"),
     ProductRepository: Symbol.for("ProductRepository"),
     UserRepository: Symbol.for("UserRepository"),
     UserTokenRepository: Symbol.for("UserTokenRepository"),
@@ -13,6 +15,10 @@ export const REPOSITORY_TYPES = {
 };
 
 const containers: Array<IContainerInterface> = [
+    {
+        type: REPOSITORY_TYPES.PictureRepository,
+        class: PictureRepository,
+    },
     {
         type: REPOSITORY_TYPES.ProductRepository,
         class: ProductRepository,
