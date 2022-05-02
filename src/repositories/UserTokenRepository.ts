@@ -12,6 +12,7 @@ export class UserTokenRepository extends Repository<UserTokenModel> {
     ): Promise<UserTokenModel> {
         const token = new UserTokenModel();
 
+        token.setDataValue("idUserFk", body.idUserFk);
         token.setDataValue("value", body.value);
 
         await token.save({ transaction });
