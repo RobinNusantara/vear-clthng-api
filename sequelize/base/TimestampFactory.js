@@ -34,7 +34,7 @@ const Timestamp = {
     updatedAt: {
         field: "updated_at",
         type: DataTypes.DATE,
-        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP"),
+        allowNull: false,
     },
     deletedAt: {
         field: "deleted_at",

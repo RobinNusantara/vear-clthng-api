@@ -7,7 +7,7 @@ class Database extends Sequelize {
 
     constructor() {
         super({
-            dialect: "mysql",
+            dialect: "postgres",
             host: config.database.host,
             port: config.database.port,
             database: "db_vear_clthng",

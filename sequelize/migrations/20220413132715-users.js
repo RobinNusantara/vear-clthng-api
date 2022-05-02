@@ -35,14 +35,13 @@ module.exports = {
                 allowNull: false,
             },
             role: {
-                type: DataTypes.ENUM,
-                values: ["Admin", "User"],
+                type: DataTypes.ENUM("Admin", "User"),
                 defaultValue: "User",
                 allowNull: false,
             },
             status: {
-                type: DataTypes.TINYINT(1),
-                defaultValue: 1,
+                type: DataTypes.ENUM("WaitingApproval", "Active", "Inactive"),
+                defaultValue: "WaitingApproval",
                 allowNull: false,
             },
             ...Timestamp,
