@@ -28,7 +28,6 @@ const Timestamp = {
     createdAt: {
         field: "created_at",
         type: DataTypes.DATE,
-        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
         allowNull: false,
     },
     updatedAt: {
