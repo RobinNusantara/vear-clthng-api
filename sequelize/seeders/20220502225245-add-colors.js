@@ -8,13 +8,14 @@ require("dotenv").config();
 
 /**
  * @param {number} id
- * @param {string} name 
+ * @param {string} name
+ * @param {string} color
  */
-function createBrand(id, name) {
+function createColor(id, name, color) {
     return {
         id,
         name,
-        label: name.toLowerCase(),
+        hex_color: color,
         created_at: new Date(),
         updated_at: new Date(),
     };
@@ -26,11 +27,12 @@ module.exports = {
      * @param {Sequelize} Sequelize 
      */
     async up (queryInterface, Sequelize) {
-        return await queryInterface.bulkInsert("brands", [
-            createBrand(1, "Adidas"),
-            createBrand(2, "Converse"),
-            createBrand(3, "Nike"),
-            createBrand(4, "Vans"),
+        return await queryInterface.bulkInsert("colors", [
+            createColor(1, "Black", "#000000"),
+            createColor(2, "White", "#FFFFFF"),
+            createColor(3, "Red", "#FF0000"),
+            createColor(4, "Green", "#008000"),
+            createColor(5, "Blue", "#0000FF"),
         ]);
     },
     /**
