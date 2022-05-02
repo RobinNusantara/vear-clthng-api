@@ -8,6 +8,7 @@ import { RefreshTokenDto, SignInDto, SignUpDto } from "@apps/dtos/AuthDto";
 import { PrimeDatabase } from "@apps/infrastructures/database/PrimeDatabase";
 import { REPOSITORY_TYPES } from "@apps/repositories/modules";
 import { UserRepository } from "@apps/repositories/UserRepository";
+import { UserTokenRepository } from "@apps/repositories/UserTokenRepository";
 import { Conflict, Unauthorized } from "http-errors";
 import { inject, injectable } from "inversify";
 
@@ -16,6 +17,8 @@ export class AuthService {
     constructor(
         @inject(REPOSITORY_TYPES.UserRepository)
         private readonly _userRepository: UserRepository,
+        @inject(REPOSITORY_TYPES.UserTokenRepository)
+        private readonly _userTokenRepository: UserTokenRepository,
     ) {}
 
     public async signUp(body: SignUpDto): Promise<IToken> {
@@ -30,24 +33,32 @@ export class AuthService {
             ),
         ]);
 
-        const data = await PrimeDatabase.transaction(async (transaction) => {
+        const token = await PrimeDatabase.transaction(async (transaction) => {
             const user = await this._userRepository.insert(body, transaction);
 
-            return user;
+            const [accessToken, refreshToken] = await this.generateToken({
+                id: user.getDataValue("id"),
+                email: user.getDataValue("email"),
+                username: user.getDataValue("username"),
+                role: user.getDataValue("role"),
+                status: user.getDataValue("status"),
+            });
+
+            await this._userTokenRepository.insert(
+                {
+                    idUserFk: user.getDataValue("id"),
+                    value: refreshToken,
+                },
+                transaction,
+            );
+
+            return {
+                accessToken,
+                refreshToken,
+            };
         });
 
-        const [accessToken, refreshToken] = await this.generateToken({
-            id: data.getDataValue("id"),
-            email: data.getDataValue("email"),
-            username: data.getDataValue("username"),
-            role: data.getDataValue("role"),
-            status: data.getDataValue("status"),
-        });
-
-        return {
-            accessToken,
-            refreshToken,
-        };
+        return token;
     }
 
     public async signIn(body: SignInDto): Promise<IToken> {
