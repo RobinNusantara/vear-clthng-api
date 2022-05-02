@@ -47,6 +47,9 @@ module.exports = {
                     username,
                     password: hashed,
                     role: "Admin",
+                    status: "Active",
+                    created_at: new Date(),
+                    updated_at: new Date(),
                 },
             ]);
 
