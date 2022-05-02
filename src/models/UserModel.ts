@@ -67,7 +67,8 @@ export class UserModel
     role: Role;
 
     @Column({
-        type: DataType.TINYINT,
+        type: DataType.ENUM,
+        values: [Status.WaitingApproval, Status.Active, Status.Inactive],
         defaultValue: Status.WaitingApproval,
         allowNull: false,
     })
