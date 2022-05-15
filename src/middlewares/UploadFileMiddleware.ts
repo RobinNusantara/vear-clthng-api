@@ -2,24 +2,28 @@ import multer, { memoryStorage, Multer } from "multer";
 import { UnsupportedMediaType } from "http-errors";
 import path from "path";
 
-export const UploadFile = (fileTypes: RegExp, fileSize: number): Multer =>
-    multer({
-        storage: memoryStorage(),
-        fileFilter: (req, file, callback) => {
-            const extname = path.extname(file.originalname).toLowerCase();
+export class UploadFile {
+    public static requestForm(fileTypes: RegExp, fileSize: number): Multer {
+        return multer({
+            storage: memoryStorage(),
+            fileFilter: (req, file, callback) => {
+                const extname = path.extname(file.originalname).toLowerCase();
 
-            const isFileExtensionValid = fileTypes.test(extname);
-            const isMimeTypeValid = fileTypes.test(file.mimetype);
+                const isFileExtensionValid = fileTypes.test(extname);
+                const isMimeTypeValid = fileTypes.test(file.mimetype);
 
-            if (isFileExtensionValid && isMimeTypeValid) {
-                return callback(null, true);
-            } else {
-                const message = `Unsupported Media Type: Only ${fileTypes} are allowed`;
+                if (!isFileExtensionValid && !isMimeTypeValid) {
+                    const message = `Unsupported Media Type: Only ${fileTypes} are allowed`;
+                    const error = new UnsupportedMediaType(message);
 
-                return callback(new UnsupportedMediaType(message));
-            }
-        },
-        limits: {
-            fileSize,
-        },
-    });
+                    callback(error);
+                }
+
+                callback(null, true);
+            },
+            limits: {
+                fileSize,
+            },
+        });
+    }
+}
