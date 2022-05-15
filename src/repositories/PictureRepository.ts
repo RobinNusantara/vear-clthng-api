@@ -7,6 +7,7 @@ export class PictureRepository extends Repository<PictureModel> {
     public insert(): Promise<PictureModel> {
         throw new Error("Method not implemented.");
     }
+
     public async insertMany(
         body: Array<CreatePictureDto>,
     ): Promise<Array<PictureModel>> {
@@ -26,18 +27,23 @@ export class PictureRepository extends Repository<PictureModel> {
 
         return values;
     }
+
     public get(): Promise<PictureModel> {
         throw new Error("Method not implemented.");
     }
+
     public getMany(): Promise<Array<PictureModel>> {
         throw new Error("Method not implemented.");
     }
+
     public getAndCountAll(): Promise<IDataPagination<PictureModel>> {
         throw new Error("Method not implemented.");
     }
+
     public update(): Promise<string | number> {
         throw new Error("Method not implemented.");
     }
+
     public delete(): Promise<boolean> {
         throw new Error("Method not implemented.");
     }
