@@ -23,7 +23,7 @@ export class FileController extends Controller {
     @httpPost(
         "/product-pictures",
         Authentication.verify({ roles: Access["Admin"] }),
-        UploadFile.requestForm(/jpeg|jpg|png/, 1024 * 1024).array("product", 3),
+        UploadFile.requestForm(/jpeg|jpg|png/, 1024 * 1024).array("product", 6),
     )
     async insertProductPictures(@request() req: Request): Promise<JsonResult> {
         const files = req.files as Array<Express.Multer.File>;
