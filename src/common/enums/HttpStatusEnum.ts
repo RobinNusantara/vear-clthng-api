@@ -7,6 +7,9 @@ export enum HttpStatus {
     Forbidden = 403,
     NotFound = 404,
     Conflict = 409,
+    PayloadTooLarge = 413,
+    UnsupportedMediaType = 415,
+    RangeNotSatisfiable = 416,
     UnprocessableEntity = 422,
     InternalServerError = 500,
 }
